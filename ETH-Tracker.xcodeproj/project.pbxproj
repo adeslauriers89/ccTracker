@@ -8,11 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		A68C7D381CB72C4A00CD9B23 /* Order.swift in Sources */ = {isa = PBXBuildFile; fileRef = A68C7D371CB72C4A00CD9B23 /* Order.swift */; };
+		A68D1BC01CD00323000BA696 /* Charts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A68D1BBF1CD00323000BA696 /* Charts.framework */; };
+		A68D1BC21CD01172000BA696 /* LineChartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A68D1BC11CD01172000BA696 /* LineChartViewController.swift */; };
 		A6A688801CAC96DF005644A0 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6A6887F1CAC96DF005644A0 /* Constants.swift */; };
 		A6DA1A541CC0102B009CB354 /* OrderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6DA1A531CC0102B009CB354 /* OrderViewController.swift */; };
 		A6DA1A561CC013CF009CB354 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6DA1A551CC013CF009CB354 /* HomeViewController.swift */; };
 		A6DA1A581CC02B14009CB354 /* TradeHistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6DA1A571CC02B14009CB354 /* TradeHistoryViewController.swift */; };
-		A6DED1F51CBF36B5006C928A /* EthTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6DED1F41CBF36B5006C928A /* EthTableViewCell.swift */; };
 		A6E6CBF71CAB254F00F92EA6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6E6CBF61CAB254F00F92EA6 /* AppDelegate.swift */; };
 		A6E6CBF91CAB254F00F92EA6 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6E6CBF81CAB254F00F92EA6 /* ViewController.swift */; };
 		A6E6CBFC1CAB254F00F92EA6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A6E6CBFA1CAB254F00F92EA6 /* Main.storyboard */; };
@@ -21,6 +22,7 @@
 		A6E6CC0C1CAB255000F92EA6 /* ETH_TrackerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6E6CC0B1CAB255000F92EA6 /* ETH_TrackerTests.swift */; };
 		A6E6CC171CAB273A00F92EA6 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6E6CC161CAB273A00F92EA6 /* DataManager.swift */; };
 		A6E6CC1A1CAB2DAE00F92EA6 /* Trade.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6E6CC191CAB2DAE00F92EA6 /* Trade.swift */; };
+		C055A18F9D5B4CD72A199591 /* Pods_ETH_Tracker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 040916DBB5198DC07546A39C /* Pods_ETH_Tracker.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,12 +36,16 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		040916DBB5198DC07546A39C /* Pods_ETH_Tracker.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ETH_Tracker.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		1F9FEE7137814DA02FBBB0B1 /* Pods-ETH-Tracker.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ETH-Tracker.release.xcconfig"; path = "Pods/Target Support Files/Pods-ETH-Tracker/Pods-ETH-Tracker.release.xcconfig"; sourceTree = "<group>"; };
+		8989E0E2DFBF90719D7A94B6 /* Pods-ETH-Tracker.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ETH-Tracker.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ETH-Tracker/Pods-ETH-Tracker.debug.xcconfig"; sourceTree = "<group>"; };
 		A68C7D371CB72C4A00CD9B23 /* Order.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Order.swift; sourceTree = "<group>"; };
+		A68D1BBF1CD00323000BA696 /* Charts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Charts.framework; path = "../../../Library/Developer/Xcode/DerivedData/ETH-Tracker-deteyhsujbivanhbwfeyxabmoqbq/Build/Products/Debug-iphonesimulator/Charts.framework"; sourceTree = "<group>"; };
+		A68D1BC11CD01172000BA696 /* LineChartViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LineChartViewController.swift; sourceTree = "<group>"; };
 		A6A6887F1CAC96DF005644A0 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		A6DA1A531CC0102B009CB354 /* OrderViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrderViewController.swift; sourceTree = "<group>"; };
 		A6DA1A551CC013CF009CB354 /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		A6DA1A571CC02B14009CB354 /* TradeHistoryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TradeHistoryViewController.swift; sourceTree = "<group>"; };
-		A6DED1F41CBF36B5006C928A /* EthTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EthTableViewCell.swift; sourceTree = "<group>"; };
 		A6E6CBF31CAB254F00F92EA6 /* ETH-Tracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ETH-Tracker.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A6E6CBF61CAB254F00F92EA6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A6E6CBF81CAB254F00F92EA6 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -59,6 +65,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A68D1BC01CD00323000BA696 /* Charts.framework in Frameworks */,
+				C055A18F9D5B4CD72A199591 /* Pods_ETH_Tracker.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -72,6 +80,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		599BD00416DD6C3D8F0554F1 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				A68D1BBF1CD00323000BA696 /* Charts.framework */,
+				040916DBB5198DC07546A39C /* Pods_ETH_Tracker.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		A6DED1F21CBF3634006C928A /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -79,6 +96,7 @@
 				A6DA1A551CC013CF009CB354 /* HomeViewController.swift */,
 				A6DA1A531CC0102B009CB354 /* OrderViewController.swift */,
 				A6DA1A571CC02B14009CB354 /* TradeHistoryViewController.swift */,
+				A68D1BC11CD01172000BA696 /* LineChartViewController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -86,7 +104,6 @@
 		A6DED1F31CBF3675006C928A /* View */ = {
 			isa = PBXGroup;
 			children = (
-				A6DED1F41CBF36B5006C928A /* EthTableViewCell.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -97,6 +114,8 @@
 				A6E6CBF51CAB254F00F92EA6 /* ETH-Tracker */,
 				A6E6CC0A1CAB255000F92EA6 /* ETH-TrackerTests */,
 				A6E6CBF41CAB254F00F92EA6 /* Products */,
+				C0E66B73B64D6C01AB4197DC /* Pods */,
+				599BD00416DD6C3D8F0554F1 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -144,6 +163,15 @@
 			name = Model;
 			sourceTree = "<group>";
 		};
+		C0E66B73B64D6C01AB4197DC /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				8989E0E2DFBF90719D7A94B6 /* Pods-ETH-Tracker.debug.xcconfig */,
+				1F9FEE7137814DA02FBBB0B1 /* Pods-ETH-Tracker.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -151,9 +179,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = A6E6CC101CAB255000F92EA6 /* Build configuration list for PBXNativeTarget "ETH-Tracker" */;
 			buildPhases = (
+				6EC8FF3F667B3C11EDDA38AC /* Check Pods Manifest.lock */,
 				A6E6CBEF1CAB254F00F92EA6 /* Sources */,
 				A6E6CBF01CAB254F00F92EA6 /* Frameworks */,
 				A6E6CBF11CAB254F00F92EA6 /* Resources */,
+				1AEE8732030D37C095E82166 /* Embed Pods Frameworks */,
+				DDECEADF28F58681EB0A60EE /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -242,6 +273,54 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		1AEE8732030D37C095E82166 /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ETH-Tracker/Pods-ETH-Tracker-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		6EC8FF3F667B3C11EDDA38AC /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		DDECEADF28F58681EB0A60EE /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ETH-Tracker/Pods-ETH-Tracker-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		A6E6CBEF1CAB254F00F92EA6 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -252,11 +331,11 @@
 				A6DA1A581CC02B14009CB354 /* TradeHistoryViewController.swift in Sources */,
 				A6E6CBF91CAB254F00F92EA6 /* ViewController.swift in Sources */,
 				A6E6CC171CAB273A00F92EA6 /* DataManager.swift in Sources */,
-				A6DED1F51CBF36B5006C928A /* EthTableViewCell.swift in Sources */,
 				A6DA1A561CC013CF009CB354 /* HomeViewController.swift in Sources */,
 				A6E6CC1A1CAB2DAE00F92EA6 /* Trade.swift in Sources */,
 				A6E6CBF71CAB254F00F92EA6 /* AppDelegate.swift in Sources */,
 				A6DA1A541CC0102B009CB354 /* OrderViewController.swift in Sources */,
+				A68D1BC21CD01172000BA696 /* LineChartViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -381,6 +460,7 @@
 		};
 		A6E6CC111CAB255000F92EA6 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8989E0E2DFBF90719D7A94B6 /* Pods-ETH-Tracker.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -395,6 +475,7 @@
 		};
 		A6E6CC121CAB255000F92EA6 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1F9FEE7137814DA02FBBB0B1 /* Pods-ETH-Tracker.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";

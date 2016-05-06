@@ -26,6 +26,7 @@ struct unixConstants {
     
     static let oneDay = 86400
     static let twelveHours = 43200
+    static let sevenHours = 25200
     static let sixHours = 21600
     static let twoHours = 7200
     static let thirtyMins = 1800

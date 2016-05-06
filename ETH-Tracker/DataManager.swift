@@ -37,6 +37,7 @@ class DataManager {
     
     var soldTradesValue = Float()
     var boughtTradesValue = Float()
+    var tradesNetValue = Float()
   
     var buyOrders = [Order]()
     var sellOrders = [Order]()
@@ -59,6 +60,9 @@ class DataManager {
     var endTime = Int()
     var tradeHistory = [Trade]()
     var historyInfo: String = ""
+    
+    var startUnix = Int()
+    var endUnix = Int()
     
    // var testlast24hrs = [Trade]()
 
@@ -241,9 +245,8 @@ class DataManager {
         
     }
     
-
     
-//    func getTradeHistory() -> (trades: [Trade], info: String) {
+//    func getTradeHistory(completion: (result: (trades: [Trade], info: String, start: Int, end: Int) ) -> Void) {
 //        
 //        endTime = Int(NSDate().timeIntervalSince1970)
 //        
@@ -257,43 +260,46 @@ class DataManager {
 //                if self.tradeHistory.isEmpty == false {
 //                    self.tradeHistory.removeAll()
 //                }
-//                
-//                
+//
 //                for historyDict in fetchedHistory {
-//                    
 //                    let newTrade = Trade()
-//                    newTrade.date = historyDict["date"] as! String
+//              
+//                    if let date = historyDict["date"] as? String {
+//                        newTrade.date = date
+//                    }
 //                    newTrade.type = historyDict["type"] as! String
 //                    newTrade.rate = (historyDict["rate"]!.floatValue)
 //                    newTrade.amount = (historyDict["amount"]!.floatValue)
 //                    newTrade.total = (historyDict["total"]!.floatValue)
-//                    
+//
+//                    newTrade.timeInt = self.timeStampToUnix(newTrade.date)
+//
 //                    self.tradeHistory.append(newTrade)
 //                    
-//                    if newTrade.type == "buy" {
-//                        self.boughtTradesValue = newTrade.total + self.boughtTradesValue
-//                        self.totalTradesBought += 1
-//                    } else {
-//                        self.soldTradesValue = newTrade.total + self.soldTradesValue
-//                        self.totalTradesSold += 1
-//                    }
-//                    
-//                }
+//                    self.tradeTypeFilter(newTrade)
 //
-//                self.historyInfo = "\(self.tradeHistory.count) trades. \(self.totalTradesBought) buys for \(self.boughtTradesValue) BTC. \(self.totalTradesSold) sells for \(self.soldTradesValue) BTC"
+//                }
+//                
+//                print("First \(self.tradeHistory.first?.timeInt)")
+//                print("Last \(self.tradeHistory.last?.timeInt)")
+//                
+//                self.tradesNetValue = self.boughtTradesValue - self.soldTradesValue
+//                    
+//                self.historyInfo = "\(self.tradeHistory.count) trades. \(self.totalTradesBought) buys for \(self.boughtTradesValue) BTC. \(self.totalTradesSold) sells for \(self.soldTradesValue) BTC : Net Value \(self.tradesNetValue)"
 //                
 //                print(self.historyInfo)
+//                
 //            }
+//            completion(result: (trades: self.tradeHistory, info: self.historyInfo, start: self.startTime, end: self.endTime))
+//
 //        }
 //        historyTask.resume()
-//   
-//            return (self.tradeHistory, self.historyInfo)
 //    }
     
-
     
-    func getTradeHistory(completion: (result: (trades: [Trade], info: String)) -> Void) {
+    func getTradeHistory(forTimePeriod: Int, completion: (result: (trades: [Trade], info: String, start: Int, end: Int) ) -> Void) {
         
+        startTime = Int(NSDate().timeIntervalSince1970) - forTimePeriod
         endTime = Int(NSDate().timeIntervalSince1970)
         
         let historyTask = NSURLSession.sharedSession().dataTaskWithURL(NSURL(string: "https://poloniex.com/public?command=returnTradeHistory&currencyPair=BTC_ETH&start=\(startTime)&end=\(endTime)")!) { (data, response, error) -> Void in
@@ -307,134 +313,155 @@ class DataManager {
                     self.tradeHistory.removeAll()
                 }
                 
-                
                 for historyDict in fetchedHistory {
-                    
                     let newTrade = Trade()
-                    newTrade.date = historyDict["date"] as! String
+                    
+                    if let date = historyDict["date"] as? String {
+                        newTrade.date = date
+                    }
                     newTrade.type = historyDict["type"] as! String
                     newTrade.rate = (historyDict["rate"]!.floatValue)
                     newTrade.amount = (historyDict["amount"]!.floatValue)
                     newTrade.total = (historyDict["total"]!.floatValue)
                     
+                    newTrade.timeInt = self.timeStampToUnix(newTrade.date)
+                    
                     self.tradeHistory.append(newTrade)
                     
-                    if newTrade.type == "buy" {
-                        self.boughtTradesValue = newTrade.total + self.boughtTradesValue
-                        self.totalTradesBought += 1
-                    } else {
-                        self.soldTradesValue = newTrade.total + self.soldTradesValue
-                        self.totalTradesSold += 1
-                    }
+                    self.tradeTypeFilter(newTrade)
                     
                 }
                 
-                self.historyInfo = "\(self.tradeHistory.count) trades. \(self.totalTradesBought) buys for \(self.boughtTradesValue) BTC. \(self.totalTradesSold) sells for \(self.soldTradesValue) BTC"
+                print("First \(self.tradeHistory.first?.timeInt)")
+                print("Last \(self.tradeHistory.last?.timeInt)")
+                
+                self.tradesNetValue = self.boughtTradesValue - self.soldTradesValue
+                
+                self.historyInfo = "\(self.tradeHistory.count) trades. \(self.totalTradesBought) buys for \(self.boughtTradesValue) BTC. \(self.totalTradesSold) sells for \(self.soldTradesValue) BTC : Net Value \(self.tradesNetValue)"
                 
                 print(self.historyInfo)
                 
             }
-            completion(result: (trades: self.tradeHistory, info: self.historyInfo))
-
+            completion(result: (trades: self.tradeHistory, info: self.historyInfo, start: self.startTime, end: self.endTime))
+            
         }
         historyTask.resume()
-        
-        
     }
     
     
-    func getHistoryLastMinute() -> (trades: [Trade] ,info: String) {
- 
-        startTime = Int(NSDate().timeIntervalSince1970) - unixConstants.oneMin
-        
-       getTradeHistory() { (result) in
-            self.lastMinuteInfo = "Last Minute: \(result.info)"
-            self.tradesInLastMinute = result.trades
-        }
-        return (tradesInLastMinute, lastMinuteInfo)
-    }
-    
-    func getHistoryLastFiveMinutes() -> (trades: [Trade], info: String) {
-        
-        startTime = Int(NSDate().timeIntervalSince1970) - unixConstants.fiveMins
-        
-        getTradeHistory { (result) in
-            self.lastFiveMinsInfo = "Last 5 Mins: \(result.info)"
-            self.tradesInLast5Mins = result.trades
-        }
-        return (tradesInLast5Mins, lastFiveMinsInfo)
-    }
-    
-//    func getHistoryLastThirtyMinutes() -> (trades: [Trade] ,info: String) {
+//    func getHistoryLastMinute() -> (trades: [Trade] ,info: String) {
+// 
+//        startTime = Int(NSDate().timeIntervalSince1970) - unixConstants.oneMin
+//        
+//       getTradeHistory() { (result) in
+//            self.lastMinuteInfo = "Last Minute: \(result.info)"
+//            self.tradesInLastMinute = result.trades
+//        }
+//        
+//        return (tradesInLastMinute, lastMinuteInfo)
+//    }
+//    
+//    func getHistoryLastFiveMinutes() -> (trades: [Trade], info: String, start: Int, end: Int) {
+//        
+//        startTime = Int(NSDate().timeIntervalSince1970) - unixConstants.fiveMins
+//        
+//        
+//        getTradeHistory { (result) in
+//            self.lastFiveMinsInfo = "Last 5 Mins: \(result.info)"
+//            self.tradesInLast5Mins = result.trades
+//            
+//            self.startUnix = result.start + unixConstants.sevenHours
+//            self.endUnix = result.end + unixConstants.sevenHours
+//
+//        }
+//        
+//        return (trades: self.tradesInLast5Mins, info: self.lastFiveMinsInfo, start: self.startUnix, end: self.endUnix)
+//    }
+//
+//    
+//    func getHistoryLastThirtyMinutes() -> (trades: [Trade], info: String) {
 //        
 //        startTime = Int(NSDate().timeIntervalSince1970) - unixConstants.thirtyMins
 //        
-//        let history = getTradeHistory()
-//        
-//        tradesInLast30Mins = history.trades
-//        last30MinsInfo = "Last 30 Mins: \(history.info)"
-//        
+//        getTradeHistory { (result) in
+//            self.last30MinsInfo = "Last 30 Mins: \(result.info)"
+//            self.tradesInLast30Mins = result.trades
+// 
+//        }
 //        return (tradesInLast30Mins, last30MinsInfo)
 //    }
+//    
+//    func getHistoryLastTwoHours() -> (trades: [Trade], info: String) {
+//        
+//        startTime = Int(NSDate().timeIntervalSince1970) - unixConstants.twoHours
+//        
+//        getTradeHistory { (result) in
+//            self.last2HrsInfo = "Last 2 Hrs: \(result.info)"
+//            self.tradesInLast2Hrs = result.trades
+//        }
+//        
+//        return (tradesInLast2Hrs, last2HrsInfo)
+//        
+//    }
+//    
+//    func getHistoryLastSixHours() -> (trades: [Trade], info: String) {
+//        
+//        startTime = Int(NSDate().timeIntervalSince1970) - unixConstants.sixHours
+//        
+//        getTradeHistory { (result) in
+//            self.last6HrsInfo = "Last 6 Hrs: \(result.info)"
+//            self.tradesInLast6Hrs = result.trades
+//        }
+//        
+//        return (tradesInLast6Hrs, last6HrsInfo)
+//    }
+//    
+//    func getHistoryLastTwelveHours() -> (trades: [Trade], info: String) {
+//        
+//        startTime = Int(NSDate().timeIntervalSince1970) - unixConstants.twelveHours
+//        
+//       getTradeHistory { (result) in
+//            self.last12HrsInfo = "Last 12 Hrs: \(result.info)"
+//            self.tradesInLast12Hrs = result.trades
+//        }
+//        
+//        return (tradesInLast12Hrs, last12HrsInfo)
+//    }
+//    
+//    func getHistoryLastDay() -> (trades: [Trade], info: String) {
+//        
+//        startTime = Int(NSDate().timeIntervalSince1970) - unixConstants.oneDay
+//        
+//       getTradeHistory { (result) in
+//            self.last24HrsInfo = "Last 24 Hrs: \(result.info)"
+//            self.tradesInLast24Hrs = result.trades
+//        }
+//        
+//        return (tradesInLast24Hrs, last24HrsInfo)
+//    }
+
     
-    func getHistoryLastThirtyMinutes() -> (trades: [Trade], info: String) {
+    func timeStampToUnix(time: String) -> Int {
         
-        startTime = Int(NSDate().timeIntervalSince1970) - unixConstants.thirtyMins
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         
-        getTradeHistory { (result) in
-            self.last30MinsInfo = "Last 30 Mins: \(result.info)"
-            self.tradesInLast30Mins = result.trades
-        }
-        return (tradesInLast30Mins, last30MinsInfo)
+        let unixTime = Int((dateFormatter.dateFromString(time)!.timeIntervalSince1970))
+        
+        return unixTime
     }
     
-    func getHistoryLastTwoHours() -> (trades: [Trade], info: String) {
-        
-        startTime = Int(NSDate().timeIntervalSince1970) - unixConstants.twoHours
-        
-        getTradeHistory { (result) in
-            self.last2HrsInfo = "Last 2 Hrs: \(result.info)"
-            self.tradesInLast2Hrs = result.trades
-        }
-        
-        return (tradesInLast2Hrs, last2HrsInfo)
-        
-    }
     
-    func getHistoryLastSixHours() -> (trades: [Trade], info: String) {
+    func tradeTypeFilter(trade: Trade) {
         
-        startTime = Int(NSDate().timeIntervalSince1970) - unixConstants.sixHours
-        
-        getTradeHistory { (result) in
-            self.last6HrsInfo = "Last 6 Hrs: \(result.info)"
-            self.tradesInLast6Hrs = result.trades
+        if trade.type == "buy" {
+            self.boughtTradesValue = trade.total + self.boughtTradesValue
+            self.totalTradesBought += 1
+        } else {
+            self.soldTradesValue = trade.total + self.soldTradesValue
+            self.totalTradesSold += 1
         }
         
-        return (tradesInLast6Hrs, last6HrsInfo)
-    }
-    
-    func getHistoryLastTwelveHours() -> (trades: [Trade], info: String) {
-        
-        startTime = Int(NSDate().timeIntervalSince1970) - unixConstants.twelveHours
-        
-       getTradeHistory { (result) in
-            self.last12HrsInfo = "Last 12 Hrs: \(result.info)"
-            self.tradesInLast12Hrs = result.trades
-        }
-        
-        return (tradesInLast12Hrs, last12HrsInfo)
-    }
-    
-    func getHistoryLastDay() -> (trades: [Trade], info: String) {
-        
-        startTime = Int(NSDate().timeIntervalSince1970) - unixConstants.oneDay
-        
-       getTradeHistory { (result) in
-            self.last24HrsInfo = "Last 24 Hrs: \(result.info)"
-            self.tradesInLast24Hrs = result.trades
-        }
-        
-        return (tradesInLast24Hrs, last24HrsInfo)
     }
     
 

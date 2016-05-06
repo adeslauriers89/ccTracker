@@ -35,6 +35,42 @@
             </objects>
             <point key="canvasLocation" x="1022" y="318"/>
         </scene>
+        <!--Line Chart View Controller-->
+        <scene sceneID="OJ1-Ed-qkU">
+            <objects>
+                <viewController id="tEJ-pO-2Tk" customClass="LineChartViewController" customModule="ETH_Tracker" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="hlJ-OO-9Ow"/>
+                        <viewControllerLayoutGuide type="bottom" id="M7x-4b-fmv"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="6VQ-7N-ZON">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ISb-xX-1CS" customClass="LineChartView" customModule="Charts">
+                                <rect key="frame" x="0.0" y="20" width="320" height="300"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="300" id="Yxp-6o-Z2r"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="ISb-xX-1CS" firstAttribute="top" secondItem="hlJ-OO-9Ow" secondAttribute="bottom" id="PZa-6j-Isj"/>
+                            <constraint firstAttribute="trailing" secondItem="ISb-xX-1CS" secondAttribute="trailing" id="w3N-pK-dVO"/>
+                            <constraint firstItem="ISb-xX-1CS" firstAttribute="leading" secondItem="6VQ-7N-ZON" secondAttribute="leading" id="whe-Sh-EPO"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="Bhh-wo-7Fp"/>
+                    <connections>
+                        <outlet property="lineChartView" destination="ISb-xX-1CS" id="F5u-Y4-eV9"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="NaE-rj-Sml" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2034" y="357"/>
+        </scene>
         <!--ETH Trackr-->
         <scene sceneID="FBW-yW-EIl">
             <objects>
@@ -61,6 +97,13 @@
                                     <segue destination="gY9-3F-PEA" kind="push" identifier="segueToTradeHistory" id="JzW-3w-1xj"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NHF-2F-d1W">
+                                <rect key="frame" x="51" y="297" width="190" height="30"/>
+                                <state key="normal" title="Market Trade History Graph"/>
+                                <connections>
+                                    <segue destination="tEJ-pO-2Tk" kind="push" identifier="segueToLineChart" id="xyc-0v-mB9"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -68,7 +111,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Lys-3v-re4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2034" y="987"/>
+            <point key="canvasLocation" x="2034" y="1041"/>
         </scene>
         <!--Order Book-->
         <scene sceneID="t9e-vg-GoI">

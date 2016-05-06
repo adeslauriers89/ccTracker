@@ -28,18 +28,40 @@ class TradeHistoryViewController: UIViewController {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-
+        dataManager.getTradeHistory(unixConstants.oneMin) { (result) in
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                self.lastMinuteHistoryLabel.text = result.info
+            })
+        }
         
-        lastMinuteHistoryLabel.text = dataManager.lastMinuteInfo
-        lastFiveMinuteHistoryLabel.text = dataManager.lastFiveMinsInfo
+        dataManager.getTradeHistory(unixConstants.fiveMins) { (result) in
+            
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                self.lastFiveMinuteHistoryLabel.text = result.info
+            })
+        }
+        
+        dataManager.getTradeHistory(unixConstants.sixHours) { (result) in
+            
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                self.lastSixHourHistoryLabel.text = result.info
+            })
+        }
+        
+        //lastMinuteHistoryLabel.text = dataManager.lastMinuteInfo
+      //  lastFiveMinuteHistoryLabel.text = dataManager.lastFiveMinsInfo
         lastThirtyMinuteHistoryLabel.text = dataManager.last30MinsInfo
         
         lastTwoHourHistoryLabel.text = dataManager.last2HrsInfo
-        lastSixHourHistoryLabel.text = dataManager.last6HrsInfo
+       // lastSixHourHistoryLabel.text = dataManager.last6HrsInfo
         lastTwelveHourHistoryLabel.text = dataManager.last12HrsInfo
         lastTwentyFourHourHistoryLabel.text = dataManager.last24HrsInfo
+        
+        
       
     }
+    
+
 
 
     

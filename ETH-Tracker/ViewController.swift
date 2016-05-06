@@ -53,7 +53,7 @@ class ViewController: UITableViewController {
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCellWithIdentifier("Cell") as! EthTableViewCell!
+        let cell = tableView.dequeueReusableCellWithIdentifier("Cell") as UITableViewCell!
         
         cell.backgroundColor = UIColor.blueColor()
         
