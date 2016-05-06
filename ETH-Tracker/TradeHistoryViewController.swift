@@ -30,32 +30,53 @@ class TradeHistoryViewController: UIViewController {
         
         dataManager.getTradeHistory(unixConstants.oneMin) { (result) in
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                self.lastMinuteHistoryLabel.text = result.info
+                self.lastMinuteHistoryLabel.text = "Last Minute: \(result.info)"
+                print(result.trades)
             })
         }
         
         dataManager.getTradeHistory(unixConstants.fiveMins) { (result) in
             
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                self.lastFiveMinuteHistoryLabel.text = result.info
+                self.lastFiveMinuteHistoryLabel.text = "Last 5 Mins: \(result.info)"
+            })
+        }
+        
+        dataManager.getTradeHistory(unixConstants.thirtyMins) { (result) in
+            
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                self.lastThirtyMinuteHistoryLabel.text = "Last 30 Mins: \(result.info)"
+            })
+        }
+        
+        dataManager.getTradeHistory(unixConstants.twoHours) { (result) in
+            
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                self.lastTwoHourHistoryLabel.text = "Last 2 Hrs: \(result.info)"
             })
         }
         
         dataManager.getTradeHistory(unixConstants.sixHours) { (result) in
             
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                self.lastSixHourHistoryLabel.text = result.info
+                self.lastSixHourHistoryLabel.text = "Last 6 Hrs: \(result.info)"
             })
         }
         
-        //lastMinuteHistoryLabel.text = dataManager.lastMinuteInfo
-      //  lastFiveMinuteHistoryLabel.text = dataManager.lastFiveMinsInfo
-        lastThirtyMinuteHistoryLabel.text = dataManager.last30MinsInfo
+        dataManager.getTradeHistory(unixConstants.twelveHours) { (result) in
+            
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                self.lastTwelveHourHistoryLabel.text = "Last 12 Hrs: \(result.info)"
+            })
+        }
         
-        lastTwoHourHistoryLabel.text = dataManager.last2HrsInfo
-       // lastSixHourHistoryLabel.text = dataManager.last6HrsInfo
-        lastTwelveHourHistoryLabel.text = dataManager.last12HrsInfo
-        lastTwentyFourHourHistoryLabel.text = dataManager.last24HrsInfo
+        dataManager.getTradeHistory(unixConstants.oneDay) { (result) in
+            
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                self.lastTwentyFourHourHistoryLabel.text = "Last 24 Hrs: \(result.info)"
+            })
+        }
+     
         
         
       
