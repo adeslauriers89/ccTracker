@@ -54,6 +54,13 @@
                                     <constraint firstAttribute="height" constant="300" id="Yxp-6o-Z2r"/>
                                 </constraints>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="diM-QZ-pIL">
+                                <rect key="frame" x="20" y="425" width="46" height="30"/>
+                                <state key="normal" title="Button"/>
+                                <connections>
+                                    <action selector="thirtyMinButtonPressed:" destination="tEJ-pO-2Tk" eventType="touchUpInside" id="MqD-kK-Dla"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>

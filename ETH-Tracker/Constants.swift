@@ -24,6 +24,8 @@ struct dateContstants {
 
 struct unixConstants {
     
+    static let twoWeeks = 1209600
+    static let oneWeek = 604800
     static let oneDay = 86400
     static let twelveHours = 43200
     static let sevenHours = 25200

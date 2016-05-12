@@ -56,8 +56,7 @@ class DataManager {
     var buyOrderInfo: String = ""
     var sellOrderInfo: String = ""
     
-    var startTime = Int()
-    var endTime = Int()
+
     var tradeHistory = [Trade]()
     var historyInfo: String = ""
     
@@ -299,8 +298,8 @@ class DataManager {
     
     func getTradeHistory(forTimePeriod: Int, completion: (result: (trades: [Trade], info: String, start: Int, end: Int) ) -> Void) {
         
-        startTime = Int(NSDate().timeIntervalSince1970) - forTimePeriod
-        endTime = Int(NSDate().timeIntervalSince1970)
+        let startTime = Int(NSDate().timeIntervalSince1970) - forTimePeriod
+        let endTime = Int(NSDate().timeIntervalSince1970)
         
         let historyTask = NSURLSession.sharedSession().dataTaskWithURL(NSURL(string: "https://poloniex.com/public?command=returnTradeHistory&currencyPair=BTC_ETH&start=\(startTime)&end=\(endTime)")!) { (data, response, error) -> Void in
             
@@ -331,18 +330,32 @@ class DataManager {
                     self.tradeTypeFilter(newTrade)
                     
                 }
+//                
+//                print("First \(self.tradeHistory.first?.timeInt)")
+//                print("First \(self.tradeHistory.first?.amount)")
+//                print("First \(self.tradeHistory.first?.date)")
+//
+//
+//                
+//                
+//                print("Last \(self.tradeHistory.last?.timeInt)")
+//                print("Last \(self.tradeHistory.last?.amount)")
+//                print("Last \(self.tradeHistory.last?.date)")
+
                 
-                print("First \(self.tradeHistory.first?.timeInt)")
-                print("Last \(self.tradeHistory.last?.timeInt)")
                 
-                self.tradesNetValue = self.boughtTradesValue - self.soldTradesValue
+                
+                
+               self.tradesNetValue = self.boughtTradesValue - self.soldTradesValue
                 
                 self.historyInfo = "\(self.tradeHistory.count) trades. \(self.totalTradesBought) buys for \(self.boughtTradesValue) BTC. \(self.totalTradesSold) sells for \(self.soldTradesValue) BTC : Net Value \(self.tradesNetValue)"
                 
                 print(self.historyInfo)
                 
+                print("STARTTIME \(startTime) ENDTIME \(endTime)")
+                
             }
-            completion(result: (trades: self.tradeHistory, info: self.historyInfo, start: self.startTime, end: self.endTime))
+            completion(result: (trades: self.tradeHistory, info: self.historyInfo, start: startTime, end: endTime))
             
         }
         historyTask.resume()
@@ -461,7 +474,6 @@ class DataManager {
             self.soldTradesValue = trade.total + self.soldTradesValue
             self.totalTradesSold += 1
         }
-        
     }
     
 
