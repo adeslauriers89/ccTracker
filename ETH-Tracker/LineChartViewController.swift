@@ -14,10 +14,9 @@ class LineChartViewController: UIViewController, ChartViewDelegate {
     //MARK: Properties
     
     var dataManager = DataManager()
-    var fiveMinsArray = [Trade]()
     
-    var startTime = Int()
-    var endTime = Int()
+//    var startTime = Int()
+//    var endTime = Int()
     var intervals = Int()
     
     var totalBuyValue = Float()
@@ -58,110 +57,152 @@ class LineChartViewController: UIViewController, ChartViewDelegate {
     }
     
     
-    
-    func splitTradesIntoTimeIntervals(trades: [Trade], timeInterval: Int, startTime: Int, endTime: Int) {
+    func splitTradesIntoTimeIntervals(trades: [Trade], timeInterval: Int, start: Int, end: Int)  {
         
-        // change name of seven hours to something that involves time difference
+        var tradeHistoryInIntervals = [[Trade]]()
+        var intervalOfTrades = [Trade]()
         
-        let netArray : [Float] = []
+        var startTime = start + unixConstants.sevenHours
+        let endTime = end + unixConstants.sevenHours
+        var timeIntervalEnd = startTime + timeInterval
         
-        let startTimeInt = startTime + unixConstants.sevenHours
-        let endTimeInt = endTime + unixConstants.sevenHours
-        
-        self.totalBuyValue = 0
-        self.totalSellValue = 0
-        
-        let timePeriodToSplit: Int = endTimeInt - startTimeInt
+        let timePeriodToSplit: Int = endTime - startTime
         
         let numberOfIntervals = timePeriodToSplit/timeInterval
         
-        print("start \(startTimeInt) ned \(endTimeInt)")
-        
-        for trade in trades {
+        for i in 0..<numberOfIntervals {
+            intervalOfTrades.removeAll()
             
-            //            if (trade.timeInt >= startTime) && (trade.timeInt <= startTime + timeInterval)
-            if (trade.timeInt <= endTimeInt) && (trade.timeInt >= endTimeInt - timeInterval) {
-                print(trade.timeInt)
-                calculateNetValueOfTrades(trade)
-                
-                self.netValueOfTrades = self.totalBuyValue - self.totalSellValue
-                print("net \(self.netValueOfTrades)")
-                
-                
-                
-            } else {
-                
+            for trade in trades {
+                if (trade.timeInt >= startTime) && (trade.timeInt < timeIntervalEnd) {
+                    print(trade.total)
+                    intervalOfTrades.append(trade)
+                }
             }
             
+            tradeHistoryInIntervals.insert(intervalOfTrades, atIndex: i)
+            
+            startTime += timeInterval
+            timeIntervalEnd += timeInterval
+            
+            print(intervalOfTrades.count)
+
+            
+        }
+        
+        calculateNetValueOfTrades(tradeHistoryInIntervals)
+        
+        
+    }
+    
+    
+    func calculateNetValueOfTrades(trades: [[Trade]]) {
+        
+        var tradesNetValue = Float()
+        var netValuesOfTradeIntervals = [Float]()
+   
+        for tradeGroup in trades {
+            tradesNetValue = 0
+            self.netValueReset()
+            
+            for trade in tradeGroup {
+                if trade.type == "buy" {
+                    self.totalBuyValue = trade.total + self.totalBuyValue
+                } else {
+                    self.totalSellValue = trade.total + self.totalSellValue
+                }
+            }
+            
+            tradesNetValue = self.totalBuyValue - self.totalSellValue
+                print(" TRADES NET VALUE \(tradesNetValue)")
+            
+            netValuesOfTradeIntervals.append(tradesNetValue)
+
         }
         
     }
     
-    func calculateNetValueOfTrades(trade: Trade) {
-        
-        if trade.type == "buy" {
-            self.totalBuyValue = trade.total + self.totalBuyValue
-        } else {
-            self.totalSellValue = trade.total + self.totalSellValue
-        }
-        
+    func netValueReset() {
+        self.totalSellValue = 0
+        self.totalBuyValue = 0
     }
     
     //MARK : Actions
     
     @IBAction func thirtyMinButtonPressed(sender: UIButton) {
         
-        dataManager.getTradeHistory(unixConstants.thirtyMins) { (result) in
-            
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-
-                
-                let startTime = result.start
-                let endTime = result.end
-                
-                print("30 min start \(startTime) end \(endTime)")
-                let thirtyMinArray = result.trades
-                
-                self.splitTradesIntoTimeIntervals(thirtyMinArray, timeInterval: unixConstants.oneMin, startTime: startTime, endTime: endTime)
-                
-            })
-        }
+//        dataManager.getTradeHistory(unixConstants.thirtyMins) { (result) in
+//            
+//            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+//
+//                let start = result.start
+//                let end = result.end
+//                
+//                print("30 min start \(start) end \(end)")
+//                let thirtyMinArray = result.trades
+//                
+//                self.splitTradesIntoTimeIntervals(thirtyMinArray, timeInterval: unixConstants.oneMin, start: start, end: end)
+//                
+//            })
+//        }
         
         dataManager.getTradeHistory(unixConstants.oneMin) { (result) in
             
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
                 
+                let start = result.start + unixConstants.sevenHours
+                let end  = result.end + unixConstants.sevenHours
+                
+                print("stort 1 min \(start) NED \(end)")
  
             })
         }
         
-        dataManager.getTradeHistory(unixConstants.twelveHours) { (result) in
+        dataManager.getTradeHistory(unixConstants.fiveMins) { (result) in
             
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
-            
-                let startTime = result.start
-                let endTime = result.end
-                let twelveHourArray = result.trades
-                print("12 hr start \(startTime) end \(endTime)")
                 
-                self.splitTradesIntoTimeIntervals(twelveHourArray, timeInterval: unixConstants.thirtyMins, startTime: startTime, endTime: endTime)
+                let start = result.start
+                let end = result.end
+                let fiveMinsArray = result.trades
+                
+                print("five min start \(start) end \(end) ")
+                
+                self.splitTradesIntoTimeIntervals(fiveMinsArray, timeInterval: unixConstants.oneMin, start: start, end: end)
             
+                
             })
         }
         
-        dataManager.getTradeHistory(unixConstants.twoWeeks) { (result) in
-            
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                
-                let startTime = result.start
-                let endTime = result.end
-                let twoWeekArray = result.trades
-                print("2 week start \(startTime) end \(endTime)")
-                
-                self.splitTradesIntoTimeIntervals(twoWeekArray, timeInterval: unixConstants.twelveHours, startTime: startTime, endTime: endTime)
-                
-            })
-        }
+
+        
+//        dataManager.getTradeHistory(unixConstants.twelveHours) { (result) in
+//            
+//            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+//            
+//                let start = result.start
+//                let end = result.end
+//                let twelveHourArray = result.trades
+//                print("12 hr start \(start) end \(end)")
+//                
+//                self.splitTradesIntoTimeIntervals(twelveHourArray, timeInterval: unixConstants.thirtyMins, start: start, end: end)
+//            
+//            })
+//        }
+//        
+//        dataManager.getTradeHistory(unixConstants.twoWeeks) { (result) in
+//            
+//            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+//                
+//                let start = result.start
+//                let end = result.end
+//                let twoWeekArray = result.trades
+//                print("2 week start \(start) end \(end)")
+//                
+//                self.splitTradesIntoTimeIntervals(twoWeekArray, timeInterval: unixConstants.twelveHours, start: start, end: end)
+//                
+//            })
+//        }
         
         
     }
@@ -174,43 +215,3 @@ class LineChartViewController: UIViewController, ChartViewDelegate {
 // 12 Hours with 30 minute intervals
 // 2 days with 2 hour intervals
 // 15 days with 12 Hour intervals
-
-
-/*
- override func viewDidLoad() {
- super.viewDidLoad()
- 
- chartsBains.delegate = self
- chartsBains.gridBackgroundColor = UIColor.redColor()
- chartsBains.descriptionTextColor = UIColor.blackColor()
- 
- 
- 
- let monthz = ["Jan", "feb", "mar", "apr","may","jun", "jul", "aug", "sep", "oct", "nov", "dec"]
- 
- let hot = ["24", "22", "20", "18", "16", "14", "12", "10", "8", "6", "4", "2", "0"]
- 
- let sprayNude = hot
- 
- let amount = [1000.0, 200.0, -400.0, -800.0, 0.0, 1200.0, 800.0, 600.0, -600.0, -600.0, -100.0, 500.0, 200.0]
- 
- setChart(sprayNude, values: amount)
- //setChart2(monthz)
- 
- 
- }
- 
- func setChart(dataPoints: [String], values: [Double]) {
- 
- var dataEntries: [ChartDataEntry] = []
- 
- for i in 0..<dataPoints.count {
- let dataEntry = ChartDataEntry(value: values[i], xIndex: i)
- dataEntries.append(dataEntry)
- }
- 
- let lineChartDataSet = LineChartDataSet(yVals: dataEntries, label: "units sold")
- let lineChartData = LineChartData(xVals: dataPoints, dataSet: lineChartDataSet)
- chartsBains.data = lineChartData
- }
- */
