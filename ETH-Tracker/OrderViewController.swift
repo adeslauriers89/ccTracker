@@ -31,7 +31,9 @@ class OrderViewController: UIViewController {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-       // dataManager.getOrderBook()
+        
+        
+        dataManager.getOrderBook()
         
         
     }
