@@ -89,8 +89,6 @@ class DataManager {
             
             if let fetchedTicker = (try? NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.AllowFragments) as! [String : AnyObject]) {
                 
-                
-                
                 if let eth: AnyObject = fetchedTicker["BTC_ETH"] {
                     if let ethDict = eth as? [String : AnyObject] {
                         print(ethDict)
@@ -114,7 +112,6 @@ class DataManager {
         orderCounterReset()
    
         for order in self.sellOrders {
-            //print("sell amnt \(order.amount)")
             let difference: Double = self.ethCurrentValue / order.price
             
             if difference >= 0.99009900 {
@@ -125,7 +122,6 @@ class DataManager {
         }
         
         for order in self.buyOrders {
-           // print("buy amnt \(order.amount)")
             let difference: Double = self.ethCurrentValue / order.price
             if difference <= 1.01010101 {
                 self.buyOrdersWithinOnePercent.append(order)
@@ -172,43 +168,49 @@ class DataManager {
         
         let historyTask = NSURLSession.sharedSession().dataTaskWithURL(NSURL(string: "https://poloniex.com/public?command=returnTradeHistory&currencyPair=BTC_ETH&start=\(startTime)&end=\(endTime)")!) { (data, response, error) -> Void in
             
-            if let fetchedHistory = (try? NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.AllowFragments) as!
-                [[String: AnyObject]]) {
-                
-                self.buySellCounterReset()
-                
-                if self.tradeHistory.isEmpty == false {
-                    self.tradeHistory.removeAll()
-                }
-                
-                for historyDict in fetchedHistory {
-                    let newTrade = Trade()
-                    
-                    if let date = historyDict["date"] as? String {
-                        newTrade.date = date
-                    }
-                    newTrade.type = historyDict["type"] as! String
-                    newTrade.rate = (historyDict["rate"]!.floatValue)
-                    newTrade.amount = (historyDict["amount"]!.floatValue)
-                    newTrade.total = (historyDict["total"]!.floatValue)
-                    
-                    newTrade.timeInt = self.timeStampToUnix(newTrade.date)
-                    
-                    self.tradeHistory.append(newTrade)
-                    
-                    self.tradeTypeFilter(newTrade)
-                    
-                }
-             
-               self.tradesNetValue = self.boughtTradesValue - self.soldTradesValue
-                
-                self.historyInfo = "\(self.tradeHistory.count) trades. \(self.totalTradesBought) buys for \(self.boughtTradesValue) BTC. \(self.totalTradesSold) sells for \(self.soldTradesValue) BTC : Net Value \(self.tradesNetValue)"
-                
-                print(self.historyInfo)
-                
-                print("STARTTIME \(startTime) ENDTIME \(endTime)")
-                
+            if error != nil {
+                print(error)
             }
+        
+                if let fetchedHistory = (try? NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.AllowFragments) as!
+                    [[String: AnyObject]]) {
+                    
+                    self.buySellCounterReset()
+                    
+                    if self.tradeHistory.isEmpty == false {
+                        self.tradeHistory.removeAll()
+                    }
+                    
+                    for historyDict in fetchedHistory {
+                        let newTrade = Trade()
+                        
+                        if let date = historyDict["date"] as? String {
+                            newTrade.date = date
+                        }
+                        newTrade.type = historyDict["type"] as! String
+                        newTrade.rate = (historyDict["rate"]!.floatValue)
+                        newTrade.amount = (historyDict["amount"]!.floatValue)
+                        newTrade.total = (historyDict["total"]!.floatValue)
+                        
+                        newTrade.timeInt = self.timeStampToUnix(newTrade.date)
+                        
+                        self.tradeHistory.append(newTrade)
+                        
+                        self.tradeTypeFilter(newTrade)
+                        
+                    }
+                    
+                    self.tradesNetValue = self.boughtTradesValue - self.soldTradesValue
+                    
+                    self.historyInfo = "\(self.tradeHistory.count) trades. \(self.totalTradesBought) buys for \(self.boughtTradesValue) BTC. \(self.totalTradesSold) sells for \(self.soldTradesValue) BTC : Net Value \(self.tradesNetValue)"
+                    
+                    print(self.historyInfo)
+                    
+                    print("STARTTIME \(startTime) ENDTIME \(endTime)")
+                    
+                }
+            
+       
             completion(result: (trades: self.tradeHistory, info: self.historyInfo, start: startTime, end: endTime))
             
         }
@@ -221,6 +223,9 @@ class DataManager {
         
         let dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        
+        ///
+        dateFormatter.timeZone = NSTimeZone(name: "UTC")
         
         let unixTime = Int((dateFormatter.dateFromString(time)!.timeIntervalSince1970))
         

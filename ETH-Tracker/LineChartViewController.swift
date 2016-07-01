@@ -85,9 +85,20 @@ class LineChartViewController: UIViewController, ChartViewDelegate {
         var tradeHistoryInIntervals = [[Trade]]()
         var intervalOfTrades = [Trade]()
         
-        //add 7 hours to make up for time difference
-        var startTime = start + timeConstants.sevenHours
-        let endTime = end + timeConstants.sevenHours
+        // add 7 hours to make up for time difference
+        // THIS ONLY WORKS IN VAN TIMEZONE
+        
+//        let startTime = start + timeConstants.twoHours
+//        let endTime = end + timeConstants.twoHours
+        
+        // ONLY WORKS IN GERMAN TIMEZONE
+//        var startTime = start - timeConstants.twoHours
+//        let endTime = end - timeConstants.twoHours
+        
+        var startTime = start
+        let endTime = end
+        
+        
         
         var timeIntervalEnd = startTime + timeInterval
         
@@ -142,7 +153,6 @@ class LineChartViewController: UIViewController, ChartViewDelegate {
 
         }
         print(netValuesOfTradeIntervals)
-     //   self.netValueOfIntervals = netValuesOfTradeIntervals
         
         setChart(dataPointsArray, values: netValuesOfTradeIntervals)
         
@@ -172,7 +182,6 @@ class LineChartViewController: UIViewController, ChartViewDelegate {
             
         }
         dataPointsArray = datesFromHistory
-        print(dataPointsArray)
         
     }
     

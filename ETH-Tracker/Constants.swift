@@ -8,23 +8,8 @@
 
 import Foundation
 
-struct dateContstants {
-
-    static let currentDate = NSDate()
-    static let unixCurrentDate = Int(currentDate.timeIntervalSince1970)
-    static let unixDateTwentyFourHoursAgo = unixCurrentDate - 86400
-    static let unixDateTwelveHoursAgo = unixCurrentDate - 43200
-    static let unixDateSixHoursAgo = unixCurrentDate - 21600
-    static let unixDateTwoHoursAgo = unixCurrentDate - 7200
-    static let unixDateThirtyMinsAgo = unixCurrentDate - 1800
-    static let unixDateOneMinAgo = unixCurrentDate - 60
-    
-
-}
-
 struct timeConstants {
     
-   
     static let oneWeek = 604800
     static let fourDays = 345600
     static let twoDays = 172800

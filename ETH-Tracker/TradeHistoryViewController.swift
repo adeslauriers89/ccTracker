@@ -31,7 +31,6 @@ class TradeHistoryViewController: UIViewController {
         dataManager.getTradeHistory(timeConstants.oneMin) { (result) in
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
                 self.lastMinuteHistoryLabel.text = "Last Minute: \(result.info)"
-                print(result.trades)
             })
         }
         
@@ -76,6 +75,12 @@ class TradeHistoryViewController: UIViewController {
                 self.lastTwentyFourHourHistoryLabel.text = "Last 24 Hrs: \(result.info)"
             })
         }
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        
     }
     
 
