@@ -47,15 +47,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ISb-xX-1CS" customClass="LineChartView" customModule="Charts">
-                                <rect key="frame" x="0.0" y="64" width="320" height="300"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="300" id="Yxp-6o-Z2r"/>
-                                </constraints>
-                            </view>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="d51-pW-BZa">
-                                <rect key="frame" x="20" y="394" width="280" height="29"/>
+                                <rect key="frame" x="20" y="491" width="280" height="29"/>
                                 <segments>
                                     <segment title="30 Min"/>
                                     <segment title="2 Hrs"/>
@@ -67,12 +60,31 @@
                                     <action selector="timePeriodSelected:" destination="tEJ-pO-2Tk" eventType="valueChanged" id="kTy-mz-mgN"/>
                                 </connections>
                             </segmentedControl>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Intervals: " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zqj-Jb-yba">
+                                <rect key="frame" x="20" y="84" width="280" height="20"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="280" id="hcG-DI-AcK"/>
+                                    <constraint firstAttribute="height" constant="20" id="zKY-VI-ic3"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ISb-xX-1CS" customClass="LineChartView" customModule="Charts">
+                                <rect key="frame" x="0.0" y="134" width="320" height="300"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="300" id="Yxp-6o-Z2r"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="ISb-xX-1CS" firstAttribute="top" secondItem="hlJ-OO-9Ow" secondAttribute="bottom" id="PZa-6j-Isj"/>
+                            <constraint firstItem="Zqj-Jb-yba" firstAttribute="centerX" secondItem="6VQ-7N-ZON" secondAttribute="centerX" id="OlT-7r-v8X"/>
+                            <constraint firstItem="ISb-xX-1CS" firstAttribute="top" secondItem="hlJ-OO-9Ow" secondAttribute="bottom" constant="70" id="PZa-6j-Isj"/>
                             <constraint firstAttribute="trailing" secondItem="ISb-xX-1CS" secondAttribute="trailing" id="w3N-pK-dVO"/>
                             <constraint firstItem="ISb-xX-1CS" firstAttribute="leading" secondItem="6VQ-7N-ZON" secondAttribute="leading" id="whe-Sh-EPO"/>
+                            <constraint firstItem="Zqj-Jb-yba" firstAttribute="top" secondItem="hlJ-OO-9Ow" secondAttribute="bottom" constant="20" id="xs6-Md-rr7"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="Bhh-wo-7Fp">
@@ -83,6 +95,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="intervalLabel" destination="Zqj-Jb-yba" id="aK9-uK-iBM"/>
                         <outlet property="lineChartView" destination="ISb-xX-1CS" id="F5u-Y4-eV9"/>
                         <outlet property="timePeriodSegmentedControl" destination="d51-pW-BZa" id="SmZ-gf-vYe"/>
                     </connections>

@@ -15,7 +15,6 @@ class LineChartViewController: UIViewController, ChartViewDelegate {
     
     var dataManager = DataManager()
     
-
     var intervals = Int()
     
     var totalBuyValue = Float()
@@ -30,6 +29,7 @@ class LineChartViewController: UIViewController, ChartViewDelegate {
     
     @IBOutlet weak var timePeriodSegmentedControl: UISegmentedControl!
     @IBOutlet weak var lineChartView: LineChartView!
+    @IBOutlet weak var intervalLabel: UILabel!
     
     //MARK: ViewController Life Cycle
     
@@ -55,6 +55,8 @@ class LineChartViewController: UIViewController, ChartViewDelegate {
                 let start = result.start
                 let end = result.end
                 let thirtyMinTrades = result.trades
+                
+                self.intervalLabel.text = "Intervals: One minute"
                 
                 self.splitTradesIntoTimeIntervals(thirtyMinTrades, timeInterval: timeConstants.oneMin, start: start, end: end)
             })
@@ -206,6 +208,8 @@ class LineChartViewController: UIViewController, ChartViewDelegate {
                     let end = result.end
                     let thirtyMinTrades = result.trades
                     
+                    self.intervalLabel.text = "Intervals: One minute"
+                    
                     self.splitTradesIntoTimeIntervals(thirtyMinTrades, timeInterval: timeConstants.oneMin, start: start, end: end)
                     self.activityWheel.stopAnimating()
 
@@ -219,13 +223,14 @@ class LineChartViewController: UIViewController, ChartViewDelegate {
                     let end = result.end
                     let twoHourTrades = result.trades
                     
+                    self.intervalLabel.text = "Intervals: Five minutes"
+                    
                     self.splitTradesIntoTimeIntervals(twoHourTrades, timeInterval: timeConstants.fiveMins, start: start, end: end)
                     self.activityWheel.stopAnimating()
 
                 })
             })
         case 2:
-
             dataManager.getTradeHistory(timeConstants.twelveHours, completion: { (result) in
 
                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
@@ -233,6 +238,8 @@ class LineChartViewController: UIViewController, ChartViewDelegate {
                     let start = result.start
                     let end = result.end
                     let twelveHourTrades = result.trades
+                    
+                    self.intervalLabel.text = "Intervals: Thirty minutes"
                     
                     self.splitTradesIntoTimeIntervals(twelveHourTrades, timeInterval: timeConstants.thirtyMins, start: start, end: end)
                     
@@ -251,6 +258,8 @@ class LineChartViewController: UIViewController, ChartViewDelegate {
                     let end = result.end
                     let oneDayTrades = result.trades
                     
+                    self.intervalLabel.text = "Intervals: One hour"
+                    
                     self.splitTradesIntoTimeIntervals(oneDayTrades, timeInterval: timeConstants.oneHour, start: start, end: end)
                     self.activityWheel.stopAnimating()
 
@@ -258,11 +267,13 @@ class LineChartViewController: UIViewController, ChartViewDelegate {
             })
 
         case 4:
-            dataManager.getTradeHistory(timeConstants.twoDays, completion: { (result) in
+            dataManager.getTradeHistory(timeConstants.twoDays ,completion: { (result) in
                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
                     let start = result.start
-                    let end = result.end
+                    let end  = result.end
                     let twoDayTrades = result.trades
+                    
+                    self.intervalLabel.text = "Intervals: Two hours"
                     
                     self.splitTradesIntoTimeIntervals(twoDayTrades, timeInterval: timeConstants.twoHours, start: start, end: end)
                     self.activityWheel.stopAnimating()

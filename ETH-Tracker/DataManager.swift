@@ -38,10 +38,7 @@ class DataManager {
     var tradeHistory = [Trade]()
     var historyInfo: String = ""
     
-    var startUnix = Int()
-    var endUnix = Int()
     
-
     
     func getOrderBook() {
         
@@ -55,7 +52,7 @@ class DataManager {
 
                     let newOrder = Order()
                     newOrder.price = bid[0].doubleValue
-                    newOrder.amount = bid.lastObject as! Double
+                    newOrder.amount = bid[1].doubleValue
                     
                     self.totalAmountPendingBids = newOrder.amount + self.totalAmountPendingBids
                     
@@ -166,6 +163,7 @@ class DataManager {
         let startTime = Int(NSDate().timeIntervalSince1970) - forTimePeriod
         let endTime = Int(NSDate().timeIntervalSince1970)
         
+        
         let historyTask = NSURLSession.sharedSession().dataTaskWithURL(NSURL(string: "https://poloniex.com/public?command=returnTradeHistory&currencyPair=BTC_ETH&start=\(startTime)&end=\(endTime)")!) { (data, response, error) -> Void in
             
             if error != nil {
@@ -198,6 +196,14 @@ class DataManager {
                         
                         self.tradeTypeFilter(newTrade)
                         
+                    }
+                    //
+                    /// trying to reconfigure to fetch more than 50k trades
+                    //
+                    
+                    if (self.tradeHistory.count >= 50000) {
+                        print("Max amount is 50k")
+
                     }
                     
                     self.tradesNetValue = self.boughtTradesValue - self.soldTradesValue
