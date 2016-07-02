@@ -116,22 +116,22 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Lnv-f1-s8e">
-                                <rect key="frame" x="100" y="95" width="79" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Lnv-f1-s8e">
+                                <rect key="frame" x="121" y="442" width="79" height="30"/>
                                 <state key="normal" title="Order Book"/>
                                 <connections>
                                     <segue destination="Y4k-PQ-NGe" kind="push" identifier="segueToOrderBook" id="T9c-YQ-mVl"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="88c-38-5ec">
-                                <rect key="frame" x="93" y="204" width="93" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="88c-38-5ec">
+                                <rect key="frame" x="114" y="480" width="93" height="30"/>
                                 <state key="normal" title="Trade History"/>
                                 <connections>
                                     <segue destination="gY9-3F-PEA" kind="push" identifier="segueToTradeHistory" id="JzW-3w-1xj"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NHF-2F-d1W">
-                                <rect key="frame" x="51" y="297" width="190" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NHF-2F-d1W">
+                                <rect key="frame" x="65" y="518" width="190" height="30"/>
                                 <state key="normal" title="Market Trade History Graph"/>
                                 <connections>
                                     <segue destination="tEJ-pO-2Tk" kind="push" identifier="segueToLineChart" id="xyc-0v-mB9"/>
@@ -139,6 +139,14 @@
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="88c-38-5ec" firstAttribute="centerX" secondItem="NHF-2F-d1W" secondAttribute="centerX" id="8cF-JT-ErL"/>
+                            <constraint firstItem="IJM-GQ-aXX" firstAttribute="top" secondItem="NHF-2F-d1W" secondAttribute="bottom" constant="20" id="FTO-wZ-L6W"/>
+                            <constraint firstItem="88c-38-5ec" firstAttribute="top" secondItem="Lnv-f1-s8e" secondAttribute="bottom" constant="8" id="U0j-ym-PmZ"/>
+                            <constraint firstItem="NHF-2F-d1W" firstAttribute="centerX" secondItem="gdh-HI-ySc" secondAttribute="centerX" id="d8g-ZV-Z0c"/>
+                            <constraint firstItem="NHF-2F-d1W" firstAttribute="top" secondItem="88c-38-5ec" secondAttribute="bottom" constant="8" id="jb6-Ae-dz6"/>
+                            <constraint firstItem="Lnv-f1-s8e" firstAttribute="centerX" secondItem="88c-38-5ec" secondAttribute="centerX" id="w49-1S-p2j"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="ETH Trackr" id="rPc-HT-eI4"/>
                 </viewController>

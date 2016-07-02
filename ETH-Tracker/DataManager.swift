@@ -104,6 +104,46 @@ class DataManager {
         tickerTask.resume()
     }
     
+    
+    func getTicker() {
+        
+        let urlPath = "https://poloniex.com/public?command=returnTicker"
+        let endPoint = NSURL(string: urlPath)
+        
+        let tickerTask = NSURLSession.sharedSession().dataTaskWithURL(endPoint!) { (data, response, error) -> Void in
+            
+            if let fetchedTicker = (try? NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.AllowFragments) as! [String : AnyObject]) {
+                
+                if let eth: AnyObject = fetchedTicker["BTC_ETH"] {
+                    if let ethTickerDict = eth as? [String : AnyObject] {
+                        print(ethTickerDict)
+                        
+                        let ethTicker = Ticker()
+                        
+                        if let currentPrice = ethTickerDict["last"]?.doubleValue {
+                            ethTicker.currentPrice = currentPrice
+                        }
+                        
+                        guard let percentChange = ethTickerDict["percentChange"]?.doubleValue,
+                              let volume = ethTickerDict["baseVolume"]?.doubleValue,
+                              let high24Hr = ethTickerDict["high24hr"]?.doubleValue,
+                              let low24Hr = ethTickerDict["low24hr"]?.doubleValue else {return}
+                        
+                                    ethTicker.percentChange = percentChange
+                                    ethTicker.volume = volume
+                                    ethTicker.high24Hr = high24Hr
+                                    ethTicker.low24Hr = low24Hr
+                        
+                    }
+                }
+                
+            }
+            self.getOrdersWithinOnePercent()
+        }
+        tickerTask.resume()
+    }
+    
+    
     func getOrdersWithinOnePercent() {
         
         orderCounterReset()
