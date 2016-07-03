@@ -118,27 +118,23 @@ class DataManager {
                     if let ethTickerDict = eth as? [String : AnyObject] {
                         print(ethTickerDict)
                         
-                        let ethTicker = Ticker()
+                        guard let currentPrice = ethTickerDict["last"]?.doubleValue,
+                            var percentChange = ethTickerDict["percentChange"]?.doubleValue,
+                            let volume = ethTickerDict["baseVolume"]?.doubleValue,
+                            let high24Hr = ethTickerDict["high24hr"]?.doubleValue,
+                            let low24Hr = ethTickerDict["low24hr"]?.doubleValue else {return}
                         
-                        if let currentPrice = ethTickerDict["last"]?.doubleValue {
-                            ethTicker.currentPrice = currentPrice
-                        }
+                            percentChange *= 100
                         
-                        guard let percentChange = ethTickerDict["percentChange"]?.doubleValue,
-                              let volume = ethTickerDict["baseVolume"]?.doubleValue,
-                              let high24Hr = ethTickerDict["high24hr"]?.doubleValue,
-                              let low24Hr = ethTickerDict["low24hr"]?.doubleValue else {return}
-                        
-                                    ethTicker.percentChange = percentChange
-                                    ethTicker.volume = volume
-                                    ethTicker.high24Hr = high24Hr
-                                    ethTicker.low24Hr = low24Hr
+                        let ethTicker = Ticker(currentPrice: currentPrice, percentChange: percentChange, volume: volume, high24Hr: high24Hr, low24Hr: low24Hr)
+
+                        print(ethTicker.volume)
+                        print(ethTicker.high24Hr)
+                        print(ethTicker.percentChange)
                         
                     }
                 }
-                
             }
-            self.getOrdersWithinOnePercent()
         }
         tickerTask.resume()
     }

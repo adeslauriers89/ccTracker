@@ -28,8 +28,9 @@ class HomeViewController: UIViewController {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
+            dataManager.getTicker()
         
-        dataManager.getOrderBook()
+//        dataManager.getOrderBook()
     
     }
     
