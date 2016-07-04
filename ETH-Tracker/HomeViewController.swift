@@ -32,11 +32,14 @@ class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-
+        
+        
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        
+        print("current date :p \(dataManager.currentDate)")
         
         dataManager.getTicker { (newTicker) in
             
@@ -64,16 +67,21 @@ class HomeViewController: UIViewController {
         })
         }
         
-//        dataManager.getHistory(timeConstants.fiveMins) { (result) in
-//            
-//            let infoz = result.tradeInfo
-//            
-//            
-//            print("Total trades: \(infoz.totalTrades) tot buys: \(infoz.totalBuys) for: \(infoz.totalBuyValue) tot sells: \(infoz.totalSells) for: \(infoz.totalSellValue) tot net; \(infoz.netValue)")
-//            
-//            
-//            print("\(result.start) end \(result.end)")
-//        }
+        dataManager.getHistory(timeConstants.fiveMins, fromTime: dataManager.currentDate) { (result) in
+            
+            let infoz = result.tradeInfo
+            
+            
+            print("Total trades: \(infoz.totalTrades) tot buys: \(infoz.totalBuys) for: \(infoz.totalBuyValue) tot sells: \(infoz.totalSells) for: \(infoz.totalSellValue) tot net; \(infoz.netValue)")
+            
+            
+            print("\(infoz.startTimeUnix) end \(infoz.endTimeUnix)")
+        }
+
+        dataManager.getTradeHistory(timeConstants.fiveMins) { (result) in
+            
+        
+        }
         
 
     }
@@ -103,3 +111,5 @@ class HomeViewController: UIViewController {
     }
     
 }
+
+

@@ -16,6 +16,9 @@ class HistoryData {
     var totalBuyValue:Double
     var totalSellValue:Double
     var netValue:Double
+    var startTimeUnix = Int()
+    var endTimeUnix = Int()
+    
     
     init(totalBuys: Int, totalBuyValue: Double, totalSells: Int, totalSellValue: Double, netValue: Double, totalTrades: Int) {
         self.totalBuys = totalBuys

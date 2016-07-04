@@ -38,6 +38,12 @@ class DataManager {
     var tradeHistory = [Trade]()
     var historyInfo: String = ""
     
+    var currentDate: Int {
+        get {
+            return Int(NSDate().timeIntervalSince1970)
+        }
+    }
+    
     
     
     func getOrderBook() {
@@ -115,7 +121,7 @@ class DataManager {
                 
                 if let eth: AnyObject = fetchedTicker["BTC_ETH"] {
                     if let ethTickerDict = eth as? [String : AnyObject] {
-                        print(ethTickerDict)
+                        //print(ethTickerDict)
                         
                         guard let currentPrice = ethTickerDict["last"]?.doubleValue,
                             var percentChange = ethTickerDict["percentChange"]?.doubleValue,
@@ -262,14 +268,17 @@ class DataManager {
     
     
     
-    func getHistory(forTimePeriod: Int,completion: (result: (trades: [Trade], tradeInfo: HistoryData, start: Int, end: Int) ) -> Void) {
+    func getHistory(forTimePeriod: Int, fromTime: Int,completion: (result: (trades: [Trade], tradeInfo: HistoryData) ) -> Void) {
         
         var completedTrades = [Trade]()
-        let startTime = Int(NSDate().timeIntervalSince1970) - forTimePeriod
-        let endTime = Int(NSDate().timeIntervalSince1970)
+        
+        let startTime = fromTime - forTimePeriod
+        
+//        let startTime = Int(NSDate().timeIntervalSince1970) - forTimePeriod
+//        let endTime = Int(NSDate().timeIntervalSince1970)
         let currencyPair = "BTC_ETH"
         
-        let urlPath = "https://poloniex.com/public?command=returnTradeHistory&currencyPair=\(currencyPair)&start=\(startTime)&end=\(endTime)"
+        let urlPath = "https://poloniex.com/public?command=returnTradeHistory&currencyPair=\(currencyPair)&start=\(startTime)&end=\(fromTime)"
         
         let historyTask = NSURLSession.sharedSession().dataTaskWithURL(NSURL(string: urlPath)!) { (data, response, error) -> Void in
             
@@ -302,25 +311,20 @@ class DataManager {
                     
                     newTrade.timeInt = self.timeStampToUnix(newTrade.date)
                     
-//                    self.tradeHistory.append(newTrade)
                     completedTrades.append(newTrade)
                 
                 }
-                
-                
 //                if (self.tradeHistory.count >= 50000) {
 //                    print("Max amount is 50k")
 //                }
-                
-                print("STARTTIME \(startTime) ENDTIME \(endTime)")
-                
+
             }
             
-//            let tradeInfo = self.caluclateHistoryData(self.tradeHistory)
             let tradeInfo = self.caluclateHistoryData(completedTrades)
+            tradeInfo.startTimeUnix = startTime
+            tradeInfo.endTimeUnix = fromTime
 
-
-            completion(result: (trades: completedTrades, tradeInfo: tradeInfo, start: startTime, end: endTime))
+            completion(result: (trades: completedTrades, tradeInfo: tradeInfo))
             
         }
         historyTask.resume()
