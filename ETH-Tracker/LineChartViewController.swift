@@ -17,9 +17,9 @@ class LineChartViewController: UIViewController, ChartViewDelegate {
     
     var intervals = Int()
     
-    var totalBuyValue = Float()
-    var totalSellValue = Float()
-    var netValueOfTrades = Float()
+    var totalBuyValue = Double()
+    var totalSellValue = Double()
+    var netValueOfTrades = Double()
     
     var dataPointsArray = [String]()
     

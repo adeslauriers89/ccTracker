@@ -76,13 +76,6 @@ class TradeHistoryViewController: UIViewController {
             })
         }
     }
-    
-    override func viewWillDisappear(animated: Bool) {
-        super.viewWillDisappear(animated)
-        
-        
-    }
-    
 
 
 }

@@ -14,9 +14,9 @@ class DataManager {
     var totalTradesSold = Int()
     var totalTradesBought = Int()
     
-    var soldTradesValue = Float()
-    var boughtTradesValue = Float()
-    var tradesNetValue = Float()
+    var soldTradesValue = Double()
+    var boughtTradesValue = Double()
+    var tradesNetValue = Double()
   
     var buyOrders = [Order]()
     var sellOrders = [Order]()
@@ -223,9 +223,9 @@ class DataManager {
                             newTrade.date = date
                         }
                         newTrade.type = historyDict["type"] as! String
-                        newTrade.rate = (historyDict["rate"]!.floatValue)
-                        newTrade.amount = (historyDict["amount"]!.floatValue)
-                        newTrade.total = (historyDict["total"]!.floatValue)
+                        newTrade.rate = (historyDict["rate"]!.doubleValue)
+                        newTrade.amount = (historyDict["amount"]!.doubleValue)
+                        newTrade.total = (historyDict["total"]!.doubleValue)
                         
                         newTrade.timeInt = self.timeStampToUnix(newTrade.date)
                         
@@ -262,6 +262,73 @@ class DataManager {
     
     
     
+    func getHistory(forTimePeriod: Int,completion: (result: (trades: [Trade], tradeInfo: HistoryData, start: Int, end: Int) ) -> Void) {
+        
+        var completedTrades = [Trade]()
+        let startTime = Int(NSDate().timeIntervalSince1970) - forTimePeriod
+        let endTime = Int(NSDate().timeIntervalSince1970)
+        let currencyPair = "BTC_ETH"
+        
+        let urlPath = "https://poloniex.com/public?command=returnTradeHistory&currencyPair=\(currencyPair)&start=\(startTime)&end=\(endTime)"
+        
+        let historyTask = NSURLSession.sharedSession().dataTaskWithURL(NSURL(string: urlPath)!) { (data, response, error) -> Void in
+            
+            if error != nil {
+                print(error)
+            }
+            
+            if let fetchedHistory = (try? NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.AllowFragments) as!
+                [[String: AnyObject]]) {
+                
+                if self.tradeHistory.isEmpty == false {
+                    self.tradeHistory.removeAll()
+                }
+                
+                for completedTrade in fetchedHistory {
+                    let newTrade = Trade()
+                    
+                    guard let date = completedTrade["date"] as? String,
+                          let type = completedTrade["type"] as? String,
+                          let rate = completedTrade["rate"]?.doubleValue,
+                          let amount = completedTrade["amount"]?.doubleValue,
+                          let total = completedTrade["total"]?.doubleValue else {return}
+                    
+                    newTrade.date = date
+                    newTrade.type = type
+                    newTrade.rate = rate
+                    newTrade.amount = amount
+                    newTrade.total = total
+                    
+                    
+                    newTrade.timeInt = self.timeStampToUnix(newTrade.date)
+                    
+//                    self.tradeHistory.append(newTrade)
+                    completedTrades.append(newTrade)
+                
+                }
+                
+                
+//                if (self.tradeHistory.count >= 50000) {
+//                    print("Max amount is 50k")
+//                }
+                
+                print("STARTTIME \(startTime) ENDTIME \(endTime)")
+                
+            }
+            
+//            let tradeInfo = self.caluclateHistoryData(self.tradeHistory)
+            let tradeInfo = self.caluclateHistoryData(completedTrades)
+
+
+            completion(result: (trades: completedTrades, tradeInfo: tradeInfo, start: startTime, end: endTime))
+            
+        }
+        historyTask.resume()
+    }
+    
+    
+    
+    
     func timeStampToUnix(time: String) -> Int {
         
         let dateFormatter = NSDateFormatter()
@@ -285,6 +352,32 @@ class DataManager {
             self.soldTradesValue = trade.total + self.soldTradesValue
             self.totalTradesSold += 1
         }
+    }
+    
+    func caluclateHistoryData(tradeHistory: [Trade]) -> HistoryData {
+        
+        var totalBuys:Int = 0
+        var totalBuyValue:Double = 0.0
+        var totalSells:Int = 0
+        var totalSellValue:Double = 0.0
+        var netValue:Double = 0.0
+        
+        for trade in tradeHistory {
+            
+            if trade.type == "buy" {
+                totalBuys += 1
+                totalBuyValue = trade.total + totalBuyValue
+            } else {
+                totalSells += 1
+                totalSellValue = trade.total + totalSellValue
+            }
+        }
+        
+        netValue = totalBuyValue - totalSellValue
+        
+        let tradeHistoryData = HistoryData(totalBuys: totalBuys, totalBuyValue: totalBuyValue, totalSells: totalSells, totalSellValue: totalSellValue, netValue: netValue, totalTrades: tradeHistory.count)
+        
+        return tradeHistoryData
     }
     
 

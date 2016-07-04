@@ -31,10 +31,9 @@ class HomeViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-    
+        
 
     }
-    
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
@@ -64,6 +63,19 @@ class HomeViewController: UIViewController {
 
         })
         }
+        
+//        dataManager.getHistory(timeConstants.fiveMins) { (result) in
+//            
+//            let infoz = result.tradeInfo
+//            
+//            
+//            print("Total trades: \(infoz.totalTrades) tot buys: \(infoz.totalBuys) for: \(infoz.totalBuyValue) tot sells: \(infoz.totalSells) for: \(infoz.totalSellValue) tot net; \(infoz.netValue)")
+//            
+//            
+//            print("\(result.start) end \(result.end)")
+//        }
+        
+
     }
     
     
@@ -83,9 +95,9 @@ class HomeViewController: UIViewController {
             
         } else if segue.identifier == "segueToLineChart" {
             
-            let destinationViewController = segue.destinationViewController as! LineChartViewController
-//            destinationViewController.dataManager = dataManager
-        }
+//            let destinationViewController = segue.destinationViewController as! LineChartViewController
+////            destinationViewController.dataManager = dataManager
+     }
         
         
     }

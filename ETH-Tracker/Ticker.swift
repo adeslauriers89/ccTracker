@@ -23,7 +23,6 @@ class Ticker {
         self.volume = volume
         self.high24Hr = high24Hr
         self.low24Hr = low24Hr
-        
     }
 
 }

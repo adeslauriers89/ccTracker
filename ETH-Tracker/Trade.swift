@@ -13,9 +13,9 @@ class Trade {
     var date  = ""
     var type = ""
     var timeInt = Int()
-    var rate = Float()
-    var amount = Float()
-    var total = Float()
+    var rate = Double()
+    var amount = Double()
+    var total = Double()
     
 }
 
