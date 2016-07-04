@@ -97,7 +97,6 @@ class DataManager {
                         
                     }
                 }
-           
             }
             self.getOrdersWithinOnePercent()
         }
@@ -105,7 +104,7 @@ class DataManager {
     }
     
     
-    func getTicker() {
+    func getTicker(completion:(Ticker) -> Void) {
         
         let urlPath = "https://poloniex.com/public?command=returnTicker"
         let endPoint = NSURL(string: urlPath)
@@ -132,11 +131,13 @@ class DataManager {
                         print(ethTicker.high24Hr)
                         print(ethTicker.percentChange)
                         
+                        completion(ethTicker)
                     }
                 }
             }
         }
         tickerTask.resume()
+        
     }
     
     
