@@ -50,17 +50,17 @@ class LineChartViewController: UIViewController, ChartViewDelegate {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
       
-        dataManager.getTradeHistory(timeConstants.thirtyMins, completion: { (result) in
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                let start = result.start
-                let end = result.end
-                let thirtyMinTrades = result.trades
-                
-                self.intervalLabel.text = "Intervals: One minute"
-                
-                self.splitTradesIntoTimeIntervals(thirtyMinTrades, timeInterval: timeConstants.oneMin, start: start, end: end)
-            })
-        })
+//        dataManager.getTradeHistory(timeConstants.thirtyMins, completion: { (result) in
+//            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+//                let start = result.start
+//                let end = result.end
+//                let thirtyMinTrades = result.trades
+//                
+//                self.intervalLabel.text = "Intervals: One minute"
+//                
+//                self.splitTradesIntoTimeIntervals(thirtyMinTrades, timeInterval: timeConstants.oneMin, start: start, end: end)
+//            })
+//        })
         
     }
     
@@ -167,7 +167,8 @@ class LineChartViewController: UIViewController, ChartViewDelegate {
     }
     
     func getDatesFromTradeHistory(history: [[Trade]]) {
-        if dataPointsArray.isEmpty {
+        
+        if dataPointsArray.isEmpty == false {
             dataPointsArray.removeAll()
         }
         
@@ -252,18 +253,64 @@ class LineChartViewController: UIViewController, ChartViewDelegate {
             })
 
         case 3:
-            dataManager.getTradeHistory(timeConstants.oneDay, completion: { (result) in
-                dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                    let start = result.start
-                    let end = result.end
-                    let oneDayTrades = result.trades
+//            dataManager.getTradeHistory(timeConstants.oneDay, completion: { (result) in
+//                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+//                    let start = result.start
+//                    let end = result.end
+//                    let oneDayTrades = result.trades
+//                    
+//                    self.intervalLabel.text = "Intervals: One hour"
+//                    
+//                    self.splitTradesIntoTimeIntervals(oneDayTrades, timeInterval: timeConstants.oneHour, start: start, end: end)
+//                    self.activityWheel.stopAnimating()
+//
+//                })
+//            })
+            
+            dataManager.getHistory(timeConstants.twelveHours, fromTime: dataManager.currentTime, completion: { (result) in
+                
                     
-                    self.intervalLabel.text = "Intervals: One hour"
+                    var firstTradesArray = result.trades
+                    let firstHistoryData = result.tradeInfo
                     
-                    self.splitTradesIntoTimeIntervals(oneDayTrades, timeInterval: timeConstants.oneHour, start: start, end: end)
-                    self.activityWheel.stopAnimating()
+                    print("first array count \(firstTradesArray.count)")
+                    print("first arrays oldest trade =  \(firstTradesArray.last?.date)")
 
-                })
+                    
+                    let adjustedEndtime = firstHistoryData.startTimeUnix - 1
+                    
+                    self.dataManager.getHistory(timeConstants.twelveHours, fromTime: adjustedEndtime, completion: { (result) in
+                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                            
+                        let secondTradesArray = result.trades
+                        let secondHistoryData = result.tradeInfo
+                        
+                        
+                        print("second array count \(secondTradesArray.count)")
+                        print("second arrays oldest trade =  \(secondTradesArray.last?.date)")
+                        
+                        firstTradesArray.appendContentsOf(secondTradesArray)
+                        print("combined array count: \(firstTradesArray.count)")
+                        print("combined array earliest date: \(firstTradesArray.last?.date)")
+                        print("combined array oldest date: \(firstTradesArray.first?.date)")
+                        
+                        print("combined array start \(firstTradesArray.last?.timeInt) and end \(firstTradesArray.first?.timeInt)")
+
+
+                        
+                        secondHistoryData.endTimeUnix = firstHistoryData.endTimeUnix
+                        print("hist data start \(secondHistoryData.startTimeUnix) and end \(secondHistoryData.endTimeUnix)")
+                        
+                        self.intervalLabel.text = "Intervals: One hour"
+                        
+                        self.splitTradesIntoTimeIntervals(firstTradesArray, timeInterval: timeConstants.oneHour, start: secondHistoryData.startTimeUnix, end: secondHistoryData.endTimeUnix)
+                        self.activityWheel.stopAnimating()
+                        
+                          })
+                    })
+                    
+   
+              
             })
 
         case 4:
@@ -280,6 +327,8 @@ class LineChartViewController: UIViewController, ChartViewDelegate {
 
                 })
             })
+            
+
         default:
             break
         }

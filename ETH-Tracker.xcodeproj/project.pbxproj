@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A660878C1D2C018A00E69E61 /* TradeHistoryDataViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A660878B1D2C018A00E69E61 /* TradeHistoryDataViewController.swift */; };
 		A665EEBE1D284AE900962E7A /* Ticker.swift in Sources */ = {isa = PBXBuildFile; fileRef = A665EEBD1D284AE900962E7A /* Ticker.swift */; };
 		A68C7D381CB72C4A00CD9B23 /* Order.swift in Sources */ = {isa = PBXBuildFile; fileRef = A68C7D371CB72C4A00CD9B23 /* Order.swift */; };
 		A68D1BC01CD00323000BA696 /* Charts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A68D1BBF1CD00323000BA696 /* Charts.framework */; };
@@ -41,6 +42,7 @@
 		040916DBB5198DC07546A39C /* Pods_ETH_Tracker.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ETH_Tracker.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1F9FEE7137814DA02FBBB0B1 /* Pods-ETH-Tracker.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ETH-Tracker.release.xcconfig"; path = "Pods/Target Support Files/Pods-ETH-Tracker/Pods-ETH-Tracker.release.xcconfig"; sourceTree = "<group>"; };
 		8989E0E2DFBF90719D7A94B6 /* Pods-ETH-Tracker.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ETH-Tracker.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ETH-Tracker/Pods-ETH-Tracker.debug.xcconfig"; sourceTree = "<group>"; };
+		A660878B1D2C018A00E69E61 /* TradeHistoryDataViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TradeHistoryDataViewController.swift; sourceTree = "<group>"; };
 		A665EEBD1D284AE900962E7A /* Ticker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Ticker.swift; sourceTree = "<group>"; };
 		A68C7D371CB72C4A00CD9B23 /* Order.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Order.swift; sourceTree = "<group>"; };
 		A68D1BBF1CD00323000BA696 /* Charts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Charts.framework; path = "../../../Library/Developer/Xcode/DerivedData/ETH-Tracker-deteyhsujbivanhbwfeyxabmoqbq/Build/Products/Debug-iphonesimulator/Charts.framework"; sourceTree = "<group>"; };
@@ -101,6 +103,7 @@
 				A6DA1A531CC0102B009CB354 /* OrderViewController.swift */,
 				A6DA1A571CC02B14009CB354 /* TradeHistoryViewController.swift */,
 				A68D1BC11CD01172000BA696 /* LineChartViewController.swift */,
+				A660878B1D2C018A00E69E61 /* TradeHistoryDataViewController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -344,6 +347,7 @@
 				A6E6CBF71CAB254F00F92EA6 /* AppDelegate.swift in Sources */,
 				A6DA1A541CC0102B009CB354 /* OrderViewController.swift in Sources */,
 				A68D1BC21CD01172000BA696 /* LineChartViewController.swift in Sources */,
+				A660878C1D2C018A00E69E61 /* TradeHistoryDataViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

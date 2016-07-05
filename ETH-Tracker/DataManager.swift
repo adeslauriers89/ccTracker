@@ -38,7 +38,7 @@ class DataManager {
     var tradeHistory = [Trade]()
     var historyInfo: String = ""
     
-    var currentDate: Int {
+    var currentTime: Int {
         get {
             return Int(NSDate().timeIntervalSince1970)
         }

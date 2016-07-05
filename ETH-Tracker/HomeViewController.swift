@@ -39,7 +39,7 @@ class HomeViewController: UIViewController {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-        print("current date :p \(dataManager.currentDate)")
+        print("current date :p \(dataManager.currentTime)")
         
         dataManager.getTicker { (newTicker) in
             
@@ -67,21 +67,48 @@ class HomeViewController: UIViewController {
         })
         }
         
-        dataManager.getHistory(timeConstants.fiveMins, fromTime: dataManager.currentDate) { (result) in
+        dataManager.getHistory(timeConstants.fiveMins, fromTime: dataManager.currentTime) { (result) in
             
             let infoz = result.tradeInfo
+            var tradez = result.trades
+            
+            print("first count \(tradez.count)")
+            print("last trades date \(tradez.last?.date)")
+            print("last trades INT  \(tradez.last?.timeInt)")
+
             
             
             print("Total trades: \(infoz.totalTrades) tot buys: \(infoz.totalBuys) for: \(infoz.totalBuyValue) tot sells: \(infoz.totalSells) for: \(infoz.totalSellValue) tot net; \(infoz.netValue)")
             
             
             print("\(infoz.startTimeUnix) end \(infoz.endTimeUnix)")
+            
+            
+            
+            self.dataManager.getHistory(timeConstants.fiveMins, fromTime: infoz.startTimeUnix, completion: { (result) in
+                
+                let tradez2 = result.trades
+                let infos = result.tradeInfo
+                
+                print("second count \(tradez2.count)")
+                print("last trades date from 2nd arr \(tradez2.last?.date)")
+                print("last trades INT from 2nd arr \(tradez2.last?.timeInt)")
+
+
+                tradez.appendContentsOf(tradez2)
+                
+                print(" second \(infos.startTimeUnix) end \(infos.endTimeUnix)")
+
+                
+                
+            })
+            
         }
 
-        dataManager.getTradeHistory(timeConstants.fiveMins) { (result) in
-            
-        
-        }
+//        dataManager.getTradeHistory(timeConstants.fiveMins) { (result) in
+//            
+//        
+//        }
         
 
     }
