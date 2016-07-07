@@ -38,9 +38,7 @@ class HomeViewController: UIViewController {
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        
-        print("current date :p \(dataManager.currentTime)")
-        
+
         dataManager.getTicker { (newTicker) in
             
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
@@ -49,10 +47,7 @@ class HomeViewController: UIViewController {
                 self.tickerCurrentPriceLabel.text = "Current Price: \(String(newTicker.currentPrice))"
                 self.ticker24HrHighLabel.text = "24hr High: \(String(newTicker.high24Hr))"
                 self.ticker24HrLowLabel.text = "24hr Low: \(String(newTicker.low24Hr))"
-                self.tickerVolumeLabel.text = "24hr Volume: \(String(newTicker.volume))"
-                
-                let percentChangeString = String(format: "%0.2f%", newTicker.percentChange)
-                
+                self.tickerVolumeLabel.text = String(format: "24hr Volume: %0.3f", newTicker.volume)
                 
                 if newTicker.percentChange > 0.0 {
                     self.tickerPercentChangeLabel.textColor = UIColor.greenColor()
@@ -61,55 +56,9 @@ class HomeViewController: UIViewController {
                 } else {
                     self.tickerPercentChangeLabel.textColor = UIColor.blackColor()
                 }
-                self.tickerPercentChangeLabel.text = "\(percentChangeString)%"
-
-
+                self.tickerPercentChangeLabel.text = String(format:"%0.2f",newTicker.percentChange ) + "%"
         })
         }
-        
-        dataManager.getHistory(timeConstants.fiveMins, fromTime: dataManager.currentTime) { (result) in
-            
-            let infoz = result.tradeInfo
-            var tradez = result.trades
-            
-            print("first count \(tradez.count)")
-            print("last trades date \(tradez.last?.date)")
-            print("last trades INT  \(tradez.last?.timeInt)")
-
-            
-            
-            print("Total trades: \(infoz.totalTrades) tot buys: \(infoz.totalBuys) for: \(infoz.totalBuyValue) tot sells: \(infoz.totalSells) for: \(infoz.totalSellValue) tot net; \(infoz.netValue)")
-            
-            
-            print("\(infoz.startTimeUnix) end \(infoz.endTimeUnix)")
-            
-            
-            
-            self.dataManager.getHistory(timeConstants.fiveMins, fromTime: infoz.startTimeUnix, completion: { (result) in
-                
-                let tradez2 = result.trades
-                let infos = result.tradeInfo
-                
-                print("second count \(tradez2.count)")
-                print("last trades date from 2nd arr \(tradez2.last?.date)")
-                print("last trades INT from 2nd arr \(tradez2.last?.timeInt)")
-
-
-                tradez.appendContentsOf(tradez2)
-                
-                print(" second \(infos.startTimeUnix) end \(infos.endTimeUnix)")
-
-                
-                
-            })
-            
-        }
-
-//        dataManager.getTradeHistory(timeConstants.fiveMins) { (result) in
-//            
-//        
-//        }
-        
 
     }
     

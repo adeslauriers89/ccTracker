@@ -49,18 +49,8 @@ class LineChartViewController: UIViewController, ChartViewDelegate {
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-      
-//        dataManager.getTradeHistory(timeConstants.thirtyMins, completion: { (result) in
-//            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-//                let start = result.start
-//                let end = result.end
-//                let thirtyMinTrades = result.trades
-//                
-//                self.intervalLabel.text = "Intervals: One minute"
-//                
-//                self.splitTradesIntoTimeIntervals(thirtyMinTrades, timeInterval: timeConstants.oneMin, start: start, end: end)
-//            })
-//        })
+        
+        getHistory30Min()
         
     }
     
@@ -87,20 +77,8 @@ class LineChartViewController: UIViewController, ChartViewDelegate {
         var tradeHistoryInIntervals = [[Trade]]()
         var intervalOfTrades = [Trade]()
         
-        // add 7 hours to make up for time difference
-        // THIS ONLY WORKS IN VAN TIMEZONE
-        
-//        let startTime = start + timeConstants.twoHours
-//        let endTime = end + timeConstants.twoHours
-        
-        // ONLY WORKS IN GERMAN TIMEZONE
-//        var startTime = start - timeConstants.twoHours
-//        let endTime = end - timeConstants.twoHours
-        
         var startTime = start
         let endTime = end
-        
-        
         
         var timeIntervalEnd = startTime + timeInterval
         
@@ -203,73 +181,42 @@ class LineChartViewController: UIViewController, ChartViewDelegate {
         
         switch timePeriodSegmentedControl.selectedSegmentIndex {
         case 0:
-            dataManager.getTradeHistory(timeConstants.thirtyMins, completion: { (result) in
-                dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                    let start = result.start
-                    let end = result.end
-                    let thirtyMinTrades = result.trades
-                    
-                    self.intervalLabel.text = "Intervals: One minute"
-                    
-                    self.splitTradesIntoTimeIntervals(thirtyMinTrades, timeInterval: timeConstants.oneMin, start: start, end: end)
-                    self.activityWheel.stopAnimating()
-
-                })
-            })
+            
+            getHistory30Min()
             
         case 1:
-            dataManager.getTradeHistory(timeConstants.twoHours, completion: { (result) in
+
+            dataManager.getHistory(timeConstants.twoHours, fromTime: dataManager.currentTime, completion: { (result) in
                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                    let start = result.start
-                    let end = result.end
+                    
+                    let historyData = result.tradeInfo
                     let twoHourTrades = result.trades
                     
                     self.intervalLabel.text = "Intervals: Five minutes"
                     
-                    self.splitTradesIntoTimeIntervals(twoHourTrades, timeInterval: timeConstants.fiveMins, start: start, end: end)
+                    self.splitTradesIntoTimeIntervals(twoHourTrades, timeInterval: timeConstants.fiveMins, start: historyData.startTimeUnix, end: historyData.endTimeUnix)
                     self.activityWheel.stopAnimating()
-
+                    
                 })
+                
             })
         case 2:
-            dataManager.getTradeHistory(timeConstants.twelveHours, completion: { (result) in
-
+            dataManager.getHistory(timeConstants.twelveHours, fromTime: dataManager.currentTime, completion: { (result) in
                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
-
-                    let start = result.start
-                    let end = result.end
+                    
+                    let historyData = result.tradeInfo
                     let twelveHourTrades = result.trades
                     
                     self.intervalLabel.text = "Intervals: Thirty minutes"
                     
-                    self.splitTradesIntoTimeIntervals(twelveHourTrades, timeInterval: timeConstants.thirtyMins, start: start, end: end)
-                    
-                    
+                    self.splitTradesIntoTimeIntervals(twelveHourTrades, timeInterval: timeConstants.thirtyMins, start: historyData.startTimeUnix, end: historyData.endTimeUnix)
                     self.activityWheel.stopAnimating()
-
-
                 })
-
             })
 
         case 3:
-//            dataManager.getTradeHistory(timeConstants.oneDay, completion: { (result) in
-//                dispatch_async(dispatch_get_main_queue(), { () -> Void in
-//                    let start = result.start
-//                    let end = result.end
-//                    let oneDayTrades = result.trades
-//                    
-//                    self.intervalLabel.text = "Intervals: One hour"
-//                    
-//                    self.splitTradesIntoTimeIntervals(oneDayTrades, timeInterval: timeConstants.oneHour, start: start, end: end)
-//                    self.activityWheel.stopAnimating()
-//
-//                })
-//            })
-            
             dataManager.getHistory(timeConstants.twelveHours, fromTime: dataManager.currentTime, completion: { (result) in
                 
-                    
                     var firstTradesArray = result.trades
                     let firstHistoryData = result.tradeInfo
                     
@@ -314,17 +261,16 @@ class LineChartViewController: UIViewController, ChartViewDelegate {
             })
 
         case 4:
-            dataManager.getTradeHistory(timeConstants.twoDays ,completion: { (result) in
+            dataManager.getHistory(timeConstants.twoDays, fromTime: dataManager.currentTime, completion: { (result) in
                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                    let start = result.start
-                    let end  = result.end
+                    
+                    let historyData = result.tradeInfo
                     let twoDayTrades = result.trades
                     
-                    self.intervalLabel.text = "Intervals: Two hours"
+                    self.intervalLabel.text = "Intervals: Two Hours"
                     
-                    self.splitTradesIntoTimeIntervals(twoDayTrades, timeInterval: timeConstants.twoHours, start: start, end: end)
+                    self.splitTradesIntoTimeIntervals(twoDayTrades, timeInterval: timeConstants.twoHours, start: historyData.startTimeUnix, end: historyData.endTimeUnix)
                     self.activityWheel.stopAnimating()
-
                 })
             })
             
@@ -337,6 +283,21 @@ class LineChartViewController: UIViewController, ChartViewDelegate {
     @IBAction func saveChartButtonPressed(sender: UIBarButtonItem) {
         lineChartView.saveToCameraRoll()
         
+    }
+    
+    func getHistory30Min() {
+        dataManager.getHistory(timeConstants.thirtyMins, fromTime: dataManager.currentTime, completion: { (result) in
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                
+                let historyData = result.tradeInfo
+                let thirtyMinTrades = result.trades
+                
+                self.intervalLabel.text = "Intervals: One Minute"
+                
+                self.splitTradesIntoTimeIntervals(thirtyMinTrades, timeInterval: timeConstants.oneMin, start: historyData.startTimeUnix, end: historyData.endTimeUnix)
+                self.activityWheel.stopAnimating()
+            })
+        })
     }
     
 }

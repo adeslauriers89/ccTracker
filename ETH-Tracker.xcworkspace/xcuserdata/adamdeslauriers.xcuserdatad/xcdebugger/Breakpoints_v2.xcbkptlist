@@ -20,11 +20,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ETH-Tracker/LineChartViewController.swift"
-            timestampString = "489416187.674617"
+            timestampString = "489592958.470128"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "170"
-            endingLineNumber = "170"
+            startingLineNumber = "148"
+            endingLineNumber = "148"
             landmarkName = "getDatesFromTradeHistory(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -36,11 +36,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ETH-Tracker/LineChartViewController.swift"
-            timestampString = "489416196.587529"
+            timestampString = "489592958.470128"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "137"
-            endingLineNumber = "137"
+            startingLineNumber = "115"
+            endingLineNumber = "115"
             landmarkName = "calculateNetValueOfTrades(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -52,11 +52,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ETH-Tracker/LineChartViewController.swift"
-            timestampString = "489416238.039176"
+            timestampString = "489592958.470128"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "127"
-            endingLineNumber = "127"
+            startingLineNumber = "105"
+            endingLineNumber = "105"
             landmarkName = "splitTradesIntoTimeIntervals(_:timeInterval:start:end:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -68,11 +68,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ETH-Tracker/LineChartViewController.swift"
-            timestampString = "489416339.933501"
+            timestampString = "489592958.470128"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "70"
-            endingLineNumber = "70"
+            startingLineNumber = "60"
+            endingLineNumber = "60"
             landmarkName = "setChart(_:values:)"
             landmarkType = "5">
          </BreakpointContent>

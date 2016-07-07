@@ -41,18 +41,25 @@ class TradeHistoryDataViewController: UIViewController {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
+        fetchOneMinuteData()
+
+        
+        }
+    
+    
+    
+    
+    func fetchOneMinuteData() {
         dataManager.getHistory(timeConstants.oneMin, fromTime: dataManager.currentTime) { (result) in
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
                 
                 let tradeHistoryData = result.tradeInfo
                 
-                self.oneMinTotalBuysLabel.text = "# Buys: \(tradeHistoryData.totalBuys)"
-                self.oneMinBuysValueLabel.text = "Buys Value: \(tradeHistoryData.totalBuyValue)"
-                self.oneMinTotalSellsLabel.text = "# Sells: \(tradeHistoryData.totalSells)"
-                self.oneMinSellsValueLabel.text = "Sells Value: \(tradeHistoryData.totalSellValue)"
+                self.oneMinTotalBuysLabel.text = "Buys: \(tradeHistoryData.totalBuys)"
+                self.oneMinBuysValueLabel.text = String(format:"Buys Value: %0.3fBTC", tradeHistoryData.totalBuyValue)
+                self.oneMinTotalSellsLabel.text = "Sells: \(tradeHistoryData.totalSells)"
+                self.oneMinSellsValueLabel.text = String(format:"Sells Value: %0.3fBTC", tradeHistoryData.totalSellValue)
                 self.oneMinTotalTradesLabel.text = "Total Trades: \(tradeHistoryData.totalTrades)"
-                
-                
                 
                 if tradeHistoryData.netValue >= 0.0 {
                     self.oneMinNetValueLabel.textColor = UIColor.greenColor()
@@ -62,16 +69,44 @@ class TradeHistoryDataViewController: UIViewController {
                     self.oneMinNetValueLabel.textColor = UIColor.blackColor()
                 }
                 
-                self.oneMinNetValueLabel.text = "\(tradeHistoryData.netValue) BTC"
-                
-
+                self.oneMinNetValueLabel.text = String(format: "%0.3fBTC", tradeHistoryData.netValue)
             })
         }
-        
-        }
-        
     }
     
+    func fetchThirtyMinuteData() {
+        dataManager.getHistory(timeConstants.thirtyMins, fromTime: dataManager.currentTime) { (result) in
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                
+                let tradeHistoryData = result.tradeInfo
+                
+                self.oneMinTotalBuysLabel.text = "Buys: \(tradeHistoryData.totalBuys)"
+                self.oneMinBuysValueLabel.text = String(format:"Buys Value: %0.3fBTC", tradeHistoryData.totalBuyValue)
+                self.oneMinTotalSellsLabel.text = "Sells: \(tradeHistoryData.totalSells)"
+                self.oneMinSellsValueLabel.text = String(format:"Sells Value: %0.3fBTC", tradeHistoryData.totalSellValue)
+                self.oneMinTotalTradesLabel.text = "Total Trades: \(tradeHistoryData.totalTrades)"
+                
+                if tradeHistoryData.netValue >= 0.0 {
+                    self.oneMinNetValueLabel.textColor = UIColor.greenColor()
+                } else if tradeHistoryData.netValue <= 0.0 {
+                    self.oneMinNetValueLabel.textColor = UIColor.redColor()
+                } else {
+                    self.oneMinNetValueLabel.textColor = UIColor.blackColor()
+                }
+                
+                self.oneMinNetValueLabel.text = String(format: "%0.3fBTC", tradeHistoryData.netValue)
+            })
+        }
+    }
+    
+    
+    
+    
+        
+    }
+
+
+
 
     
 

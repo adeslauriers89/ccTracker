@@ -10,7 +10,15 @@ import Foundation
 
 class Order {
     
-    var price = Double()
-    var amount = Double()
+//    var price = Double()
+//    var amount = Double()
+    
+    var price: Double
+    var amount: Double
+    
+    init(price: Double, amount: Double) {
+        self.price = price
+        self.amount = amount
+    }
     
 }

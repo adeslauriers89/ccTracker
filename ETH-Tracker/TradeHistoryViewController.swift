@@ -28,53 +28,54 @@ class TradeHistoryViewController: UIViewController {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-        dataManager.getTradeHistory(timeConstants.oneMin) { (result) in
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                self.lastMinuteHistoryLabel.text = "Last Minute: \(result.info)"
-            })
-        }
+//        dataManager.getTradeHistory(timeConstants.oneMin) { (result) in
+//            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+//                self.lastMinuteHistoryLabel.text = "Last Minute: \(result.info)"
+//            })
+//        }
+//        
+//        dataManager.getTradeHistory(timeConstants.fiveMins) { (result) in
+//            
+//            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+//                self.lastFiveMinuteHistoryLabel.text = "Last 5 Mins: \(result.info)"
+//            })
+//        }
+//        
+//        dataManager.getTradeHistory(timeConstants.thirtyMins) { (result) in
+//            
+//            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+//                self.lastThirtyMinuteHistoryLabel.text = "Last 30 Mins: \(result.info)"
+//            })
+//        }
+//        
+//        dataManager.getTradeHistory(timeConstants.twoHours) { (result) in
+//            
+//            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+//                self.lastTwoHourHistoryLabel.text = "Last 2 Hrs: \(result.info)"
+//            })
+//        }
+//        
+//        dataManager.getTradeHistory(timeConstants.sixHours) { (result) in
+//            
+//            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+//                self.lastSixHourHistoryLabel.text = "Last 6 Hrs: \(result.info)"
+//            })
+//        }
+//        
+//        dataManager.getTradeHistory(timeConstants.twelveHours) { (result) in
+//            
+//            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+//                self.lastTwelveHourHistoryLabel.text = "Last 12 Hrs: \(result.info)"
+//            })
+//        }
+//        
+//        dataManager.getTradeHistory(timeConstants.oneDay) { (result) in
+//            
+//            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+//                self.lastTwentyFourHourHistoryLabel.text = "Last 24 Hrs: \(result.info)"
+//            })
+//        }
         
-        dataManager.getTradeHistory(timeConstants.fiveMins) { (result) in
-            
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                self.lastFiveMinuteHistoryLabel.text = "Last 5 Mins: \(result.info)"
-            })
-        }
-        
-        dataManager.getTradeHistory(timeConstants.thirtyMins) { (result) in
-            
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                self.lastThirtyMinuteHistoryLabel.text = "Last 30 Mins: \(result.info)"
-            })
-        }
-        
-        dataManager.getTradeHistory(timeConstants.twoHours) { (result) in
-            
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                self.lastTwoHourHistoryLabel.text = "Last 2 Hrs: \(result.info)"
-            })
-        }
-        
-        dataManager.getTradeHistory(timeConstants.sixHours) { (result) in
-            
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                self.lastSixHourHistoryLabel.text = "Last 6 Hrs: \(result.info)"
-            })
-        }
-        
-        dataManager.getTradeHistory(timeConstants.twelveHours) { (result) in
-            
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                self.lastTwelveHourHistoryLabel.text = "Last 12 Hrs: \(result.info)"
-            })
-        }
-        
-        dataManager.getTradeHistory(timeConstants.oneDay) { (result) in
-            
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                self.lastTwentyFourHourHistoryLabel.text = "Last 24 Hrs: \(result.info)"
-            })
-        }
     }
 
 

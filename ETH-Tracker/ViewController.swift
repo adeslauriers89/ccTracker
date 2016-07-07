@@ -31,7 +31,7 @@ class ViewController: UITableViewController {
       //  dataManager.getTradesLast30Mins()
      //   dataManager.getTradesLastMinute()
         
-        dataManager.getOrderBook()
+       // dataManager.getOrderBook()
         
       //  dataManager.getCurrentPrice()
         
