@@ -315,7 +315,7 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6bA-KF-fGg">
                                         <rect key="frame" x="20" y="230" width="280" height="190"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="1 Minute" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Nd-rY-LdO">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="5 Minutes" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Nd-rY-LdO">
                                                 <rect key="frame" x="20" y="2" width="240" height="26"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -369,6 +369,9 @@
                                                 <state key="normal" title="Refresh">
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </state>
+                                                <connections>
+                                                    <action selector="refreshFiveMinButtonPressed:" destination="rD3-F1-v3Z" eventType="touchUpInside" id="OPV-Ib-grx"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -376,7 +379,7 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CEO-jT-7W9">
                                         <rect key="frame" x="20" y="434" width="280" height="190"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="1 Minute" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OKg-wN-WaW">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="30 Minutes" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OKg-wN-WaW">
                                                 <rect key="frame" x="20" y="2" width="240" height="26"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -430,6 +433,9 @@
                                                 <state key="normal" title="Refresh">
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </state>
+                                                <connections>
+                                                    <action selector="refreshThirtyMinButtonPressed:" destination="rD3-F1-v3Z" eventType="touchUpInside" id="YA9-m8-bH8"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -440,7 +446,7 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bO3-6C-sn7">
                                         <rect key="frame" x="20" y="638" width="280" height="190"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="1 Minute" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1wx-yx-hZC">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="2 Hours" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1wx-yx-hZC">
                                                 <rect key="frame" x="20" y="2" width="240" height="26"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -494,6 +500,9 @@
                                                 <state key="normal" title="Refresh">
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </state>
+                                                <connections>
+                                                    <action selector="refreshTwoHourButtonPressed:" destination="rD3-F1-v3Z" eventType="touchUpInside" id="J4Z-Uo-nOw"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -504,7 +513,7 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="A4q-aX-ObH">
                                         <rect key="frame" x="20" y="842" width="280" height="190"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="1 Minute" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ynj-AK-azH">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="12 Hours" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ynj-AK-azH">
                                                 <rect key="frame" x="20" y="2" width="240" height="26"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -518,12 +527,6 @@
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Buys Value:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K3z-n3-JbC">
                                                 <rect key="frame" x="20" y="48" width="240" height="21"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Sells:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lLj-HU-Ivb">
-                                                <rect key="frame" x="20" y="68" width="240" height="21"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
@@ -558,7 +561,16 @@
                                                 <state key="normal" title="Refresh">
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </state>
+                                                <connections>
+                                                    <action selector="refreshTwelveHourButtonPressed:" destination="rD3-F1-v3Z" eventType="touchUpInside" id="M65-Xl-U9Z"/>
+                                                </connections>
                                             </button>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Sells:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lLj-HU-Ivb">
+                                                <rect key="frame" x="20" y="68" width="240" height="21"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
@@ -568,7 +580,7 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ggE-4N-Cv6">
                                         <rect key="frame" x="20" y="1046" width="280" height="190"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="1 Minute" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ItK-KD-WWa">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="24 Hours" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ItK-KD-WWa">
                                                 <rect key="frame" x="20" y="2" width="240" height="26"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -622,6 +634,9 @@
                                                 <state key="normal" title="Refresh">
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </state>
+                                                <connections>
+                                                    <action selector="refreshOneDayButtonPressed:" destination="rD3-F1-v3Z" eventType="touchUpInside" id="Idb-Ce-5Kj"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -683,6 +698,9 @@
                                                 <state key="normal" title="Refresh">
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </state>
+                                                <connections>
+                                                    <action selector="refreshOneMinButtonPressed:" destination="rD3-F1-v3Z" eventType="touchUpInside" id="aTW-AD-ofJ"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -734,13 +752,54 @@
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="320" height="1250"/>
                     <connections>
+                        <outlet property="fiveMinBuysValueLabel" destination="hzR-sM-QSn" id="XSo-wn-jKf"/>
+                        <outlet property="fiveMinNetValueLabel" destination="dx5-kE-vVs" id="0bD-FN-5h8"/>
+                        <outlet property="fiveMinRefreshButton" destination="OWd-Xo-Wzn" id="xUn-dJ-edG"/>
+                        <outlet property="fiveMinSellsValueLabel" destination="gUG-gw-T4d" id="qSI-3y-fks"/>
+                        <outlet property="fiveMinTotalBuysLabel" destination="RhZ-7v-jor" id="2b6-1d-8xG"/>
+                        <outlet property="fiveMinTotalSellsLabel" destination="5Rh-3J-wFX" id="bSi-9r-08w"/>
+                        <outlet property="fiveMinTotalTradesLabel" destination="vp5-Of-6Ea" id="tz5-rx-sVn"/>
+                        <outlet property="fiveMinView" destination="6bA-KF-fGg" id="OY8-0u-o2j"/>
+                        <outlet property="oneDayBuysValueLabel" destination="d3b-yC-UWb" id="ZTv-h2-tE1"/>
+                        <outlet property="oneDayNetValueLabel" destination="h0V-Je-jky" id="o30-GC-hcQ"/>
+                        <outlet property="oneDayRefreshButton" destination="pJl-dj-qxb" id="TlP-iM-bNY"/>
+                        <outlet property="oneDaySellsValueLabel" destination="rXg-QU-ZnA" id="ImQ-eh-vQB"/>
+                        <outlet property="oneDayTotalBuysLabel" destination="ClX-Lt-8Sl" id="mXf-fR-EBN"/>
+                        <outlet property="oneDayTotalSellsLabel" destination="aZi-hM-Czz" id="8H2-j8-fCL"/>
+                        <outlet property="oneDayTotalTradesLabel" destination="pdy-59-Crk" id="T2k-5X-6KZ"/>
+                        <outlet property="oneDayView" destination="ggE-4N-Cv6" id="dNg-Xw-Tu4"/>
                         <outlet property="oneMinBuysValueLabel" destination="qIN-Rs-xad" id="gGn-EE-YR5"/>
                         <outlet property="oneMinNetValueLabel" destination="iEs-gp-SdE" id="xAV-vo-QHx"/>
+                        <outlet property="oneMinRefreshButton" destination="37W-ug-2Ft" id="c7S-yr-TUb"/>
                         <outlet property="oneMinSellsValueLabel" destination="QMB-og-wXM" id="Qpd-Zf-LDz"/>
                         <outlet property="oneMinTotalBuysLabel" destination="TGr-li-cYX" id="vnz-zn-Y61"/>
                         <outlet property="oneMinTotalSellsLabel" destination="BAc-J6-61M" id="7Oq-HF-Ojc"/>
                         <outlet property="oneMinTotalTradesLabel" destination="Csr-tF-V65" id="kXd-4U-6c3"/>
                         <outlet property="oneMinView" destination="yyJ-Gb-y2N" id="9TP-vH-XwZ"/>
+                        <outlet property="thirtyMinBuysValueLabel" destination="2v4-64-TgB" id="A7e-5c-ZH1"/>
+                        <outlet property="thirtyMinNetValueLabel" destination="Cce-N9-cj8" id="fBS-Sd-SfV"/>
+                        <outlet property="thirtyMinRefreshButton" destination="HOX-wJ-dpQ" id="UQO-mT-2JB"/>
+                        <outlet property="thirtyMinSellsValueLabel" destination="kQr-BE-eGY" id="cZW-Ff-eWo"/>
+                        <outlet property="thirtyMinTotalBuysLabel" destination="Pwn-Dc-JmV" id="ZQO-3L-h14"/>
+                        <outlet property="thirtyMinTotalSellsLabel" destination="dHN-Y1-gzy" id="KhQ-tR-6F9"/>
+                        <outlet property="thirtyMinTotalTradesLabel" destination="Ddj-xC-bpG" id="rQs-67-yFN"/>
+                        <outlet property="thirtyMinView" destination="CEO-jT-7W9" id="mh7-7o-IkQ"/>
+                        <outlet property="twelveHourBuysValueLabel" destination="K3z-n3-JbC" id="PS7-S3-zeh"/>
+                        <outlet property="twelveHourNetValueLabel" destination="tHn-xj-OXE" id="9Wr-JB-zMN"/>
+                        <outlet property="twelveHourRefreshButton" destination="rJK-b4-XLx" id="eGt-Pa-xKJ"/>
+                        <outlet property="twelveHourSellsValueLabel" destination="9qC-9E-D0U" id="M4M-Y6-2LJ"/>
+                        <outlet property="twelveHourTotalBuysLabel" destination="VH7-E8-aJq" id="i1d-xB-kY6"/>
+                        <outlet property="twelveHourTotalSellsLabel" destination="lLj-HU-Ivb" id="gdb-OW-c1J"/>
+                        <outlet property="twelveHourTotalTradesLabel" destination="TSH-Nj-sHt" id="5lO-Z5-bCC"/>
+                        <outlet property="twelveHourView" destination="A4q-aX-ObH" id="NgA-E6-QGQ"/>
+                        <outlet property="twoHourBuysValueLabel" destination="FG5-GR-3JE" id="ITF-Jm-BjW"/>
+                        <outlet property="twoHourNetValueLabel" destination="k8O-6X-322" id="eAU-a3-khj"/>
+                        <outlet property="twoHourRefreshButton" destination="RSg-q3-eBG" id="T2C-f1-qDG"/>
+                        <outlet property="twoHourSellsValueLabel" destination="8YM-tl-FWg" id="Iy5-XI-jwX"/>
+                        <outlet property="twoHourTotalBuysLabel" destination="m04-6e-56u" id="xnY-HI-NnX"/>
+                        <outlet property="twoHourTotalSellsLabel" destination="CeX-tE-tou" id="ZRp-jo-i1n"/>
+                        <outlet property="twoHourTotalTradesLabel" destination="CJW-vx-8oS" id="Uba-66-bYs"/>
+                        <outlet property="twoHourView" destination="bO3-6C-sn7" id="Hhs-cp-TMQ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RVN-Tf-hcN" userLabel="First Responder" sceneMemberID="firstResponder"/>
