@@ -45,6 +45,7 @@ class DataManager {
     }
     
     
+    
     func getTicker(completion:(Ticker) -> Void) {
         
         let urlPath = "https://poloniex.com/public?command=returnTicker"
@@ -52,11 +53,11 @@ class DataManager {
         
         let tickerTask = NSURLSession.sharedSession().dataTaskWithURL(endPoint!) { (data, response, error) -> Void in
             
-            if let fetchedTicker = (try? NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.AllowFragments) as! [String : AnyObject]) {
+            if let unWrappedaData = data {
+                guard let fetchedTicker = (try? NSJSONSerialization.JSONObjectWithData(unWrappedaData, options: NSJSONReadingOptions.AllowFragments) as! [String : AnyObject]) else  {return}
                 
                 if let eth: AnyObject = fetchedTicker["BTC_ETH"] {
                     if let ethTickerDict = eth as? [String : AnyObject] {
-                        //print(ethTickerDict)
                         
                         guard let currentPrice = ethTickerDict["last"]?.doubleValue,
                             var percentChange = ethTickerDict["percentChange"]?.doubleValue,
@@ -67,12 +68,15 @@ class DataManager {
                         percentChange *= 100
                         
                         let ethTicker = Ticker(currentPrice: currentPrice, percentChange: percentChange, volume: volume, high24Hr: high24Hr, low24Hr: low24Hr)
-
+                        
                         completion(ethTicker)
                     }
                 }
+            } else {
+                print("No connection")
             }
         }
+        //}
         tickerTask.resume()
         
     }
@@ -91,35 +95,40 @@ class DataManager {
         
         let orderTask = NSURLSession.sharedSession().dataTaskWithURL(NSURL(string: url)!) { (data, response, error) -> Void in
             
-            if let fetchedOrders = (try? NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.AllowFragments) as! [String: AnyObject]) {
-                
-                let fetchedBuyOrders = fetchedOrders["bids"] as! [AnyObject]
-                
-                
-                for buy in fetchedBuyOrders {
-                
-                    guard let price = buy[0].doubleValue,
-                          let amount = buy[1].doubleValue else {return}
+            
+            if let unWrappedData = data {
+                if let fetchedOrders = (try? NSJSONSerialization.JSONObjectWithData(unWrappedData, options: NSJSONReadingOptions.AllowFragments) as! [String: AnyObject]) {
                     
-                    let newBuy = Order(price: price, amount: amount)
+                    let fetchedBuyOrders = fetchedOrders["bids"] as! [AnyObject]
                     
-                    totalAmountPendingBuys = newBuy.amount + totalAmountPendingBuys
                     
-                    buyOrdersArray.append(newBuy)
+                    for buy in fetchedBuyOrders {
+                        
+                        guard let price = buy[0].doubleValue,
+                            let amount = buy[1].doubleValue else {return}
+                        
+                        let newBuy = Order(price: price, amount: amount)
+                        
+                        totalAmountPendingBuys = newBuy.amount + totalAmountPendingBuys
+                        
+                        buyOrdersArray.append(newBuy)
+                    }
+                    
+                    let fetchedSellOrders = fetchedOrders["asks"] as! [AnyObject]
+                    
+                    for sell in fetchedSellOrders {
+                        
+                        guard let price = sell[0].doubleValue,
+                            let amount = sell[1].doubleValue else {return}
+                        
+                        let newSell = Order(price: price, amount: amount)
+                        
+                        totalAmountPendingSells = newSell.amount + totalAmountPendingSells
+                        sellOrdersArray.append(newSell)
+                    }
                 }
-                
-                let fetchedSellOrders = fetchedOrders["asks"] as! [AnyObject]
-                
-                for sell in fetchedSellOrders {
-                
-                    guard let price = sell[0].doubleValue,
-                          let amount = sell[1].doubleValue else {return}
-                    
-                    let newSell = Order(price: price, amount: amount)
-                    
-                    totalAmountPendingSells = newSell.amount + totalAmountPendingSells
-                    sellOrdersArray.append(newSell)
-                }
+            } else {
+                print("no connection or no data recieved")
             }
             
             
@@ -134,7 +143,7 @@ class DataManager {
                 })
                 
             })
-
+            
         }
         
         orderTask.resume()
@@ -191,44 +200,47 @@ class DataManager {
                 print(error)
             }
             
-            if let fetchedHistory = (try? NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.AllowFragments) as!
-                [[String: AnyObject]]) {
+            
+            if let unWrappedData = data {
                 
-                if self.tradeHistory.isEmpty == false {
-                    self.tradeHistory.removeAll()
+                
+                
+                if let fetchedHistory = (try? NSJSONSerialization.JSONObjectWithData(unWrappedData, options: NSJSONReadingOptions.AllowFragments) as!
+                    [[String: AnyObject]]) {
+                    
+                    if self.tradeHistory.isEmpty == false {
+                        self.tradeHistory.removeAll()
+                    }
+                    
+                    for completedTrade in fetchedHistory {
+                        let newTrade = Trade()
+                        
+                        guard let date = completedTrade["date"] as? String,
+                            let type = completedTrade["type"] as? String,
+                            let rate = completedTrade["rate"]?.doubleValue,
+                            let amount = completedTrade["amount"]?.doubleValue,
+                            let total = completedTrade["total"]?.doubleValue else {return}
+                        
+                        newTrade.date = date
+                        newTrade.type = type
+                        newTrade.rate = rate
+                        newTrade.amount = amount
+                        newTrade.total = total
+                        
+                        
+                        newTrade.timeInt = self.timeStampToUnix(newTrade.date)
+                        
+                        completedTrades.append(newTrade)
+                        
+                    }
+                    
                 }
-                
-                for completedTrade in fetchedHistory {
-                    let newTrade = Trade()
-                    
-                    guard let date = completedTrade["date"] as? String,
-                          let type = completedTrade["type"] as? String,
-                          let rate = completedTrade["rate"]?.doubleValue,
-                          let amount = completedTrade["amount"]?.doubleValue,
-                          let total = completedTrade["total"]?.doubleValue else {return}
-                    
-                    newTrade.date = date
-                    newTrade.type = type
-                    newTrade.rate = rate
-                    newTrade.amount = amount
-                    newTrade.total = total
-                    
-                    
-                    newTrade.timeInt = self.timeStampToUnix(newTrade.date)
-                    
-                    completedTrades.append(newTrade)
-                
-                }
-//                if (self.tradeHistory.count >= 50000) {
-//                    print("Max amount is 50k")
-//                }
-
             }
             
             let tradeInfo = self.caluclateHistoryData(completedTrades)
             tradeInfo.startTimeUnix = startTime
             tradeInfo.endTimeUnix = fromTime
-
+            
             completion(result: (trades: completedTrades, tradeInfo: tradeInfo))
             
         }
@@ -243,7 +255,6 @@ class DataManager {
         let dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         
-        ///
         dateFormatter.timeZone = NSTimeZone(name: "UTC")
         
         let unixTime = Int((dateFormatter.dateFromString(time)!.timeIntervalSince1970))

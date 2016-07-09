@@ -24,6 +24,7 @@ class TradeHistoryDataViewController: UIViewController {
     @IBOutlet weak var oneMinTotalTradesLabel: UILabel!
     @IBOutlet weak var oneMinNetValueLabel: UILabel!
     @IBOutlet weak var oneMinRefreshButton: UIButton!
+
     
     // 5 min view & labels
     
@@ -46,6 +47,8 @@ class TradeHistoryDataViewController: UIViewController {
     @IBOutlet weak var thirtyMinTotalTradesLabel: UILabel!
     @IBOutlet weak var thirtyMinNetValueLabel: UILabel!
     @IBOutlet weak var thirtyMinRefreshButton: UIButton!
+    let thirtyMinActivityWheel = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.Gray)
+
     
     // 2 hr view & labels
     
@@ -88,8 +91,12 @@ class TradeHistoryDataViewController: UIViewController {
         
         view.backgroundColor = UIColor(colorLiteralRed: 217.0/255.0, green: 217.0/255.0 , blue: 217.0/255.0, alpha: 1.0)
             
-        
-        configureViewStyle()
+
+        thirtyMinActivityWheel.center = thirtyMinView.center
+        thirtyMinActivityWheel.hidesWhenStopped = true
+        thirtyMinActivityWheel.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.Gray
+        thirtyMinView.addSubview(thirtyMinActivityWheel)
+
         
     }
     
@@ -99,18 +106,33 @@ class TradeHistoryDataViewController: UIViewController {
         fetchOneMinuteData()
         fetchFiveMinuteData()
         fetchThirtyMinuteData()
-        fetchTwoHourData()
+       // fetchTwoHourData()
         fetchTwelveHourData()
-        fetchOneDayData()
+       // fetchOneDayData()
         
+        
+        
+        configureViewStyle()
+        
+
+        
+
         }
+    
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+    }
     
     
     //MARK: Data Functions
     
     func fetchOneMinuteData() {
+        
         dataManager.getHistory(timeConstants.oneMin, fromTime: dataManager.currentTime) { (result) in
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
+
                 
                 let tradeHistoryData = result.tradeInfo
                 
@@ -129,6 +151,8 @@ class TradeHistoryDataViewController: UIViewController {
                 }
                 
                 self.oneMinNetValueLabel.text = String(format: "%0.3fBTC", tradeHistoryData.netValue)
+                
+
             })
         }
     }
@@ -159,8 +183,16 @@ class TradeHistoryDataViewController: UIViewController {
     }
     
     func fetchThirtyMinuteData() {
+        
+        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+
+        
+
         dataManager.getHistory(timeConstants.thirtyMins, fromTime: dataManager.currentTime) { (result) in
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                
+                self.thirtyMinActivityWheel.startAnimating()
+
                 
                 let tradeHistoryData = result.tradeInfo
                 
@@ -179,7 +211,11 @@ class TradeHistoryDataViewController: UIViewController {
                 }
                 
                 self.thirtyMinNetValueLabel.text = String(format: "%0.3fBTC", tradeHistoryData.netValue)
+                self.thirtyMinActivityWheel.stopAnimating()
+
+                
             })
+            UIApplication.sharedApplication().networkActivityIndicatorVisible = false
         }
     }
     
@@ -209,10 +245,14 @@ class TradeHistoryDataViewController: UIViewController {
     }
     
     func fetchTwelveHourData() {
+        
+        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+        
         dataManager.getHistory(timeConstants.twelveHours, fromTime: dataManager.currentTime) { (result) in
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
                 
                 let tradeHistoryData = result.tradeInfo
+                
                 
                 self.twelveHourTotalBuysLabel.text = "Buys: \(tradeHistoryData.totalBuys)"
                 self.twelveHourBuysValueLabel.text = String(format:"Buys Value: %0.3fBTC", tradeHistoryData.totalBuyValue)
@@ -229,6 +269,8 @@ class TradeHistoryDataViewController: UIViewController {
                 }
                 
                 self.twelveHourNetValueLabel.text = String(format: "%0.3fBTC", tradeHistoryData.netValue)
+                
+                UIApplication.sharedApplication().networkActivityIndicatorVisible = false
             })
         }
     }
@@ -286,7 +328,18 @@ class TradeHistoryDataViewController: UIViewController {
     
     func configureViewStyle() {
         
+//        var activityWheel = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.Gray)
+//        
+//        activityWheel.center = view.center
+//        activityWheel.hidesWhenStopped = true
+//        activityWheel.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.Gray
+//        view.addSubview(activityWheel)
         
+//        oneMinActivityWheel.center = oneMinView.center
+//        oneMinActivityWheel.hidesWhenStopped = true
+//        oneMinActivityWheel.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.Gray
+//        view.addSubview(oneMinActivityWheel)
+//        
         oneMinView.layer.borderWidth = 1.0
         oneMinView.layer.borderColor = UIColor.blackColor().CGColor
         oneMinView.layer.cornerRadius = 5.0

@@ -201,8 +201,12 @@ class LineChartViewController: UIViewController, ChartViewDelegate {
                 
             })
         case 2:
+            
+            self.timePeriodSegmentedControl.userInteractionEnabled = false
+
             dataManager.getHistory(timeConstants.twelveHours, fromTime: dataManager.currentTime, completion: { (result) in
                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    
                     
                     let historyData = result.tradeInfo
                     let twelveHourTrades = result.trades
@@ -211,8 +215,13 @@ class LineChartViewController: UIViewController, ChartViewDelegate {
                     
                     self.splitTradesIntoTimeIntervals(twelveHourTrades, timeInterval: timeConstants.thirtyMins, start: historyData.startTimeUnix, end: historyData.endTimeUnix)
                     self.activityWheel.stopAnimating()
+                    
+                    self.timePeriodSegmentedControl.userInteractionEnabled = true
+
                 })
             })
+            
+
 
         case 3:
             dataManager.getHistory(timeConstants.twelveHours, fromTime: dataManager.currentTime, completion: { (result) in
