@@ -44,14 +44,13 @@ class DataManager {
         }
     }
     
-    
-    
     func getTicker(completion:(Ticker) -> Void) {
         
         let urlPath = "https://poloniex.com/public?command=returnTicker"
         let endPoint = NSURL(string: urlPath)
         
         let tickerTask = NSURLSession.sharedSession().dataTaskWithURL(endPoint!) { (data, response, error) -> Void in
+            
             
             if let unWrappedaData = data {
                 guard let fetchedTicker = (try? NSJSONSerialization.JSONObjectWithData(unWrappedaData, options: NSJSONReadingOptions.AllowFragments) as! [String : AnyObject]) else  {return}
@@ -76,7 +75,6 @@ class DataManager {
                 print("No connection")
             }
         }
-        //}
         tickerTask.resume()
         
     }

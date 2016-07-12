@@ -106,9 +106,9 @@ class TradeHistoryDataViewController: UIViewController {
         fetchOneMinuteData()
         fetchFiveMinuteData()
         fetchThirtyMinuteData()
-       // fetchTwoHourData()
+        fetchTwoHourData()
         fetchTwelveHourData()
-       // fetchOneDayData()
+        fetchOneDayData()
         
         
         
@@ -184,8 +184,6 @@ class TradeHistoryDataViewController: UIViewController {
     
     func fetchThirtyMinuteData() {
         
-        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
-
         
 
         dataManager.getHistory(timeConstants.thirtyMins, fromTime: dataManager.currentTime) { (result) in
@@ -215,7 +213,6 @@ class TradeHistoryDataViewController: UIViewController {
 
                 
             })
-            UIApplication.sharedApplication().networkActivityIndicatorVisible = false
         }
     }
     
@@ -245,9 +242,6 @@ class TradeHistoryDataViewController: UIViewController {
     }
     
     func fetchTwelveHourData() {
-        
-        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
-        
         dataManager.getHistory(timeConstants.twelveHours, fromTime: dataManager.currentTime) { (result) in
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
                 
@@ -269,13 +263,15 @@ class TradeHistoryDataViewController: UIViewController {
                 }
                 
                 self.twelveHourNetValueLabel.text = String(format: "%0.3fBTC", tradeHistoryData.netValue)
-                
-                UIApplication.sharedApplication().networkActivityIndicatorVisible = false
             })
         }
     }
     
     func fetchOneDayData() {
+        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+
+
+        
         dataManager.getHistory(timeConstants.twelveHours, fromTime: dataManager.currentTime, completion: { (result) in
             
             var firstTradesArray = result.trades
@@ -286,6 +282,8 @@ class TradeHistoryDataViewController: UIViewController {
             
             self.dataManager.getHistory(timeConstants.twelveHours, fromTime: adjustedEndtime, completion: { (result) in
                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    
+
                     
                     let secondTradesArray = result.trades
                     let secondHistoryData = result.tradeInfo
@@ -314,14 +312,14 @@ class TradeHistoryDataViewController: UIViewController {
                     }
                     
                     self.oneDayNetValueLabel.text = String(format: "%0.3fBTC", combinedHistoryData.netValue)
-                    
+                    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+
                 })
+                    
             })
-            
+
         })
-        
-        
-        
+
     }
     
     //MARK: UI Functions
@@ -398,6 +396,7 @@ class TradeHistoryDataViewController: UIViewController {
     
     @IBAction func refreshOneDayButtonPressed(sender: UIButton) {
         fetchOneDayData()
+
     }
         
     }
