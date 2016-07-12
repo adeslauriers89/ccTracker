@@ -273,12 +273,6 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="24 Hours" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fk3-LH-WiU">
-                                <rect key="frame" x="12" y="480" width="296" height="60"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -289,7 +283,6 @@
                         <outlet property="lastSixHourHistoryLabel" destination="XmC-AF-faL" id="4s1-qZ-n9F"/>
                         <outlet property="lastThirtyMinuteHistoryLabel" destination="DLw-Ct-rDu" id="P16-1b-dY5"/>
                         <outlet property="lastTwelveHourHistoryLabel" destination="lDM-Qh-Byf" id="taF-BL-zuu"/>
-                        <outlet property="lastTwentyFourHourHistoryLabel" destination="Fk3-LH-WiU" id="MCs-lq-u29"/>
                         <outlet property="lastTwoHourHistoryLabel" destination="0QI-hB-SI9" id="z6T-xM-xKv"/>
                     </connections>
                 </viewController>

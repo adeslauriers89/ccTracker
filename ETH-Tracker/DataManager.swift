@@ -44,6 +44,29 @@ class DataManager {
         }
     }
     
+    func getCurrencyPairs() {
+        
+        let urlPath = "https://poloniex.com/public?command=returnTicker"
+        let endPoint = NSURL(string: urlPath)
+        
+        let currencyPairTask = NSURLSession.sharedSession().dataTaskWithURL(endPoint!) { (data, response, error) -> Void in
+            
+            if let unWrappedData = data {
+                guard let fetchedPairs = (try? NSJSONSerialization.JSONObjectWithData(unWrappedData, options: NSJSONReadingOptions.AllowFragments) as! [String : AnyObject]) else {return}
+                
+                for pair in fetchedPairs {
+                    let pairName = pair.0
+                    
+                    print(pairName)
+                }
+                
+            }
+            
+        }
+        currencyPairTask.resume()
+    }
+    
+    
     func getTicker(completion:(Ticker) -> Void) {
         
         let urlPath = "https://poloniex.com/public?command=returnTicker"
@@ -52,8 +75,8 @@ class DataManager {
         let tickerTask = NSURLSession.sharedSession().dataTaskWithURL(endPoint!) { (data, response, error) -> Void in
             
             
-            if let unWrappedaData = data {
-                guard let fetchedTicker = (try? NSJSONSerialization.JSONObjectWithData(unWrappedaData, options: NSJSONReadingOptions.AllowFragments) as! [String : AnyObject]) else  {return}
+            if let unWrappedData = data {
+                guard let fetchedTicker = (try? NSJSONSerialization.JSONObjectWithData(unWrappedData, options: NSJSONReadingOptions.AllowFragments) as! [String : AnyObject]) else  {return}
                 
                 if let eth: AnyObject = fetchedTicker["BTC_ETH"] {
                     if let ethTickerDict = eth as? [String : AnyObject] {
