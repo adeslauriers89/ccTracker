@@ -44,10 +44,11 @@ class DataManager {
         }
     }
     
-    func getCurrencyPairs() {
+    func getCurrencyPairs(completion:[String] -> Void) {
         
         let urlPath = "https://poloniex.com/public?command=returnTicker"
         let endPoint = NSURL(string: urlPath)
+        var currencyPairs = [String]()
         
         let currencyPairTask = NSURLSession.sharedSession().dataTaskWithURL(endPoint!) { (data, response, error) -> Void in
             
@@ -58,11 +59,16 @@ class DataManager {
                     let pairName = pair.0
                     
                     print(pairName)
+                    currencyPairs.append(pairName)
                 }
                 
             }
             
+            completion(currencyPairs)
+            
         }
+        
+        
         currencyPairTask.resume()
     }
     

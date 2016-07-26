@@ -292,7 +292,12 @@ class TradeHistoryDataViewController: UIViewController {
 
                     secondHistoryData.endTimeUnix = firstHistoryData.endTimeUnix
                     
-                    let combinedHistoryData = HistoryData(totalBuys: firstHistoryData.totalBuys + secondHistoryData.totalBuys, totalBuyValue: firstHistoryData.totalBuyValue + secondHistoryData.totalBuyValue, totalSells: firstHistoryData.totalSells + secondHistoryData.totalSells, totalSellValue: firstHistoryData.totalSellValue + secondHistoryData.totalSellValue, netValue: firstHistoryData.netValue + secondHistoryData.netValue, totalTrades: firstHistoryData.totalTrades + secondHistoryData.totalTrades)
+                    let combinedHistoryData = HistoryData(totalBuys: firstHistoryData.totalBuys + secondHistoryData.totalBuys,
+                        totalBuyValue: firstHistoryData.totalBuyValue + secondHistoryData.totalBuyValue,
+                        totalSells: firstHistoryData.totalSells + secondHistoryData.totalSells,
+                        totalSellValue: firstHistoryData.totalSellValue + secondHistoryData.totalSellValue,
+                        netValue: firstHistoryData.netValue + secondHistoryData.netValue,
+                        totalTrades: firstHistoryData.totalTrades + secondHistoryData.totalTrades)
                     
                    print("Combined data: Buys: \(combinedHistoryData.totalBuys), B Values: \(combinedHistoryData.totalBuyValue), Sells: \(combinedHistoryData.totalSells), S values: \(combinedHistoryData.totalSellValue), Total trades: \(combinedHistoryData.totalTrades) net value: \(combinedHistoryData.netValue)")
                     

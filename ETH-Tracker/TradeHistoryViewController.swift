@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TradeHistoryViewController: UIViewController {
+class TradeHistoryViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
 
     //MARK: Properties
     
@@ -23,60 +23,149 @@ class TradeHistoryViewController: UIViewController {
     @IBOutlet weak var lastTwentyFourHourHistoryLabel: UILabel!
     
     
+    @IBOutlet weak var picker: UIPickerView!
+    
+    
+    var pickerData = [String]()
+    
+
     //MARK: ViewController Life Cycle
+    
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        self.picker.delegate = self
+        self.picker.dataSource = self
+        
+        dataManager.getCurrencyPairs { (pairs) in
+            
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            
+            self.pickerData = pairs
+            
+                let indexOfBtcEth = self.pickerData.indexOf("BTC_ETH")
+                
+                self.picker.reloadAllComponents()
+                
+                if self.pickerData.count == 0 {
+                    print("0000000")
+                } else {
+                    
+                    
+                    self.picker.selectRow(indexOfBtcEth!, inComponent: 0, animated: true)
+                }
+                
+            
+              })
+        }
+        
+        
+        
+        
+    }
+    
+    func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        
+        print("hihi \(pickerData.count)")
+        
+        return pickerData.count
+    }
+    
+    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        
+        return pickerData[row]
+    }
+    
+    
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+
         
-//        dataManager.getTradeHistory(timeConstants.oneMin) { (result) in
-//            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-//                self.lastMinuteHistoryLabel.text = "Last Minute: \(result.info)"
-//            })
-//        }
-//        
-//        dataManager.getTradeHistory(timeConstants.fiveMins) { (result) in
-//            
-//            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-//                self.lastFiveMinuteHistoryLabel.text = "Last 5 Mins: \(result.info)"
-//            })
-//        }
-//        
-//        dataManager.getTradeHistory(timeConstants.thirtyMins) { (result) in
-//            
-//            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-//                self.lastThirtyMinuteHistoryLabel.text = "Last 30 Mins: \(result.info)"
-//            })
-//        }
-//        
-//        dataManager.getTradeHistory(timeConstants.twoHours) { (result) in
-//            
-//            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-//                self.lastTwoHourHistoryLabel.text = "Last 2 Hrs: \(result.info)"
-//            })
-//        }
-//        
-//        dataManager.getTradeHistory(timeConstants.sixHours) { (result) in
-//            
-//            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-//                self.lastSixHourHistoryLabel.text = "Last 6 Hrs: \(result.info)"
-//            })
-//        }
-//        
-//        dataManager.getTradeHistory(timeConstants.twelveHours) { (result) in
-//            
-//            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-//                self.lastTwelveHourHistoryLabel.text = "Last 12 Hrs: \(result.info)"
-//            })
-//        }
-//        
-//        dataManager.getTradeHistory(timeConstants.oneDay) { (result) in
-//            
-//            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-//                self.lastTwentyFourHourHistoryLabel.text = "Last 24 Hrs: \(result.info)"
-//            })
-//        }
+        
+        dataManager.getHistory(timeConstants.twoHours, fromTime: dataManager.currentTime) { (result) in
+            
+            var historyDataArray = [HistoryData]()
+            
+            var firstTradesArray = result.trades
+            let firstHistoryData = result.tradeInfo
+            historyDataArray.append(firstHistoryData)
+            
+            print(firstHistoryData.startTimeUnix)
+            
+            var adjustedEndTime = firstHistoryData.startTimeUnix - 1
+            
+            
+            print("adj \(adjustedEndTime)")
+            
+            self.dataManager.getHistory(timeConstants.twoHours, fromTime: adjustedEndTime, completion: { (result) in
+                
+                let secondTradesArray = result.trades
+                let secondHistoryData = result.tradeInfo
+                historyDataArray.append(secondHistoryData)
+                
+                firstTradesArray.appendContentsOf(secondTradesArray)
+                
+                adjustedEndTime = secondHistoryData.startTimeUnix - 1
+                
+                
+                    self.dataManager.getHistory(timeConstants.twoHours, fromTime: adjustedEndTime, completion: { (result) in
+                        
+                        
+                        let thirdTradesArray = result.trades
+                        let thirdHistoryData = result.tradeInfo
+                        historyDataArray.append(thirdHistoryData)
+                        
+                        firstTradesArray.appendContentsOf(thirdTradesArray)
+                        
+
+                        
+                        var combinedTotalBuys = Int()
+                        var combinedBuyValue = Double()
+                        var combinedTotalSells = Int()
+                        var combinedSellValue = Double()
+                        var combinedNetValue = Double()
+                        var combinedTotalTrades = Int()
+                        
+                        
+                        for historyData in historyDataArray {
+                            
+                            combinedTotalBuys = historyData.totalBuys
+                            combinedBuyValue = historyData.totalBuyValue
+                            combinedTotalSells = historyData.totalSells
+                            combinedSellValue = historyData.totalSellValue
+                            combinedNetValue = historyData.netValue
+                            combinedTotalTrades = historyData.totalTrades
+    
+                        }
+                        
+                        print("Total buys \(combinedTotalBuys) value \(combinedBuyValue), total sells \(combinedTotalSells) value \(combinedSellValue), total trades \(combinedTotalTrades) value \(combinedNetValue)")
+                        
+                        
+                    })
+                
+                
+                
+            })
+            
+            
+            
+            
+        }
         
     }
 
 
 }
+
+
+
+
+
+
+
