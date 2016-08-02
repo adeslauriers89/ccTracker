@@ -89,8 +89,7 @@ class TradeHistoryDataViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = UIColor(colorLiteralRed: 217.0/255.0, green: 217.0/255.0 , blue: 217.0/255.0, alpha: 1.0)
-            
+        view.backgroundColor = colours.backGroundGrey
 
         thirtyMinActivityWheel.center = thirtyMinView.center
         thirtyMinActivityWheel.hidesWhenStopped = true
@@ -143,7 +142,7 @@ class TradeHistoryDataViewController: UIViewController {
                 self.oneMinTotalTradesLabel.text = "Total Trades: \(tradeHistoryData.totalTrades)"
                 
                 if tradeHistoryData.netValue >= 0.0 {
-                    self.oneMinNetValueLabel.textColor = UIColor.greenColor()
+                    self.oneMinNetValueLabel.textColor = colours.positiveGreen
                 } else if tradeHistoryData.netValue <= 0.0 {
                     self.oneMinNetValueLabel.textColor = UIColor.redColor()
                 } else {
@@ -170,7 +169,7 @@ class TradeHistoryDataViewController: UIViewController {
                 self.fiveMinTotalTradesLabel.text = "Total Trades: \(tradeHistoryData.totalTrades)"
                 
                 if tradeHistoryData.netValue >= 0.0 {
-                    self.fiveMinNetValueLabel.textColor = UIColor.greenColor()
+                    self.fiveMinNetValueLabel.textColor = colours.positiveGreen
                 } else if tradeHistoryData.netValue <= 0.0 {
                     self.fiveMinNetValueLabel.textColor = UIColor.redColor()
                 } else {
@@ -201,7 +200,7 @@ class TradeHistoryDataViewController: UIViewController {
                 self.thirtyMinTotalTradesLabel.text = "Total Trades: \(tradeHistoryData.totalTrades)"
                 
                 if tradeHistoryData.netValue >= 0.0 {
-                    self.thirtyMinNetValueLabel.textColor = UIColor.greenColor()
+                    self.thirtyMinNetValueLabel.textColor = colours.positiveGreen
                 } else if tradeHistoryData.netValue <= 0.0 {
                     self.thirtyMinNetValueLabel.textColor = UIColor.redColor()
                 } else {
@@ -229,7 +228,7 @@ class TradeHistoryDataViewController: UIViewController {
                 self.twoHourTotalTradesLabel.text = "Total Trades: \(tradeHistoryData.totalTrades)"
                 
                 if tradeHistoryData.netValue >= 0.0 {
-                    self.twoHourNetValueLabel.textColor = UIColor.greenColor()
+                    self.twoHourNetValueLabel.textColor = colours.positiveGreen
                 } else if tradeHistoryData.netValue <= 0.0 {
                     self.twoHourNetValueLabel.textColor = UIColor.redColor()
                 } else {
@@ -255,7 +254,7 @@ class TradeHistoryDataViewController: UIViewController {
                 self.twelveHourTotalTradesLabel.text = "Total Trades: \(tradeHistoryData.totalTrades)"
                 
                 if tradeHistoryData.netValue >= 0.0 {
-                    self.twelveHourNetValueLabel.textColor = UIColor.greenColor()
+                    self.twelveHourNetValueLabel.textColor = colours.positiveGreen
                 } else if tradeHistoryData.netValue <= 0.0 {
                     self.twelveHourNetValueLabel.textColor = UIColor.redColor()
                 } else {
@@ -309,7 +308,7 @@ class TradeHistoryDataViewController: UIViewController {
                     self.oneDayTotalTradesLabel.text = "Total Trades: \(combinedHistoryData.totalTrades)"
                     
                     if combinedHistoryData.netValue >= 0.0 {
-                        self.oneDayNetValueLabel.textColor = UIColor.greenColor()
+                        self.oneDayNetValueLabel.textColor = colours.positiveGreen
                     } else if combinedHistoryData.netValue <= 0.0 {
                         self.oneDayNetValueLabel.textColor = UIColor.redColor()
                     } else {

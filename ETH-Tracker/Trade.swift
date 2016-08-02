@@ -10,12 +10,22 @@ import Foundation
 
 class Trade {
     
-    var date  = ""
-    var type = ""
-    var timeInt = Int()
-    var rate = Double()
-    var amount = Double()
-    var total = Double()
+    var date: String
+    var type: String
+    var timeInt: Int
+    var rate: Double
+    var amount: Double
+    var total: Double
+    
+    init(date: String, type: String, timeInt: Int, rate: Double, amount: Double, total: Double) {
+        self.date = date
+        self.type = type
+        self.timeInt = timeInt
+        self.rate = rate
+        self.amount = amount
+        self.total = total
+    }
+    
     
 }
 

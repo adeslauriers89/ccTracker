@@ -34,7 +34,7 @@ class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = UIColor(colorLiteralRed: 217.0/255.0, green: 217.0/255.0 , blue: 217.0/255.0, alpha: 1.0)
+        view.backgroundColor = colours.backGroundGrey
 
         
         tickerView.layer.borderWidth = 1.0
@@ -51,32 +51,7 @@ class HomeViewController: UIViewController {
         getTickerData()
 
     }
-    
-    
-    //MARK: Segue
-    
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        
-        if segue.identifier == "segueToOrderBook" {
-            
-            let destinationViewController = segue.destinationViewController as! OrderViewController
-            destinationViewController.dataManager = dataManager
-            
-        } else if segue.identifier == "segueToTradeHistory" {
-            
-            let destinationViewController = segue.destinationViewController as! TradeHistoryViewController
-            destinationViewController.dataManager = dataManager
-            
-        } else if segue.identifier == "segueToLineChart" {
-            
-//            let destinationViewController = segue.destinationViewController as! LineChartViewController
-////            destinationViewController.dataManager = dataManager
-     }
-        
-        
-    }
-    
-    //MARK: Actions
+        //MARK: Actions
     
     
     @IBAction func refreshTickerButtonPressed(sender: UIButton) {
@@ -100,7 +75,7 @@ class HomeViewController: UIViewController {
                 self.tickerVolumeLabel.text = String(format: "24hr Volume: %0.3f", newTicker.volume)
                 
                 if newTicker.percentChange > 0.0 {
-                    self.tickerPercentChangeLabel.textColor = UIColor.greenColor()
+                    self.tickerPercentChangeLabel.textColor = colours.positiveGreen
                 } else if newTicker.percentChange < 0.0 {
                     self.tickerPercentChangeLabel.textColor = UIColor.redColor()
                 } else {

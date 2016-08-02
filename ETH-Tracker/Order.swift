@@ -10,9 +10,6 @@ import Foundation
 
 class Order {
     
-//    var price = Double()
-//    var amount = Double()
-    
     var price: Double
     var amount: Double
     

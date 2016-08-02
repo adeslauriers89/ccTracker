@@ -51,9 +51,9 @@
                                 <segments>
                                     <segment title="30 Min"/>
                                     <segment title="2 Hrs"/>
+                                    <segment title="6 Hrs"/>
                                     <segment title="12 Hrs"/>
                                     <segment title="1 Day"/>
-                                    <segment title="2 Days"/>
                                 </segments>
                                 <connections>
                                     <action selector="timePeriodSelected:" destination="tEJ-pO-2Tk" eventType="valueChanged" id="kTy-mz-mgN"/>
@@ -316,21 +316,21 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="1 Min" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FvZ-RG-Wbg">
-                                <rect key="frame" x="12" y="72" width="296" height="60"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <pickerView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VrL-7j-E9b">
                                 <rect key="frame" x="0.0" y="159" width="320" height="116"/>
                             </pickerView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rpx-qE-YzE">
+                                <rect key="frame" x="137" y="390" width="46" height="30"/>
+                                <state key="normal" title="Button"/>
+                                <connections>
+                                    <action selector="setPairButtonPressed:" destination="gY9-3F-PEA" eventType="touchUpInside" id="NS7-1Y-X5h"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" title="Trade History" id="52g-Qp-rcW"/>
                     <connections>
-                        <outlet property="lastMinuteHistoryLabel" destination="FvZ-RG-Wbg" id="TPS-NX-2xc"/>
                         <outlet property="picker" destination="VrL-7j-E9b" id="tqJ-WP-wEo"/>
                     </connections>
                 </viewController>

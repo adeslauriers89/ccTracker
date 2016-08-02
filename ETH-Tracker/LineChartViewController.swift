@@ -40,6 +40,9 @@ class LineChartViewController: UIViewController, ChartViewDelegate {
         activityWheel.hidesWhenStopped = true
         activityWheel.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.Gray
         view.addSubview(activityWheel)
+        
+        view.backgroundColor = UIColor(colorLiteralRed: 217.0/255.0, green: 217.0/255.0 , blue: 217.0/255.0, alpha: 1.0)
+
      
         lineChartView.delegate = self
         lineChartView.descriptionTextColor = UIColor.blackColor()
@@ -76,6 +79,7 @@ class LineChartViewController: UIViewController, ChartViewDelegate {
         
         var tradeHistoryInIntervals = [[Trade]]()
         var intervalOfTrades = [Trade]()
+        var tradesToSplit = trades
         
         var startTime = start
         let endTime = end
@@ -89,13 +93,15 @@ class LineChartViewController: UIViewController, ChartViewDelegate {
         for i in 0..<numberOfIntervals {
             intervalOfTrades.removeAll()
             
-            for trade in trades {
+            for trade in tradesToSplit {
                 if (trade.timeInt >= startTime) && (trade.timeInt < timeIntervalEnd) {
                     intervalOfTrades.append(trade)
+                    
                 }
             }
             
             tradeHistoryInIntervals.insert(intervalOfTrades, atIndex: i)
+            
             
             startTime += timeInterval
             timeIntervalEnd += timeInterval
@@ -181,10 +187,13 @@ class LineChartViewController: UIViewController, ChartViewDelegate {
         
         switch timePeriodSegmentedControl.selectedSegmentIndex {
         case 0:
-            
+        
             getHistory30Min()
             
         case 1:
+            
+            self.timePeriodSegmentedControl.userInteractionEnabled = false
+
 
             dataManager.getHistory(timeConstants.twoHours, fromTime: dataManager.currentTime, completion: { (result) in
                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
@@ -192,11 +201,13 @@ class LineChartViewController: UIViewController, ChartViewDelegate {
                     let historyData = result.tradeInfo
                     let twoHourTrades = result.trades
                     
-                    self.intervalLabel.text = "Intervals: Five minutes"
+                    self.intervalLabel.text = "Intervals: 5 Minutes"
                     
                     self.splitTradesIntoTimeIntervals(twoHourTrades, timeInterval: timeConstants.fiveMins, start: historyData.startTimeUnix, end: historyData.endTimeUnix)
                     self.activityWheel.stopAnimating()
-                    
+
+                    self.timePeriodSegmentedControl.userInteractionEnabled = true
+
                 })
                 
             })
@@ -204,18 +215,19 @@ class LineChartViewController: UIViewController, ChartViewDelegate {
             
             self.timePeriodSegmentedControl.userInteractionEnabled = false
 
-            dataManager.getHistory(timeConstants.twelveHours, fromTime: dataManager.currentTime, completion: { (result) in
+            
+            dataManager.getHistory(timeConstants.sixHours, fromTime: dataManager.currentTime, completion: { (result) in
                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
                     
-                    
                     let historyData = result.tradeInfo
-                    let twelveHourTrades = result.trades
+                    let sixHourTrades = result.trades
                     
-                    self.intervalLabel.text = "Intervals: Thirty minutes"
+                    self.intervalLabel.text = "Intervals: 15 Minutes"
                     
-                    self.splitTradesIntoTimeIntervals(twelveHourTrades, timeInterval: timeConstants.thirtyMins, start: historyData.startTimeUnix, end: historyData.endTimeUnix)
+                    self.splitTradesIntoTimeIntervals(sixHourTrades, timeInterval: timeConstants.fifteenMins, start: historyData.startTimeUnix, end: historyData.endTimeUnix)
                     self.activityWheel.stopAnimating()
-                    
+
+                
                     self.timePeriodSegmentedControl.userInteractionEnabled = true
 
                 })
@@ -224,20 +236,47 @@ class LineChartViewController: UIViewController, ChartViewDelegate {
 
 
         case 3:
+            
+            
+            self.timePeriodSegmentedControl.userInteractionEnabled = false
+            
+            dataManager.getHistory(timeConstants.twelveHours, fromTime: dataManager.currentTime, completion: { (result) in
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    
+                    
+                    let historyData = result.tradeInfo
+                    let twelveHourTrades = result.trades
+                    
+                    self.intervalLabel.text = "Intervals: 30 Minutes"
+                    
+                    self.splitTradesIntoTimeIntervals(twelveHourTrades, timeInterval: timeConstants.thirtyMins, start: historyData.startTimeUnix, end: historyData.endTimeUnix)
+                    self.activityWheel.stopAnimating()
+                    
+                    self.timePeriodSegmentedControl.userInteractionEnabled = true
+                    
+                })
+            })
+
+
+        case 4:
+            
+            self.timePeriodSegmentedControl.userInteractionEnabled = false
+
+
             dataManager.getHistory(timeConstants.twelveHours, fromTime: dataManager.currentTime, completion: { (result) in
                 
-                    var firstTradesArray = result.trades
-                    let firstHistoryData = result.tradeInfo
-                    
-                    print("first array count \(firstTradesArray.count)")
-                    print("first arrays oldest trade =  \(firstTradesArray.last?.date)")
-
-                    
-                    let adjustedEndtime = firstHistoryData.startTimeUnix - 1
-                    
-                    self.dataManager.getHistory(timeConstants.twelveHours, fromTime: adjustedEndtime, completion: { (result) in
-                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                            
+                var firstTradesArray = result.trades
+                let firstHistoryData = result.tradeInfo
+                
+                print("first array count \(firstTradesArray.count)")
+                print("first arrays oldest trade =  \(firstTradesArray.last?.date)")
+                
+                
+                let adjustedEndtime = firstHistoryData.startTimeUnix - 1
+                
+                self.dataManager.getHistory(timeConstants.twelveHours, fromTime: adjustedEndtime, completion: { (result) in
+                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                        
                         let secondTradesArray = result.trades
                         let secondHistoryData = result.tradeInfo
                         
@@ -251,38 +290,23 @@ class LineChartViewController: UIViewController, ChartViewDelegate {
                         print("combined array oldest date: \(firstTradesArray.first?.date)")
                         
                         print("combined array start \(firstTradesArray.last?.timeInt) and end \(firstTradesArray.first?.timeInt)")
-
-
+                        
+                        
                         
                         secondHistoryData.endTimeUnix = firstHistoryData.endTimeUnix
                         print("hist data start \(secondHistoryData.startTimeUnix) and end \(secondHistoryData.endTimeUnix)")
                         
-                        self.intervalLabel.text = "Intervals: One hour"
+                        self.intervalLabel.text = "Intervals: 1 Hour"
                         
                         self.splitTradesIntoTimeIntervals(firstTradesArray, timeInterval: timeConstants.oneHour, start: secondHistoryData.startTimeUnix, end: secondHistoryData.endTimeUnix)
                         self.activityWheel.stopAnimating()
                         
-                          })
-                    })
-                    
-   
-              
-            })
+                        self.timePeriodSegmentedControl.userInteractionEnabled = true
 
-        case 4:
-            dataManager.getHistory(timeConstants.twoDays, fromTime: dataManager.currentTime, completion: { (result) in
-                dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                    
-                    let historyData = result.tradeInfo
-                    let twoDayTrades = result.trades
-                    
-                    self.intervalLabel.text = "Intervals: Two Hours"
-                    
-                    self.splitTradesIntoTimeIntervals(twoDayTrades, timeInterval: timeConstants.twoHours, start: historyData.startTimeUnix, end: historyData.endTimeUnix)
-                    self.activityWheel.stopAnimating()
+                        
+                    })
                 })
             })
-            
 
         default:
             break
@@ -295,16 +319,23 @@ class LineChartViewController: UIViewController, ChartViewDelegate {
     }
     
     func getHistory30Min() {
+        self.timePeriodSegmentedControl.userInteractionEnabled = false
+        
+        
         dataManager.getHistory(timeConstants.thirtyMins, fromTime: dataManager.currentTime, completion: { (result) in
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
                 
                 let historyData = result.tradeInfo
                 let thirtyMinTrades = result.trades
                 
-                self.intervalLabel.text = "Intervals: One Minute"
+                self.intervalLabel.text = "Intervals: 1 Minute"
                 
                 self.splitTradesIntoTimeIntervals(thirtyMinTrades, timeInterval: timeConstants.oneMin, start: historyData.startTimeUnix, end: historyData.endTimeUnix)
                 self.activityWheel.stopAnimating()
+                
+                self.timePeriodSegmentedControl.userInteractionEnabled = true
+
+                
             })
         })
     }

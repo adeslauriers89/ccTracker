@@ -10,33 +10,9 @@ import Foundation
 
 
 class DataManager {
-    
-    var totalTradesSold = Int()
-    var totalTradesBought = Int()
-    
-    var soldTradesValue = Double()
-    var boughtTradesValue = Double()
-    var tradesNetValue = Double()
-  
-    var buyOrders = [Order]()
-    var sellOrders = [Order]()
-    
-    var totalAmountPendingAsks = Double()
-    var totalAmountPendingBids = Double()
-    
-    var totalAmountSellOrdersWithinOnePercent = Double()
-    var totalAmountBuyOrdersWithinOnePercent = Double()
-    
-    var ethCurrentValue = Double()
-    
-    var sellOrdersWithinOnePercent = [Order]()
-    var buyOrdersWithinOnePercent = [Order]()
-    
-    var buyOrderInfo: String = ""
-    var sellOrderInfo: String = ""
 
-    var tradeHistory = [Trade]()
-    var historyInfo: String = ""
+   // var tradeHistory = [Trade]()
+    var currencyPair = String()
     
     var currentTime: Int {
         get {
@@ -52,23 +28,21 @@ class DataManager {
         
         let currencyPairTask = NSURLSession.sharedSession().dataTaskWithURL(endPoint!) { (data, response, error) -> Void in
             
+            if error != nil {
+                print("ERROR: \(error)")
+            }
+            
             if let unWrappedData = data {
                 guard let fetchedPairs = (try? NSJSONSerialization.JSONObjectWithData(unWrappedData, options: NSJSONReadingOptions.AllowFragments) as! [String : AnyObject]) else {return}
                 
                 for pair in fetchedPairs {
                     let pairName = pair.0
                     
-                    print(pairName)
                     currencyPairs.append(pairName)
                 }
-                
             }
-            
             completion(currencyPairs)
-            
         }
-        
-        
         currencyPairTask.resume()
     }
     
@@ -158,7 +132,6 @@ class DataManager {
                 print("no connection or no data recieved")
             }
             
-            
             self.getTicker({ (Ticker) in
                 
                 currentPrice = Ticker.currentPrice
@@ -214,33 +187,20 @@ class DataManager {
     func getHistory(forTimePeriod: Int, fromTime: Int,completion: (result: (trades: [Trade], tradeInfo: HistoryData) ) -> Void) {
         
         var completedTrades = [Trade]()
-        
         let startTime = fromTime - forTimePeriod
-        
         let currencyPair = "BTC_ETH"
-        
         let urlPath = "https://poloniex.com/public?command=returnTradeHistory&currencyPair=\(currencyPair)&start=\(startTime)&end=\(fromTime)"
         
         let historyTask = NSURLSession.sharedSession().dataTaskWithURL(NSURL(string: urlPath)!) { (data, response, error) -> Void in
-            
             if error != nil {
-                print(error)
+                print("ERROR: \(error)")
             }
             
-            
             if let unWrappedData = data {
-                
-                
-                
                 if let fetchedHistory = (try? NSJSONSerialization.JSONObjectWithData(unWrappedData, options: NSJSONReadingOptions.AllowFragments) as!
                     [[String: AnyObject]]) {
                     
-                    if self.tradeHistory.isEmpty == false {
-                        self.tradeHistory.removeAll()
-                    }
-                    
                     for completedTrade in fetchedHistory {
-                        let newTrade = Trade()
                         
                         guard let date = completedTrade["date"] as? String,
                             let type = completedTrade["type"] as? String,
@@ -248,19 +208,12 @@ class DataManager {
                             let amount = completedTrade["amount"]?.doubleValue,
                             let total = completedTrade["total"]?.doubleValue else {return}
                         
-                        newTrade.date = date
-                        newTrade.type = type
-                        newTrade.rate = rate
-                        newTrade.amount = amount
-                        newTrade.total = total
+                        let timeInt = self.timeStampToUnix(date)
                         
-                        
-                        newTrade.timeInt = self.timeStampToUnix(newTrade.date)
+                        let newTrade = Trade(date: date, type: type, timeInt: timeInt, rate: rate, amount: amount, total: total)
                         
                         completedTrades.append(newTrade)
-                        
                     }
-                    
                 }
             }
             
@@ -274,6 +227,169 @@ class DataManager {
         historyTask.resume()
     }
     
+    func combineHistory(timePeriod: Int, timesToCombine: Int, completion:(result: (trades: [Trade], tradeInfo: HistoryData)) -> Void) {
+        
+        
+        
+        let group = dispatch_group_create()
+        
+        var fetchedTrades = [Trade]()
+        var fetchedHistoryData = [HistoryData]()
+        var timeToSearchFrom = currentTime
+    
+        for i in 0..<timesToCombine {
+
+            if (i == timesToCombine - 1) {
+                print("Last time in loop \(i)")
+                
+                dispatch_group_enter(group)
+                
+                getHistory(timePeriod - i, fromTime: timeToSearchFrom, completion: { (result) in
+                    
+                    let trades = result.trades
+                    let tradeInfo = result.tradeInfo
+                    
+                    fetchedTrades.appendContentsOf(trades)
+                    
+                    fetchedHistoryData.append(tradeInfo)
+                    
+                    print("trades count \(fetchedTrades.count)")
+                    print("Time number : \(i)")
+                    print("Start \(tradeInfo.startTimeUnix) End \(tradeInfo.endTimeUnix)")
+                    
+                    dispatch_group_leave(group)
+                })
+            } else {
+                
+                dispatch_group_enter(group)
+
+                
+                getHistory(timePeriod, fromTime: timeToSearchFrom, completion: { (result) in
+                    
+                    let trades = result.trades
+                    let tradeInfo = result.tradeInfo
+                    
+                    fetchedTrades.appendContentsOf(trades)
+                    fetchedHistoryData.append(tradeInfo)
+                    
+                    print("trades count \(fetchedTrades.count)")
+                    print("Time number : \(i)")
+                    
+                    print("Start \(tradeInfo.startTimeUnix) End \(tradeInfo.endTimeUnix)")
+                    
+                  //  completion(result: (trades: fetchedTrades, tradeInfo: fetchedHistoryData))
+
+                  //print("HIST DATA COUNT \(fetchedHistoryData.count)")
+                    
+                    
+                    dispatch_group_leave(group)
+
+                })
+                
+
+            }
+            
+            timeToSearchFrom -= timePeriod + 1
+            
+        }
+        
+        dispatch_group_notify(group, dispatch_get_main_queue()) { 
+            
+            
+            print("HIST DATA COUNT \(fetchedHistoryData.count)")
+            print("TRADES COUNTTTTT \(fetchedTrades.count)")
+            
+         //   print(self.combineHistoryData(fetchedHistoryData))
+            
+            let histData = self.combineHistoryData(fetchedHistoryData)
+            
+            print("COMBINED HIST DATA: Total buys \(histData.totalBuys) value \(histData.totalBuyValue). Total sells \(histData.totalSells) value \(histData.totalSellValue). Total Trades \(histData.totalTrades) value \(histData.netValue)")
+            
+            
+            
+            
+            completion(result: (trades: fetchedTrades, tradeInfo: histData))
+
+        }
+
+    }
+    
+    
+    func combineHistoryData(dataToCombine: [HistoryData]) -> HistoryData{
+        
+        var combinedTotalBuys = Int()
+        var combinedBuyValue = Double()
+        var combinedTotalSells = Int()
+        var combinedSellValue = Double()
+        var combinedTotalTrades = Int()
+        var combinedNetValue = Double()
+        
+        var startTimes = [Int]()
+        var endTimes = [Int]()
+        
+        for data in dataToCombine {
+            
+            combinedTotalBuys += data.totalBuys
+            combinedBuyValue += data.totalBuyValue
+            combinedTotalSells += data.totalSells
+            combinedSellValue += data.totalSellValue
+            combinedNetValue += data.netValue
+            combinedTotalTrades += data.totalTrades
+            
+            startTimes.append(data.startTimeUnix)
+            endTimes.append(data.endTimeUnix)
+            
+        }
+        
+        let startTime = getEarliestTime(startTimes)
+        let endTime = getLatestTime(endTimes)
+        
+    
+        let histData = HistoryData(totalBuys: combinedTotalBuys, totalBuyValue: combinedBuyValue, totalSells: combinedTotalSells, totalSellValue: combinedSellValue, netValue: combinedNetValue, totalTrades: combinedTotalTrades)
+        histData.startTimeUnix = startTime
+        histData.endTimeUnix = endTime
+        
+        return histData
+        
+    }
+    
+    
+    func getEarliestTime(times: [Int]) -> Int {
+        
+        var earliest = Int()
+        
+        earliest = times.first!
+        
+        for time in times {
+            print("TIME \(time)")
+            
+            if time < earliest {
+                earliest = time
+            }
+            print(" earliest time \(earliest)")
+            
+        }
+        
+        return earliest
+    }
+    
+    func getLatestTime(times: [Int]) -> Int {
+        
+        var latest = Int()
+        
+        latest = times.first!
+        
+        for time in times {
+            print("TIME \(time)")
+            
+            if time > latest {
+                latest = time
+            }
+            print(" LATEST time \(latest)")
+            
+        }
+        return latest
+    }
     
     
     

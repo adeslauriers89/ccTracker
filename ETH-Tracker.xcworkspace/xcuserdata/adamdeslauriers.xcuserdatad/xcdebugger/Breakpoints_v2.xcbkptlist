@@ -19,14 +19,12 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "ETH-Tracker/LineChartViewController.swift"
-            timestampString = "489592958.470128"
+            filePath = "ETH-Tracker/TradeHistoryViewController.swift"
+            timestampString = "491806037.379061"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "148"
-            endingLineNumber = "148"
-            landmarkName = "getDatesFromTradeHistory(_:)"
-            landmarkType = "5">
+            startingLineNumber = "130"
+            endingLineNumber = "130">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -35,45 +33,29 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "ETH-Tracker/LineChartViewController.swift"
-            timestampString = "489592958.470128"
+            filePath = "ETH-Tracker/TradeHistoryViewController.swift"
+            timestampString = "491806037.379061"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "115"
-            endingLineNumber = "115"
-            landmarkName = "calculateNetValueOfTrades(_:)"
-            landmarkType = "5">
+            startingLineNumber = "126"
+            endingLineNumber = "126"
+            landmarkName = "TradeHistoryViewController"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "ETH-Tracker/LineChartViewController.swift"
-            timestampString = "489592958.470128"
+            filePath = "ETH-Tracker/DataManager.swift"
+            timestampString = "491805946.669903"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "105"
-            endingLineNumber = "105"
-            landmarkName = "splitTradesIntoTimeIntervals(_:timeInterval:start:end:)"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "ETH-Tracker/LineChartViewController.swift"
-            timestampString = "489592958.470128"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "60"
-            endingLineNumber = "60"
-            landmarkName = "setChart(_:values:)"
+            startingLineNumber = "361"
+            endingLineNumber = "361"
+            landmarkName = "getEarliestTime(_:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
