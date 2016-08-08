@@ -86,7 +86,7 @@ class TradeHistoryViewController: UIViewController, UIPickerViewDelegate, UIPick
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-        dataManager.combineHistory(timeConstants.thirtyMins, timesToCombine: 24) { (result) in
+        dataManager.combineHistory(timeConstants.fifteenMins, timesToCombine: 24) { (result) in
             
             let trades = result.trades
             let info = result.tradeInfo
@@ -98,7 +98,7 @@ class TradeHistoryViewController: UIViewController, UIPickerViewDelegate, UIPick
         }
         
         
-        dataManager.getHistory(timeConstants.twelveHours, fromTime: dataManager.currentTime) { (result) in
+        dataManager.getHistory(timeConstants.sixHours, fromTime: dataManager.currentTime) { (result) in
             
             
             let history = result.tradeInfo

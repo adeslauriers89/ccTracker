@@ -241,7 +241,7 @@ class TradeHistoryDataViewController: UIViewController {
     }
     
     func fetchTwelveHourData() {
-        dataManager.getHistory(timeConstants.twelveHours, fromTime: dataManager.currentTime) { (result) in
+        dataManager.combineHistory(timeConstants.oneHour, timesToCombine: 12) { (result) in
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
                 
                 let tradeHistoryData = result.tradeInfo
@@ -267,62 +267,33 @@ class TradeHistoryDataViewController: UIViewController {
     }
     
     func fetchOneDayData() {
-        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
-
-
         
-        dataManager.getHistory(timeConstants.twelveHours, fromTime: dataManager.currentTime, completion: { (result) in
-            
-            var firstTradesArray = result.trades
-            let firstHistoryData = result.tradeInfo
-
-            
-            let adjustedEndtime = firstHistoryData.startTimeUnix - 1
-            
-            self.dataManager.getHistory(timeConstants.twelveHours, fromTime: adjustedEndtime, completion: { (result) in
-                dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                    
-
-                    
-                    let secondTradesArray = result.trades
-                    let secondHistoryData = result.tradeInfo
-
-                    firstTradesArray.appendContentsOf(secondTradesArray)
-
-                    secondHistoryData.endTimeUnix = firstHistoryData.endTimeUnix
-                    
-                    let combinedHistoryData = HistoryData(totalBuys: firstHistoryData.totalBuys + secondHistoryData.totalBuys,
-                        totalBuyValue: firstHistoryData.totalBuyValue + secondHistoryData.totalBuyValue,
-                        totalSells: firstHistoryData.totalSells + secondHistoryData.totalSells,
-                        totalSellValue: firstHistoryData.totalSellValue + secondHistoryData.totalSellValue,
-                        netValue: firstHistoryData.netValue + secondHistoryData.netValue,
-                        totalTrades: firstHistoryData.totalTrades + secondHistoryData.totalTrades)
-                    
-                   print("Combined data: Buys: \(combinedHistoryData.totalBuys), B Values: \(combinedHistoryData.totalBuyValue), Sells: \(combinedHistoryData.totalSells), S values: \(combinedHistoryData.totalSellValue), Total trades: \(combinedHistoryData.totalTrades) net value: \(combinedHistoryData.netValue)")
-                    
-                    
-                    self.oneDayTotalBuysLabel.text = "Buys: \(combinedHistoryData.totalBuys)"
-                    self.oneDayBuysValueLabel.text = String(format:"Buys Value: %0.3fBTC", combinedHistoryData.totalBuyValue)
-                    self.oneDayTotalSellsLabel.text = "Sells: \(combinedHistoryData.totalSells)"
-                    self.oneDaySellsValueLabel.text = String(format:"Sells Value: %0.3fBTC", combinedHistoryData.totalSellValue)
-                    self.oneDayTotalTradesLabel.text = "Total Trades: \(combinedHistoryData.totalTrades)"
-                    
-                    if combinedHistoryData.netValue >= 0.0 {
-                        self.oneDayNetValueLabel.textColor = colours.positiveGreen
-                    } else if combinedHistoryData.netValue <= 0.0 {
-                        self.oneDayNetValueLabel.textColor = UIColor.redColor()
-                    } else {
-                        self.oneDayNetValueLabel.textColor = UIColor.blackColor()
-                    }
-                    
-                    self.oneDayNetValueLabel.text = String(format: "%0.3fBTC", combinedHistoryData.netValue)
-                    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-
-                })
-                    
+        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+        
+        dataManager.combineHistory(timeConstants.oneHour, timesToCombine: 24) { (result) in
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                
+                let tradeHistoryData = result.tradeInfo
+                
+                self.oneDayTotalBuysLabel.text = "Buys: \(tradeHistoryData.totalBuys)"
+                self.oneDayBuysValueLabel.text = String(format:"Buys Value: %0.3fBTC", tradeHistoryData.totalBuyValue)
+                self.oneDayTotalSellsLabel.text = "Sells: \(tradeHistoryData.totalSells)"
+                self.oneDaySellsValueLabel.text = String(format:"Sells Value: %0.3fBTC", tradeHistoryData.totalSellValue)
+                self.oneDayTotalTradesLabel.text = "Total Trades: \(tradeHistoryData.totalTrades)"
+                
+                if tradeHistoryData.netValue >= 0.0 {
+                    self.oneDayNetValueLabel.textColor = colours.positiveGreen
+                } else if tradeHistoryData.netValue <= 0.0 {
+                    self.oneDayNetValueLabel.textColor = UIColor.redColor()
+                } else {
+                    self.oneDayNetValueLabel.textColor = UIColor.blackColor()
+                }
+                
+                self.oneDayNetValueLabel.text = String(format: "%0.3fBTC", tradeHistoryData.netValue)
+                 UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                
             })
-
-        })
+        }
 
     }
     

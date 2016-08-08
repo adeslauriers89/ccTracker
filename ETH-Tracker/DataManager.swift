@@ -229,8 +229,6 @@ class DataManager {
     
     func combineHistory(timePeriod: Int, timesToCombine: Int, completion:(result: (trades: [Trade], tradeInfo: HistoryData)) -> Void) {
         
-        
-        
         let group = dispatch_group_create()
         
         var fetchedTrades = [Trade]()
@@ -240,10 +238,7 @@ class DataManager {
         for i in 0..<timesToCombine {
 
             if (i == timesToCombine - 1) {
-                print("Last time in loop \(i)")
-                
                 dispatch_group_enter(group)
-                
                 getHistory(timePeriod - i, fromTime: timeToSearchFrom, completion: { (result) in
                     
                     let trades = result.trades
@@ -262,8 +257,6 @@ class DataManager {
             } else {
                 
                 dispatch_group_enter(group)
-
-                
                 getHistory(timePeriod, fromTime: timeToSearchFrom, completion: { (result) in
                     
                     let trades = result.trades
@@ -272,18 +265,11 @@ class DataManager {
                     fetchedTrades.appendContentsOf(trades)
                     fetchedHistoryData.append(tradeInfo)
                     
-                    print("trades count \(fetchedTrades.count)")
-                    print("Time number : \(i)")
-                    
-                    print("Start \(tradeInfo.startTimeUnix) End \(tradeInfo.endTimeUnix)")
-                    
-                  //  completion(result: (trades: fetchedTrades, tradeInfo: fetchedHistoryData))
+//                    print("trades count \(fetchedTrades.count)")
+//                    print("Time number : \(i)")
+//                    print("Start \(tradeInfo.startTimeUnix) End \(tradeInfo.endTimeUnix)")
 
-                  //print("HIST DATA COUNT \(fetchedHistoryData.count)")
-                    
-                    
                     dispatch_group_leave(group)
-
                 })
                 
 
@@ -298,9 +284,7 @@ class DataManager {
             
             print("HIST DATA COUNT \(fetchedHistoryData.count)")
             print("TRADES COUNTTTTT \(fetchedTrades.count)")
-            
-         //   print(self.combineHistoryData(fetchedHistoryData))
-            
+                        
             let histData = self.combineHistoryData(fetchedHistoryData)
             
             print("COMBINED HIST DATA: Total buys \(histData.totalBuys) value \(histData.totalBuyValue). Total sells \(histData.totalSells) value \(histData.totalSellValue). Total Trades \(histData.totalTrades) value \(histData.netValue)")
@@ -336,6 +320,8 @@ class DataManager {
             combinedNetValue += data.netValue
             combinedTotalTrades += data.totalTrades
             
+            print("NET OF INTERVAL \(data.netValue)")
+            
             startTimes.append(data.startTimeUnix)
             endTimes.append(data.endTimeUnix)
             
@@ -361,12 +347,12 @@ class DataManager {
         earliest = times.first!
         
         for time in times {
-            print("TIME \(time)")
+//            print("TIME \(time)")
             
             if time < earliest {
                 earliest = time
             }
-            print(" earliest time \(earliest)")
+//            print(" earliest time \(earliest)")
             
         }
         
@@ -380,12 +366,12 @@ class DataManager {
         latest = times.first!
         
         for time in times {
-            print("TIME \(time)")
+//            print("TIME \(time)")
             
             if time > latest {
                 latest = time
             }
-            print(" LATEST time \(latest)")
+//            print(" LATEST time \(latest)")
             
         }
         return latest

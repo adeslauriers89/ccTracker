@@ -195,7 +195,26 @@ class LineChartViewController: UIViewController, ChartViewDelegate {
             self.timePeriodSegmentedControl.userInteractionEnabled = false
 
 
-            dataManager.getHistory(timeConstants.twoHours, fromTime: dataManager.currentTime, completion: { (result) in
+//            dataManager.getHistory(timeConstants.twoHours, fromTime: dataManager.currentTime, completion: { (result) in
+//                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+//                    
+//                    let historyData = result.tradeInfo
+//                    let twoHourTrades = result.trades
+//                    
+//                    self.intervalLabel.text = "Intervals: 5 Minutes"
+//                    
+//                    self.splitTradesIntoTimeIntervals(twoHourTrades, timeInterval: timeConstants.fiveMins, start: historyData.startTimeUnix, end: historyData.endTimeUnix)
+//                    self.activityWheel.stopAnimating()
+//
+//                    self.timePeriodSegmentedControl.userInteractionEnabled = true
+//
+//                })
+//
+//            })
+            
+
+            
+            dataManager.combineHistory(timeConstants.thirtyMins, timesToCombine: 4, completion: { (result) in
                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
                     
                     let historyData = result.tradeInfo
@@ -205,12 +224,15 @@ class LineChartViewController: UIViewController, ChartViewDelegate {
                     
                     self.splitTradesIntoTimeIntervals(twoHourTrades, timeInterval: timeConstants.fiveMins, start: historyData.startTimeUnix, end: historyData.endTimeUnix)
                     self.activityWheel.stopAnimating()
-
+                    
                     self.timePeriodSegmentedControl.userInteractionEnabled = true
-
+                    
                 })
+
+                
                 
             })
+            
         case 2:
             
             self.timePeriodSegmentedControl.userInteractionEnabled = false
@@ -232,6 +254,17 @@ class LineChartViewController: UIViewController, ChartViewDelegate {
 
                 })
             })
+            
+            dataManager.combineHistory(timeConstants.fifteenMins, timesToCombine: 24) { (result) in
+                
+                let trades = result.trades
+                let info = result.tradeInfo
+                
+                print("COUNT FROM HERE \(trades.count)")
+                print("THE FINAL START \(info.startTimeUnix) END \(info.endTimeUnix)")
+                
+                
+            }
             
 
 
