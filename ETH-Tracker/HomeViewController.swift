@@ -13,7 +13,7 @@ class HomeViewController: UIViewController {
     
     //MARK: Properties
     
-    var dataManager = DataManager()
+    var dataManager = DataManager.sharedManager
     
     
     
@@ -49,6 +49,14 @@ class HomeViewController: UIViewController {
         super.viewWillAppear(animated)
         
         getTickerData()
+        
+       // print("HEY THIS IS CURENT PAIRR \(dataManager.currencyPair)")
+        
+        
+        print("TRYING WITH USER DEFAULTS \(dataManager.defaultCurrencyPair)")
+        
+        //dataManager.currPair = "BTC_ETH"
+        //print("NEW  USER DEFAULTS \(dataManager.currPair)")
 
     }
         //MARK: Actions
@@ -64,8 +72,8 @@ class HomeViewController: UIViewController {
     
     func getTickerData() {
         
-        dataManager.getTicker { (newTicker) in
-            
+        dataManager.getTicker(dataManager.selectedCurrencyPair) { (newTicker) in
+         
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
                 
                 self.tickerCurrencyPairLabel.text = "Currency Pair: ETH/BTC"

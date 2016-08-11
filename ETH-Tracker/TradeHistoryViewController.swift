@@ -12,7 +12,7 @@ class TradeHistoryViewController: UIViewController, UIPickerViewDelegate, UIPick
 
     //MARK: Properties
     
-    var dataManager = DataManager()
+    var dataManager = DataManager.sharedManager
     
     @IBOutlet weak var lastMinuteHistoryLabel: UILabel!
     @IBOutlet weak var lastFiveMinuteHistoryLabel: UILabel!
@@ -44,16 +44,28 @@ class TradeHistoryViewController: UIViewController, UIPickerViewDelegate, UIPick
             
             self.pickerData = pairs
             
-                let indexOfBtcEth = self.pickerData.indexOf("BTC_ETH")
+//                let indexOfBtcEth = self.pickerData.indexOf("BTC_ETH")
+                
+                var indexOfSelectedPair: Int
+                
+                
+                if self.dataManager.selectedCurrencyPair == "" {
+                     indexOfSelectedPair = self.pickerData.indexOf(self.dataManager.defaultCurrencyPair)!
+                } else {
+                    indexOfSelectedPair = self.pickerData.indexOf(self.dataManager.selectedCurrencyPair)!
+                }
+                
+                
+                
                 
                 self.picker.reloadAllComponents()
                 
                 if self.pickerData.count == 0 {
-                    print("0000000")
+                    print("0")
                 } else {
                     
                     
-                    self.picker.selectRow(indexOfBtcEth!, inComponent: 0, animated: true)
+                    self.picker.selectRow(indexOfSelectedPair, inComponent: 0, animated: true)
                 }
                 
             
@@ -71,7 +83,6 @@ class TradeHistoryViewController: UIViewController, UIPickerViewDelegate, UIPick
     
     func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         
-     //   print("hihi \(pickerData.count)")
         
         return pickerData.count
     }
@@ -86,28 +97,28 @@ class TradeHistoryViewController: UIViewController, UIPickerViewDelegate, UIPick
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-        dataManager.combineHistory(timeConstants.fifteenMins, timesToCombine: 24) { (result) in
-            
-            let trades = result.trades
-            let info = result.tradeInfo
-            
-            print("COUNT FROM HERE \(trades.count)")
-            print("THE FINAL START \(info.startTimeUnix) END \(info.endTimeUnix)")
-
-            
-        }
-        
-        
-        dataManager.getHistory(timeConstants.sixHours, fromTime: dataManager.currentTime) { (result) in
-            
-            
-            let history = result.tradeInfo
-            
-        print("8 HOUR FUNC: Total buys \(history.totalBuys) value \(history.totalBuyValue). Total sells \(history.totalSells) sell value \(history.totalSellValue). Total trades \(history.totalTrades) value \(history.netValue)")
-            
-            print("START ^HR \(history.startTimeUnix) END ^HR \(history.endTimeUnix)")
-            
-        }
+//        dataManager.combineHistory(timeConstants.fifteenMins, timesToCombine: 24) { (result) in
+//            
+//            let trades = result.trades
+//            let info = result.tradeInfo
+//            
+//            print("COUNT FROM HERE \(trades.count)")
+//            print("THE FINAL START \(info.startTimeUnix) END \(info.endTimeUnix)")
+//
+//            
+//        }
+//        
+//        
+//        dataManager.getHistory(timeConstants.sixHours, fromTime: dataManager.currentTime) { (result) in
+//            
+//            
+//            let history = result.tradeInfo
+//            
+//        print("8 HOUR FUNC: Total buys \(history.totalBuys) value \(history.totalBuyValue). Total sells \(history.totalSells) sell value \(history.totalSellValue). Total trades \(history.totalTrades) value \(history.netValue)")
+//            
+//            print("START ^HR \(history.startTimeUnix) END ^HR \(history.endTimeUnix)")
+//            
+//        }
         
     }
     
@@ -115,9 +126,14 @@ class TradeHistoryViewController: UIViewController, UIPickerViewDelegate, UIPick
     
     @IBAction func setPairButtonPressed(sender: UIButton) {
         
+        print("Current Pair = \(dataManager.selectedCurrencyPair)")
+        
         let selectedValue = pickerData[picker.selectedRowInComponent(0)]
         
-        print(selectedValue)
+        
+        dataManager.selectedCurrencyPair = selectedValue
+        
+        print("New Pair = \(dataManager.selectedCurrencyPair)")
         
     }
 
@@ -125,65 +141,6 @@ class TradeHistoryViewController: UIViewController, UIPickerViewDelegate, UIPick
 
 
 }
-
-
-
-//        dataManager.getHistory(timeConstants.twoHours, fromTime: dataManager.currentTime) { (result) in
-//            var historyDataArray = [HistoryData]()
-//
-//            var firstTradesArray = result.trades
-//            let firstHistoryData = result.tradeInfo
-//            historyDataArray.append(firstHistoryData)
-//
-//         //   print(firstHistoryData.startTimeUnix)
-//
-//            var adjustedEndTime = firstHistoryData.startTimeUnix - 1
-//
-//         //   print("adj \(adjustedEndTime)")
-//
-//            self.dataManager.getHistory(timeConstants.twoHours, fromTime: adjustedEndTime, completion: { (result) in
-//
-//                let secondTradesArray = result.trades
-//                let secondHistoryData = result.tradeInfo
-//                historyDataArray.append(secondHistoryData)
-//
-//                firstTradesArray.appendContentsOf(secondTradesArray)
-//
-//                adjustedEndTime = secondHistoryData.startTimeUnix - 1
-//               // print("adj \(adjustedEndTime)")
-//
-//
-//                    self.dataManager.getHistory(timeConstants.twoHours, fromTime: adjustedEndTime, completion: { (result) in
-//
-//                        let thirdTradesArray = result.trades
-//                        let thirdHistoryData = result.tradeInfo
-//                        historyDataArray.append(thirdHistoryData)
-//
-//                        firstTradesArray.appendContentsOf(thirdTradesArray)
-//
-//                        var combinedTotalBuys = Int()
-//                        var combinedBuyValue = Double()
-//                        var combinedTotalSells = Int()
-//                        var combinedSellValue = Double()
-//                        var combinedNetValue = Double()
-//                        var combinedTotalTrades = Int()
-//
-//                        for historyData in historyDataArray {
-//
-//                            combinedTotalBuys += historyData.totalBuys
-//                            combinedBuyValue += historyData.totalBuyValue
-//                            combinedTotalSells += historyData.totalSells
-//                            combinedSellValue += historyData.totalSellValue
-//                            combinedNetValue += historyData.netValue
-//                            combinedTotalTrades += historyData.totalTrades
-//
-//                        }
-//
-//                    //    print("Total buys \(combinedTotalBuys) value \(combinedBuyValue), total sells \(combinedTotalSells) value \(combinedSellValue), total trades \(combinedTotalTrades) value \(combinedNetValue)")
-//                    })
-//                })
-//        }
-
 
 
 

@@ -317,7 +317,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <pickerView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VrL-7j-E9b">
-                                <rect key="frame" x="0.0" y="159" width="320" height="116"/>
+                                <rect key="frame" x="0.0" y="77" width="320" height="254"/>
                             </pickerView>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rpx-qE-YzE">
                                 <rect key="frame" x="137" y="390" width="46" height="30"/>

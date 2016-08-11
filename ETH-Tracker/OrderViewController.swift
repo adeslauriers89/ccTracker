@@ -12,7 +12,7 @@ class OrderViewController: UIViewController {
     
     //MARK: Properties
     
-    var dataManager = DataManager()
+    var dataManager = DataManager.sharedManager
     
     @IBOutlet weak var buyOrderView: UIView!
     @IBOutlet weak var sellOrderView: UIView!
@@ -69,7 +69,10 @@ class OrderViewController: UIViewController {
     
     
     func getOrderBookData() {
-        dataManager.fetchOrderBook { (result) in
+//        dataManager.fetchOrderBook { (result) in
+        dataManager.fetchOrderBook(dataManager.selectedCurrencyPair) { (result) in
+            
+        
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
                 
                 let orderBook  = result

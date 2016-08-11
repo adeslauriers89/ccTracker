@@ -12,7 +12,8 @@ class TradeHistoryDataViewController: UIViewController {
     
     //MARK: Properties
     
-    var dataManager = DataManager()
+    var dataManager = DataManager.sharedManager
+   // var operationQueue: NSOperationQueue?
     
     // one min view & labels
     
@@ -83,6 +84,8 @@ class TradeHistoryDataViewController: UIViewController {
     @IBOutlet weak var oneDayNetValueLabel: UILabel!
     @IBOutlet weak var oneDayRefreshButton: UIButton!
     
+    
+    
 
     //MARK: ViewController Life Cycle
     
@@ -109,19 +112,15 @@ class TradeHistoryDataViewController: UIViewController {
         fetchTwelveHourData()
         fetchOneDayData()
         
-        
-        
         configureViewStyle()
         
-
-        
-
         }
     
     
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
         
+        dataManager.cancelDownloads()
     }
     
     
@@ -182,9 +181,6 @@ class TradeHistoryDataViewController: UIViewController {
     }
     
     func fetchThirtyMinuteData() {
-        
-        
-
         dataManager.getHistory(timeConstants.thirtyMins, fromTime: dataManager.currentTime) { (result) in
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
                 
@@ -241,6 +237,7 @@ class TradeHistoryDataViewController: UIViewController {
     }
     
     func fetchTwelveHourData() {
+        
         dataManager.combineHistory(timeConstants.oneHour, timesToCombine: 12) { (result) in
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
                 

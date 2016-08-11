@@ -13,7 +13,7 @@ class LineChartViewController: UIViewController, ChartViewDelegate {
 
     //MARK: Properties
     
-    var dataManager = DataManager()
+    var dataManager = DataManager.sharedManager
     
     var intervals = Int()
     
@@ -193,26 +193,6 @@ class LineChartViewController: UIViewController, ChartViewDelegate {
         case 1:
             
             self.timePeriodSegmentedControl.userInteractionEnabled = false
-
-
-//            dataManager.getHistory(timeConstants.twoHours, fromTime: dataManager.currentTime, completion: { (result) in
-//                dispatch_async(dispatch_get_main_queue(), { () -> Void in
-//                    
-//                    let historyData = result.tradeInfo
-//                    let twoHourTrades = result.trades
-//                    
-//                    self.intervalLabel.text = "Intervals: 5 Minutes"
-//                    
-//                    self.splitTradesIntoTimeIntervals(twoHourTrades, timeInterval: timeConstants.fiveMins, start: historyData.startTimeUnix, end: historyData.endTimeUnix)
-//                    self.activityWheel.stopAnimating()
-//
-//                    self.timePeriodSegmentedControl.userInteractionEnabled = true
-//
-//                })
-//
-//            })
-            
-
             
             dataManager.combineHistory(timeConstants.thirtyMins, timesToCombine: 4, completion: { (result) in
                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
@@ -228,17 +208,13 @@ class LineChartViewController: UIViewController, ChartViewDelegate {
                     self.timePeriodSegmentedControl.userInteractionEnabled = true
                     
                 })
-
-                
-                
             })
             
         case 2:
             
             self.timePeriodSegmentedControl.userInteractionEnabled = false
-
             
-            dataManager.getHistory(timeConstants.sixHours, fromTime: dataManager.currentTime, completion: { (result) in
+            dataManager.combineHistory(timeConstants.oneHour, timesToCombine: 6, completion: { (result) in
                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
                     
                     let historyData = result.tradeInfo
@@ -248,32 +224,20 @@ class LineChartViewController: UIViewController, ChartViewDelegate {
                     
                     self.splitTradesIntoTimeIntervals(sixHourTrades, timeInterval: timeConstants.fifteenMins, start: historyData.startTimeUnix, end: historyData.endTimeUnix)
                     self.activityWheel.stopAnimating()
-
-                
+                    
+                    
                     self.timePeriodSegmentedControl.userInteractionEnabled = true
-
+                    
                 })
             })
-            
-            dataManager.combineHistory(timeConstants.fifteenMins, timesToCombine: 24) { (result) in
-                
-                let trades = result.trades
-                let info = result.tradeInfo
-                
-                print("COUNT FROM HERE \(trades.count)")
-                print("THE FINAL START \(info.startTimeUnix) END \(info.endTimeUnix)")
-                
-                
-            }
-            
-
-
+        
         case 3:
             
             
             self.timePeriodSegmentedControl.userInteractionEnabled = false
             
-            dataManager.getHistory(timeConstants.twelveHours, fromTime: dataManager.currentTime, completion: { (result) in
+            
+            dataManager.combineHistory(timeConstants.oneHour, timesToCombine: 12, completion: { (result) in
                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
                     
                     
@@ -290,56 +254,27 @@ class LineChartViewController: UIViewController, ChartViewDelegate {
                 })
             })
 
-
         case 4:
             
             self.timePeriodSegmentedControl.userInteractionEnabled = false
-
-
-            dataManager.getHistory(timeConstants.twelveHours, fromTime: dataManager.currentTime, completion: { (result) in
-                
-                var firstTradesArray = result.trades
-                let firstHistoryData = result.tradeInfo
-                
-                print("first array count \(firstTradesArray.count)")
-                print("first arrays oldest trade =  \(firstTradesArray.last?.date)")
-                
-                
-                let adjustedEndtime = firstHistoryData.startTimeUnix - 1
-                
-                self.dataManager.getHistory(timeConstants.twelveHours, fromTime: adjustedEndtime, completion: { (result) in
-                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                        
-                        let secondTradesArray = result.trades
-                        let secondHistoryData = result.tradeInfo
-                        
-                        
-                        print("second array count \(secondTradesArray.count)")
-                        print("second arrays oldest trade =  \(secondTradesArray.last?.date)")
-                        
-                        firstTradesArray.appendContentsOf(secondTradesArray)
-                        print("combined array count: \(firstTradesArray.count)")
-                        print("combined array earliest date: \(firstTradesArray.last?.date)")
-                        print("combined array oldest date: \(firstTradesArray.first?.date)")
-                        
-                        print("combined array start \(firstTradesArray.last?.timeInt) and end \(firstTradesArray.first?.timeInt)")
-                        
-                        
-                        
-                        secondHistoryData.endTimeUnix = firstHistoryData.endTimeUnix
-                        print("hist data start \(secondHistoryData.startTimeUnix) and end \(secondHistoryData.endTimeUnix)")
-                        
-                        self.intervalLabel.text = "Intervals: 1 Hour"
-                        
-                        self.splitTradesIntoTimeIntervals(firstTradesArray, timeInterval: timeConstants.oneHour, start: secondHistoryData.startTimeUnix, end: secondHistoryData.endTimeUnix)
-                        self.activityWheel.stopAnimating()
-                        
-                        self.timePeriodSegmentedControl.userInteractionEnabled = true
-
-                        
-                    })
+            
+            dataManager.combineHistory(timeConstants.oneHour, timesToCombine: 24, completion: { (result) in
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    
+                    
+                    let historyData = result.tradeInfo
+                    let oneDayTrades = result.trades
+                    
+                    self.intervalLabel.text = "Intervals: 1 Hour"
+                    
+                    self.splitTradesIntoTimeIntervals(oneDayTrades, timeInterval: timeConstants.oneHour, start: historyData.startTimeUnix, end: historyData.endTimeUnix)
+                    self.activityWheel.stopAnimating()
+                    
+                    self.timePeriodSegmentedControl.userInteractionEnabled = true
+                    
                 })
             })
+
 
         default:
             break
