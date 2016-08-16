@@ -50,7 +50,18 @@ class HomeViewController: UIViewController {
         
         getTickerData()
         
-       // print("HEY THIS IS CURENT PAIRR \(dataManager.currencyPair)")
+        dataManager.splitCurrencyPair()
+        
+        
+        dataManager.getCurrencyPairs { (pairs) in
+            
+            let pears = pairs
+            
+            for par in pears {
+                print("pears \(par.name) base: \(par.baseCurrency) and quote \(par.quoteCurrency)")
+            }
+        }
+        
         
         
         print("TRYING WITH USER DEFAULTS \(dataManager.defaultCurrencyPair)")
@@ -76,11 +87,21 @@ class HomeViewController: UIViewController {
          
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
                 
-                self.tickerCurrencyPairLabel.text = "Currency Pair: ETH/BTC"
-                self.tickerCurrentPriceLabel.text = "Current Price: \(String(newTicker.currentPrice))"
-                self.ticker24HrHighLabel.text = "24hr High: \(String(newTicker.high24Hr))"
-                self.ticker24HrLowLabel.text = "24hr Low: \(String(newTicker.low24Hr))"
-                self.tickerVolumeLabel.text = String(format: "24hr Volume: %0.3f", newTicker.volume)
+                //"24hr Low: \(String(newTicker.low24Hr))"
+                //"Current Price: \(String(newTicker.currentPrice))"
+                
+                
+                var currencyPair = self.dataManager.selectedCurrencyPair
+                
+                if currencyPair == "" {
+                    currencyPair = self.dataManager.defaultCurrencyPair
+                }
+                
+                self.tickerCurrencyPairLabel.text = "Currency Pair: \(currencyPair)"
+                self.tickerCurrentPriceLabel.text = String(format: "Current Price: %0.8f", newTicker.currentPrice)
+                self.ticker24HrHighLabel.text = String(format: "24hr High: %0.8f", newTicker.high24Hr)
+                self.ticker24HrLowLabel.text = String(format: "24hr Low: %0.8f", newTicker.low24Hr)
+                self.tickerVolumeLabel.text = String(format: "24hr Volume: %0.3f \(self.dataManager.baseCurrency)", newTicker.volume)
                 
                 if newTicker.percentChange > 0.0 {
                     self.tickerPercentChangeLabel.textColor = colours.positiveGreen

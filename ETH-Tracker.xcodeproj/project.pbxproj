@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A65AA77B1D626E8200A6E331 /* CurrencySearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A65AA77A1D626E8200A6E331 /* CurrencySearchViewController.swift */; };
+		A65AA77D1D627DA200A6E331 /* CurrencyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A65AA77C1D627DA200A6E331 /* CurrencyCell.swift */; };
+		A65AA77F1D6284EC00A6E331 /* CurrencyPair.swift in Sources */ = {isa = PBXBuildFile; fileRef = A65AA77E1D6284EC00A6E331 /* CurrencyPair.swift */; };
 		A660878C1D2C018A00E69E61 /* TradeHistoryDataViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A660878B1D2C018A00E69E61 /* TradeHistoryDataViewController.swift */; };
 		A665EEBE1D284AE900962E7A /* Ticker.swift in Sources */ = {isa = PBXBuildFile; fileRef = A665EEBD1D284AE900962E7A /* Ticker.swift */; };
 		A68C7D381CB72C4A00CD9B23 /* Order.swift in Sources */ = {isa = PBXBuildFile; fileRef = A68C7D371CB72C4A00CD9B23 /* Order.swift */; };
@@ -18,7 +21,6 @@
 		A6DA1A561CC013CF009CB354 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6DA1A551CC013CF009CB354 /* HomeViewController.swift */; };
 		A6DA1A581CC02B14009CB354 /* TradeHistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6DA1A571CC02B14009CB354 /* TradeHistoryViewController.swift */; };
 		A6E6CBF71CAB254F00F92EA6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6E6CBF61CAB254F00F92EA6 /* AppDelegate.swift */; };
-		A6E6CBF91CAB254F00F92EA6 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6E6CBF81CAB254F00F92EA6 /* ViewController.swift */; };
 		A6E6CBFC1CAB254F00F92EA6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A6E6CBFA1CAB254F00F92EA6 /* Main.storyboard */; };
 		A6E6CBFE1CAB254F00F92EA6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A6E6CBFD1CAB254F00F92EA6 /* Assets.xcassets */; };
 		A6E6CC011CAB254F00F92EA6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A6E6CBFF1CAB254F00F92EA6 /* LaunchScreen.storyboard */; };
@@ -42,6 +44,9 @@
 		040916DBB5198DC07546A39C /* Pods_ETH_Tracker.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ETH_Tracker.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1F9FEE7137814DA02FBBB0B1 /* Pods-ETH-Tracker.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ETH-Tracker.release.xcconfig"; path = "Pods/Target Support Files/Pods-ETH-Tracker/Pods-ETH-Tracker.release.xcconfig"; sourceTree = "<group>"; };
 		8989E0E2DFBF90719D7A94B6 /* Pods-ETH-Tracker.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ETH-Tracker.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ETH-Tracker/Pods-ETH-Tracker.debug.xcconfig"; sourceTree = "<group>"; };
+		A65AA77A1D626E8200A6E331 /* CurrencySearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrencySearchViewController.swift; sourceTree = "<group>"; };
+		A65AA77C1D627DA200A6E331 /* CurrencyCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrencyCell.swift; sourceTree = "<group>"; };
+		A65AA77E1D6284EC00A6E331 /* CurrencyPair.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrencyPair.swift; sourceTree = "<group>"; };
 		A660878B1D2C018A00E69E61 /* TradeHistoryDataViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TradeHistoryDataViewController.swift; sourceTree = "<group>"; };
 		A665EEBD1D284AE900962E7A /* Ticker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Ticker.swift; sourceTree = "<group>"; };
 		A68C7D371CB72C4A00CD9B23 /* Order.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Order.swift; sourceTree = "<group>"; };
@@ -54,7 +59,6 @@
 		A6DA1A571CC02B14009CB354 /* TradeHistoryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TradeHistoryViewController.swift; sourceTree = "<group>"; };
 		A6E6CBF31CAB254F00F92EA6 /* ETH-Tracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ETH-Tracker.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A6E6CBF61CAB254F00F92EA6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		A6E6CBF81CAB254F00F92EA6 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		A6E6CBFB1CAB254F00F92EA6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		A6E6CBFD1CAB254F00F92EA6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A6E6CC001CAB254F00F92EA6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -98,12 +102,12 @@
 		A6DED1F21CBF3634006C928A /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				A6E6CBF81CAB254F00F92EA6 /* ViewController.swift */,
 				A6DA1A551CC013CF009CB354 /* HomeViewController.swift */,
 				A6DA1A531CC0102B009CB354 /* OrderViewController.swift */,
 				A6DA1A571CC02B14009CB354 /* TradeHistoryViewController.swift */,
 				A68D1BC11CD01172000BA696 /* LineChartViewController.swift */,
 				A660878B1D2C018A00E69E61 /* TradeHistoryDataViewController.swift */,
+				A65AA77A1D626E8200A6E331 /* CurrencySearchViewController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -111,6 +115,7 @@
 		A6DED1F31CBF3675006C928A /* View */ = {
 			isa = PBXGroup;
 			children = (
+				A65AA77C1D627DA200A6E331 /* CurrencyCell.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -168,6 +173,7 @@
 				A68C7D371CB72C4A00CD9B23 /* Order.swift */,
 				A665EEBD1D284AE900962E7A /* Ticker.swift */,
 				A6CC2B741D2AC42900E72EB8 /* HistoryData.swift */,
+				A65AA77E1D6284EC00A6E331 /* CurrencyPair.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -234,7 +240,7 @@
 				TargetAttributes = {
 					A6E6CBF21CAB254F00F92EA6 = {
 						CreatedOnToolsVersion = 7.2;
-						DevelopmentTeam = 4U2N6J8VHM;
+						DevelopmentTeam = N7XQHFZFZE;
 					};
 					A6E6CC061CAB255000F92EA6 = {
 						CreatedOnToolsVersion = 7.2;
@@ -338,10 +344,12 @@
 				A68C7D381CB72C4A00CD9B23 /* Order.swift in Sources */,
 				A6A688801CAC96DF005644A0 /* Constants.swift in Sources */,
 				A6DA1A581CC02B14009CB354 /* TradeHistoryViewController.swift in Sources */,
-				A6E6CBF91CAB254F00F92EA6 /* ViewController.swift in Sources */,
 				A6E6CC171CAB273A00F92EA6 /* DataManager.swift in Sources */,
+				A65AA77D1D627DA200A6E331 /* CurrencyCell.swift in Sources */,
 				A6DA1A561CC013CF009CB354 /* HomeViewController.swift in Sources */,
 				A665EEBE1D284AE900962E7A /* Ticker.swift in Sources */,
+				A65AA77F1D6284EC00A6E331 /* CurrencyPair.swift in Sources */,
+				A65AA77B1D626E8200A6E331 /* CurrencySearchViewController.swift in Sources */,
 				A6E6CC1A1CAB2DAE00F92EA6 /* Trade.swift in Sources */,
 				A6CC2B751D2AC42900E72EB8 /* HistoryData.swift in Sources */,
 				A6E6CBF71CAB254F00F92EA6 /* AppDelegate.swift in Sources */,

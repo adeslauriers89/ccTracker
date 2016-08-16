@@ -42,12 +42,15 @@ class TradeHistoryViewController: UIViewController, UIPickerViewDelegate, UIPick
             
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
             
-            self.pickerData = pairs
+       //     self.pickerData = pairs
             
-//                let indexOfBtcEth = self.pickerData.indexOf("BTC_ETH")
                 
                 var indexOfSelectedPair: Int
                 
+                if self.pickerData.count == 0 {
+                    print("Unable to load Pairs")
+                    return
+                }
                 
                 if self.dataManager.selectedCurrencyPair == "" {
                      indexOfSelectedPair = self.pickerData.indexOf(self.dataManager.defaultCurrencyPair)!
@@ -55,20 +58,10 @@ class TradeHistoryViewController: UIViewController, UIPickerViewDelegate, UIPick
                     indexOfSelectedPair = self.pickerData.indexOf(self.dataManager.selectedCurrencyPair)!
                 }
                 
-                
-                
-                
                 self.picker.reloadAllComponents()
                 
-                if self.pickerData.count == 0 {
-                    print("0")
-                } else {
-                    
-                    
-                    self.picker.selectRow(indexOfSelectedPair, inComponent: 0, animated: true)
-                }
+                 self.picker.selectRow(indexOfSelectedPair, inComponent: 0, animated: true)
                 
-            
               })
         }
         
@@ -97,28 +90,7 @@ class TradeHistoryViewController: UIViewController, UIPickerViewDelegate, UIPick
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-//        dataManager.combineHistory(timeConstants.fifteenMins, timesToCombine: 24) { (result) in
-//            
-//            let trades = result.trades
-//            let info = result.tradeInfo
-//            
-//            print("COUNT FROM HERE \(trades.count)")
-//            print("THE FINAL START \(info.startTimeUnix) END \(info.endTimeUnix)")
-//
-//            
-//        }
-//        
-//        
-//        dataManager.getHistory(timeConstants.sixHours, fromTime: dataManager.currentTime) { (result) in
-//            
-//            
-//            let history = result.tradeInfo
-//            
-//        print("8 HOUR FUNC: Total buys \(history.totalBuys) value \(history.totalBuyValue). Total sells \(history.totalSells) sell value \(history.totalSellValue). Total trades \(history.totalTrades) value \(history.netValue)")
-//            
-//            print("START ^HR \(history.startTimeUnix) END ^HR \(history.endTimeUnix)")
-//            
-//        }
+
         
     }
     
@@ -138,6 +110,13 @@ class TradeHistoryViewController: UIViewController, UIPickerViewDelegate, UIPick
     }
 
     
+    @IBAction func setDefaultButtonPressed(sender: UIButton) {
+        
+        let selectedValue = pickerData[picker.selectedRowInComponent(0)]
+        
+        dataManager.defaultCurrencyPair = selectedValue
+        dataManager.selectedCurrencyPair = selectedValue
+    }
 
 
 }

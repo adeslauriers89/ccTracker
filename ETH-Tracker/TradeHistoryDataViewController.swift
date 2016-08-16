@@ -94,10 +94,10 @@ class TradeHistoryDataViewController: UIViewController {
         
         view.backgroundColor = colours.backGroundGrey
 
-        thirtyMinActivityWheel.center = thirtyMinView.center
-        thirtyMinActivityWheel.hidesWhenStopped = true
-        thirtyMinActivityWheel.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.Gray
-        thirtyMinView.addSubview(thirtyMinActivityWheel)
+//        thirtyMinActivityWheel.center = thirtyMinView.center
+//        thirtyMinActivityWheel.hidesWhenStopped = true
+//        thirtyMinActivityWheel.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.Gray
+//        thirtyMinView.addSubview(thirtyMinActivityWheel)
 
         
     }
@@ -135,9 +135,9 @@ class TradeHistoryDataViewController: UIViewController {
                 let tradeHistoryData = result.tradeInfo
                 
                 self.oneMinTotalBuysLabel.text = "Buys: \(tradeHistoryData.totalBuys)"
-                self.oneMinBuysValueLabel.text = String(format:"Buys Value: %0.3fBTC", tradeHistoryData.totalBuyValue)
+                self.oneMinBuysValueLabel.text = String(format:"Buys Value: %0.3f \(self.dataManager.baseCurrency)", tradeHistoryData.totalBuyValue)
                 self.oneMinTotalSellsLabel.text = "Sells: \(tradeHistoryData.totalSells)"
-                self.oneMinSellsValueLabel.text = String(format:"Sells Value: %0.3fBTC", tradeHistoryData.totalSellValue)
+                self.oneMinSellsValueLabel.text = String(format:"Sells Value: %0.3f \(self.dataManager.baseCurrency)", tradeHistoryData.totalSellValue)
                 self.oneMinTotalTradesLabel.text = "Total Trades: \(tradeHistoryData.totalTrades)"
                 
                 if tradeHistoryData.netValue >= 0.0 {
@@ -148,7 +148,7 @@ class TradeHistoryDataViewController: UIViewController {
                     self.oneMinNetValueLabel.textColor = UIColor.blackColor()
                 }
                 
-                self.oneMinNetValueLabel.text = String(format: "%0.3fBTC", tradeHistoryData.netValue)
+                self.oneMinNetValueLabel.text = String(format: "%0.3f \(self.dataManager.baseCurrency)", tradeHistoryData.netValue)
                 
 
             })
@@ -162,9 +162,9 @@ class TradeHistoryDataViewController: UIViewController {
                 let tradeHistoryData = result.tradeInfo
                 
                 self.fiveMinTotalBuysLabel.text = "Buys: \(tradeHistoryData.totalBuys)"
-                self.fiveMinBuysValueLabel.text = String(format:"Buys Value: %0.3fBTC", tradeHistoryData.totalBuyValue)
+                self.fiveMinBuysValueLabel.text = String(format:"Buys Value: %0.3f \(self.dataManager.baseCurrency)", tradeHistoryData.totalBuyValue)
                 self.fiveMinTotalSellsLabel.text = "Sells: \(tradeHistoryData.totalSells)"
-                self.fiveMinSellsValueLabel.text = String(format:"Sells Value: %0.3fBTC", tradeHistoryData.totalSellValue)
+                self.fiveMinSellsValueLabel.text = String(format:"Sells Value: %0.3f \(self.dataManager.baseCurrency)", tradeHistoryData.totalSellValue)
                 self.fiveMinTotalTradesLabel.text = "Total Trades: \(tradeHistoryData.totalTrades)"
                 
                 if tradeHistoryData.netValue >= 0.0 {
@@ -175,7 +175,7 @@ class TradeHistoryDataViewController: UIViewController {
                     self.fiveMinNetValueLabel.textColor = UIColor.blackColor()
                 }
                 
-                self.fiveMinNetValueLabel.text = String(format: "%0.3fBTC", tradeHistoryData.netValue)
+                self.fiveMinNetValueLabel.text = String(format: "%0.3f \(self.dataManager.baseCurrency)", tradeHistoryData.netValue)
             })
         }
     }
@@ -190,9 +190,9 @@ class TradeHistoryDataViewController: UIViewController {
                 let tradeHistoryData = result.tradeInfo
                 
                 self.thirtyMinTotalBuysLabel.text = "Buys: \(tradeHistoryData.totalBuys)"
-                self.thirtyMinBuysValueLabel.text = String(format:"Buys Value: %0.3fBTC", tradeHistoryData.totalBuyValue)
+                self.thirtyMinBuysValueLabel.text = String(format:"Buys Value: %0.3f \(self.dataManager.baseCurrency)", tradeHistoryData.totalBuyValue)
                 self.thirtyMinTotalSellsLabel.text = "Sells: \(tradeHistoryData.totalSells)"
-                self.thirtyMinSellsValueLabel.text = String(format:"Sells Value: %0.3fBTC", tradeHistoryData.totalSellValue)
+                self.thirtyMinSellsValueLabel.text = String(format:"Sells Value: %0.3f \(self.dataManager.baseCurrency)", tradeHistoryData.totalSellValue)
                 self.thirtyMinTotalTradesLabel.text = "Total Trades: \(tradeHistoryData.totalTrades)"
                 
                 if tradeHistoryData.netValue >= 0.0 {
@@ -203,7 +203,7 @@ class TradeHistoryDataViewController: UIViewController {
                     self.thirtyMinNetValueLabel.textColor = UIColor.blackColor()
                 }
                 
-                self.thirtyMinNetValueLabel.text = String(format: "%0.3fBTC", tradeHistoryData.netValue)
+                self.thirtyMinNetValueLabel.text = String(format: "%0.3f \(self.dataManager.baseCurrency)", tradeHistoryData.netValue)
                 self.thirtyMinActivityWheel.stopAnimating()
 
                 
@@ -218,9 +218,9 @@ class TradeHistoryDataViewController: UIViewController {
                 let tradeHistoryData = result.tradeInfo
                 
                 self.twoHourTotalBuysLabel.text = "Buys: \(tradeHistoryData.totalBuys)"
-                self.twoHourBuysValueLabel.text = String(format:"Buys Value: %0.3fBTC", tradeHistoryData.totalBuyValue)
+                self.twoHourBuysValueLabel.text = String(format:"Buys Value: %0.3f \(self.dataManager.baseCurrency)", tradeHistoryData.totalBuyValue)
                 self.twoHourTotalSellsLabel.text = "Sells: \(tradeHistoryData.totalSells)"
-                self.twoHourSellsValueLabel.text = String(format:"Sells Value: %0.3fBTC", tradeHistoryData.totalSellValue)
+                self.twoHourSellsValueLabel.text = String(format:"Sells Value: %0.3f \(self.dataManager.baseCurrency)", tradeHistoryData.totalSellValue)
                 self.twoHourTotalTradesLabel.text = "Total Trades: \(tradeHistoryData.totalTrades)"
                 
                 if tradeHistoryData.netValue >= 0.0 {
@@ -231,7 +231,7 @@ class TradeHistoryDataViewController: UIViewController {
                     self.twoHourNetValueLabel.textColor = UIColor.blackColor()
                 }
                 
-                self.twoHourNetValueLabel.text = String(format: "%0.3fBTC", tradeHistoryData.netValue)
+                self.twoHourNetValueLabel.text = String(format: "%0.3f \(self.dataManager.baseCurrency)", tradeHistoryData.netValue)
             })
         }
     }
@@ -245,9 +245,9 @@ class TradeHistoryDataViewController: UIViewController {
                 
                 
                 self.twelveHourTotalBuysLabel.text = "Buys: \(tradeHistoryData.totalBuys)"
-                self.twelveHourBuysValueLabel.text = String(format:"Buys Value: %0.3fBTC", tradeHistoryData.totalBuyValue)
+                self.twelveHourBuysValueLabel.text = String(format:"Buys Value: %0.3f \(self.dataManager.baseCurrency)", tradeHistoryData.totalBuyValue)
                 self.twelveHourTotalSellsLabel.text = "Sells: \(tradeHistoryData.totalSells)"
-                self.twelveHourSellsValueLabel.text = String(format:"Sells Value: %0.3fBTC", tradeHistoryData.totalSellValue)
+                self.twelveHourSellsValueLabel.text = String(format:"Sells Value: %0.3f \(self.dataManager.baseCurrency)", tradeHistoryData.totalSellValue)
                 self.twelveHourTotalTradesLabel.text = "Total Trades: \(tradeHistoryData.totalTrades)"
                 
                 if tradeHistoryData.netValue >= 0.0 {
@@ -258,7 +258,7 @@ class TradeHistoryDataViewController: UIViewController {
                     self.twelveHourNetValueLabel.textColor = UIColor.blackColor()
                 }
                 
-                self.twelveHourNetValueLabel.text = String(format: "%0.3fBTC", tradeHistoryData.netValue)
+                self.twelveHourNetValueLabel.text = String(format: "%0.3f \(self.dataManager.baseCurrency)", tradeHistoryData.netValue)
             })
         }
     }
@@ -273,9 +273,9 @@ class TradeHistoryDataViewController: UIViewController {
                 let tradeHistoryData = result.tradeInfo
                 
                 self.oneDayTotalBuysLabel.text = "Buys: \(tradeHistoryData.totalBuys)"
-                self.oneDayBuysValueLabel.text = String(format:"Buys Value: %0.3fBTC", tradeHistoryData.totalBuyValue)
+                self.oneDayBuysValueLabel.text = String(format:"Buys Value: %0.3f \(self.dataManager.baseCurrency)", tradeHistoryData.totalBuyValue)
                 self.oneDayTotalSellsLabel.text = "Sells: \(tradeHistoryData.totalSells)"
-                self.oneDaySellsValueLabel.text = String(format:"Sells Value: %0.3fBTC", tradeHistoryData.totalSellValue)
+                self.oneDaySellsValueLabel.text = String(format:"Sells Value: %0.3f \(self.dataManager.baseCurrency)", tradeHistoryData.totalSellValue)
                 self.oneDayTotalTradesLabel.text = "Total Trades: \(tradeHistoryData.totalTrades)"
                 
                 if tradeHistoryData.netValue >= 0.0 {
@@ -286,7 +286,7 @@ class TradeHistoryDataViewController: UIViewController {
                     self.oneDayNetValueLabel.textColor = UIColor.blackColor()
                 }
                 
-                self.oneDayNetValueLabel.text = String(format: "%0.3fBTC", tradeHistoryData.netValue)
+                self.oneDayNetValueLabel.text = String(format: "%0.3f \(self.dataManager.baseCurrency)", tradeHistoryData.netValue)
                  UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                 
             })

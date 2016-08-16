@@ -68,7 +68,7 @@ class LineChartViewController: UIViewController, ChartViewDelegate {
             dataEntries.append(dataEntry)
         }
         
-        let lineChartDataSet = LineChartDataSet(yVals: dataEntries, label: "Net value of trades in BTC")
+        let lineChartDataSet = LineChartDataSet(yVals: dataEntries, label: "Net value of trades in \(dataManager.baseCurrency)")
         let lineChartData =  LineChartData(xVals: dataPoints, dataSet: lineChartDataSet)
         lineChartView.data = lineChartData
         
@@ -79,7 +79,12 @@ class LineChartViewController: UIViewController, ChartViewDelegate {
         
         var tradeHistoryInIntervals = [[Trade]]()
         var intervalOfTrades = [Trade]()
-        var tradesToSplit = trades
+        let tradesToSplit = trades
+        
+        let realtime = NSDate(timeIntervalSince1970: Double(start))
+        
+        print("Start in realtime \(realtime))")
+        print("START IN 1st \(start)")
         
         var startTime = start
         let endTime = end
@@ -108,8 +113,43 @@ class LineChartViewController: UIViewController, ChartViewDelegate {
             
         }
         
-        calculateNetValueOfTrades(tradeHistoryInIntervals)
+     //   calculateNetValueOfTrades(tradeHistoryInIntervals)
+        getDatesForIntervals(start, timeInterval: timeInterval, numberOfIntervals: numberOfIntervals,trades: tradeHistoryInIntervals)
         
+    }
+    
+    func getDatesForIntervals(startTime: Int, timeInterval: Int, numberOfIntervals: Int, trades: [[Trade]]) {
+        
+        var dateStringCollection = [String]()
+        var startingInterval = startTime
+        
+        if dataPointsArray.isEmpty == false {
+            dataPointsArray.removeAll()
+        }
+        
+        
+        for _ in 0..<numberOfIntervals {
+            
+            let dateForInterval = NSDate(timeIntervalSince1970: Double(startingInterval))
+            
+      //      print("\(i)date \(dateForInterval)")
+            
+            let dateString = String(dateForInterval)
+            
+            let separatedDates = dateString.componentsSeparatedByString(" ")
+            
+            print(separatedDates[1])
+            
+            dateStringCollection.append(separatedDates[1])
+            
+            startingInterval += timeInterval
+        }
+        
+        print(dateStringCollection)
+        
+        dataPointsArray = dateStringCollection
+        
+        calculateNetValueOfTrades(trades)
         
     }
     
@@ -118,8 +158,8 @@ class LineChartViewController: UIViewController, ChartViewDelegate {
         
         var tradesNetValue = Double()
         var netValuesOfTradeIntervals = [Double]()
-        
-        getDatesFromTradeHistory(trades)
+
+      //  getDatesFromTradeHistory(trades)
    
         for tradeGroup in trades {
             tradesNetValue = 0
@@ -150,27 +190,30 @@ class LineChartViewController: UIViewController, ChartViewDelegate {
         self.totalBuyValue = 0
     }
     
-    func getDatesFromTradeHistory(history: [[Trade]]) {
-        
-        if dataPointsArray.isEmpty == false {
-            dataPointsArray.removeAll()
-        }
-        
-        var datesFromHistory = [String]()
-        var trimmedDatesArray = [String]()
-        
-        for historyInterval in history {
-            
-            if let dateString = historyInterval.last?.date {
-                trimmedDatesArray = dateString.componentsSeparatedByString(" ")
-            }
-            
-            datesFromHistory.append(trimmedDatesArray.last!)
-            
-        }
-        dataPointsArray = datesFromHistory
-        
-    }
+//    func getDatesFromTradeHistory(history: [[Trade]]) {
+//        
+//        if dataPointsArray.isEmpty == false {
+//            dataPointsArray.removeAll()
+//        }
+//        
+//        var datesFromHistory = [String]()
+//        var trimmedDatesArray = [String]()
+//        
+//        for historyInterval in history {
+//            
+//            if let dateString = historyInterval.last?.date {
+//                trimmedDatesArray = dateString.componentsSeparatedByString(" ")
+//            }
+//            
+//            
+//            
+//            datesFromHistory.append(trimmedDatesArray.last!)
+//            
+//        }
+//        dataPointsArray = datesFromHistory
+//        print("BAd 1 \(datesFromHistory)")
+//        
+//    }
     
     func chartValueSelected(chartView: ChartViewBase, entry: ChartDataEntry, dataSetIndex: Int, highlight: ChartHighlight) {
  

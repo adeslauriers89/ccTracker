@@ -38,7 +38,12 @@ class DataManager {
             NSUserDefaults.standardUserDefaults().synchronize()
         }
     }
+    
+    var baseCurrency: String = ""
+    
+    var quoteCurrency: String = ""
 
+    
     
    // let session =  NSURLSession(configuration: NSURLSessionConfiguration.defaultSessionConfiguration())
     
@@ -52,32 +57,110 @@ class DataManager {
         }
     }
     
-    func getCurrencyPairs(completion:[String] -> Void) {
+    func splitCurrencyPair() {
+        
+        var pairToSplit = selectedCurrencyPair
+        
+        if pairToSplit == "" {
+            pairToSplit = defaultCurrencyPair
+        }
+        
+        let splitPairArray = pairToSplit.componentsSeparatedByString("_")
+        
+        print(splitPairArray)
+        
+        baseCurrency = splitPairArray[0]
+        quoteCurrency = splitPairArray[1]
+        
+        print("Base \(baseCurrency)")
+        print("Quote \(quoteCurrency)")
+    }
+    
+//    func getCurrencyPairs(completion:[String] -> Void) {
+//        
+//        let urlPath = "https://poloniex.com/public?command=returnTicker"
+//        let endPoint = NSURL(string: urlPath)
+//        var currencyPairs = [String]()
+//        
+//        let currencyPairTask = NSURLSession.sharedSession().dataTaskWithURL(endPoint!) { (data, response, error) -> Void in
+//            
+//            if error != nil {
+//                let currentVC = self.findCurrentVC()
+//                
+//                let alertController = UIAlertController(title: "Error", message: "\(error!.localizedDescription)", preferredStyle: .Alert)
+//                let okAction = UIAlertAction(title: "OK", style: .Default, handler: { (action: UIAlertAction) in
+//                    return
+//                })
+//                
+//                alertController.addAction(okAction)
+//                
+//                dispatch_async(dispatch_get_main_queue(), {
+//                    currentVC!.presentViewController(alertController, animated: true, completion: nil)
+//                })
+//                print("ERROR: \(error)")
+//            }
+//            
+//            if let unWrappedData = data {
+//                guard let fetchedPairs = (try? NSJSONSerialization.JSONObjectWithData(unWrappedData, options: NSJSONReadingOptions.AllowFragments) as! [String : AnyObject]) else {return}
+//                
+//                for pair in fetchedPairs {
+//                    let pairName = pair.0
+//                    
+//                    currencyPairs.append(pairName)
+//                }
+//            }
+//            completion(currencyPairs)
+//        }
+//        currencyPairTask.resume()
+//    }
+
+    
+    func getCurrencyPairs(completion:[CurrencyPair] -> Void) {
         
         let urlPath = "https://poloniex.com/public?command=returnTicker"
         let endPoint = NSURL(string: urlPath)
-        var currencyPairs = [String]()
+        var currencyPairs = [CurrencyPair]()
         
         let currencyPairTask = NSURLSession.sharedSession().dataTaskWithURL(endPoint!) { (data, response, error) -> Void in
             
             if error != nil {
+                let currentVC = self.findCurrentVC()
+                
+                let alertController = UIAlertController(title: "Error", message: "\(error!.localizedDescription)", preferredStyle: .Alert)
+                let okAction = UIAlertAction(title: "OK", style: .Default, handler: { (action: UIAlertAction) in
+                    return
+                })
+                
+                alertController.addAction(okAction)
+                
+                dispatch_async(dispatch_get_main_queue(), {
+                    currentVC!.presentViewController(alertController, animated: true, completion: nil)
+                })
                 print("ERROR: \(error)")
             }
             
             if let unWrappedData = data {
                 guard let fetchedPairs = (try? NSJSONSerialization.JSONObjectWithData(unWrappedData, options: NSJSONReadingOptions.AllowFragments) as! [String : AnyObject]) else {return}
                 
+                
+                
                 for pair in fetchedPairs {
-                    let pairName = pair.0
+                    let newPair = CurrencyPair(name: pair.0)
                     
-                    currencyPairs.append(pairName)
+                    let splitPairArray = newPair.name.componentsSeparatedByString("_")
+                    
+                    newPair.baseCurrency = splitPairArray[0]
+                    newPair.quoteCurrency = splitPairArray[1]
+                    
+                    
+                    currencyPairs.append(newPair)
                 }
             }
             completion(currencyPairs)
         }
         currencyPairTask.resume()
     }
-
+    
     func getTicker(forPair: String,completion:(Ticker) -> Void) {
         
         let urlPath = "https://poloniex.com/public?command=returnTicker"
@@ -140,6 +223,9 @@ class DataManager {
                         percentChange *= 100
                         
                         let pairTicker = Ticker(currentPrice: currentPrice, percentChange: percentChange, volume: volume, high24Hr: high24Hr, low24Hr: low24Hr)
+                        
+                        print("Curr price \(pairTicker.currentPrice) High \(pairTicker.high24Hr) lo \(pairTicker.low24Hr)")
+                        
                         
                         completion(pairTicker)
                     }
@@ -213,18 +299,6 @@ class DataManager {
                 print("no connection or no data recieved")
             }
             
-//            self.getTicker({ (Ticker) in
-//                
-//                currentPrice = Ticker.currentPrice
-//                
-//                self.findOrdersWithinOnePercentCurrentPrice(buyOrdersArray, sellOrders: sellOrdersArray, currentPrice: currentPrice, completion: { (result) in
-//                    
-//                    completion(result: (totalBuys: result.totalBuys, buysValue: result.buysValue, totalSells: result.totalSells, sellsValue: result.sellsValue))
-//                    
-//                })
-//                
-//            })
-            
             self.getTicker(pairToSearch, completion: { (Ticker) in
                 
         
@@ -283,7 +357,11 @@ class DataManager {
         
         var completedTrades = [Trade]()
         let startTime = fromTime - forTimePeriod
-        let currencyPair = "BTC_ETH"
+//        let currencyPair = "BTC_ETH"
+        var currencyPair = selectedCurrencyPair
+        if currencyPair == "" {
+            currencyPair = defaultCurrencyPair
+        }
         let urlPath = "https://poloniex.com/public?command=returnTradeHistory&currencyPair=\(currencyPair)&start=\(startTime)&end=\(fromTime)"
         
         let historyTask = NSURLSession.sharedSession().dataTaskWithURL(NSURL(string: urlPath)!) { (data, response, error) -> Void in

@@ -5,35 +5,6 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
-        <scene sceneID="ysp-oW-bwY">
-            <objects>
-                <tableViewController id="Ui9-dZ-peZ" customClass="ViewController" customModule="ETH_Tracker" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="100" sectionHeaderHeight="28" sectionFooterHeight="28" id="8aB-wS-xs1">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" rowHeight="100" id="cz2-Cp-XQT" customClass="EthTableViewCell" customModule="ETH_Tracker" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="28" width="320" height="100"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="cz2-Cp-XQT" id="YJ0-nF-s0v">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="99.5"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                </tableViewCellContentView>
-                            </tableViewCell>
-                        </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="Ui9-dZ-peZ" id="vp1-f2-KHb"/>
-                            <outlet property="delegate" destination="Ui9-dZ-peZ" id="ea0-Jb-sdx"/>
-                        </connections>
-                    </tableView>
-                    <navigationItem key="navigationItem" id="JSk-FN-WeY"/>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="YN8-wD-cOg" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1651" y="1680"/>
-        </scene>
         <!--Line Chart View Controller-->
         <scene sceneID="OJ1-Ed-qkU">
             <objects>
@@ -89,7 +60,7 @@
             </objects>
             <point key="canvasLocation" x="2034" y="357"/>
         </scene>
-        <!--ETH Trackr-->
+        <!--CryptoTracker-->
         <scene sceneID="FBW-yW-EIl">
             <objects>
                 <viewController id="P66-1S-zGd" customClass="HomeViewController" customModule="ETH_Tracker" customModuleProvider="target" sceneMemberID="viewController">
@@ -187,10 +158,17 @@
                                     <segue destination="gY9-3F-PEA" kind="push" identifier="segueToTradeHistory" id="JzW-3w-1xj"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jGE-Al-64b">
+                                <rect key="frame" x="137" y="360" width="46" height="30"/>
+                                <state key="normal" title="Button"/>
+                                <connections>
+                                    <segue destination="8nf-UZ-s88" kind="push" id="U8S-fK-Fy6"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" title="ETH Trackr" id="rPc-HT-eI4"/>
+                    <navigationItem key="navigationItem" title="CryptoTracker" id="rPc-HT-eI4"/>
                     <connections>
                         <outlet property="ticker24HrHighLabel" destination="dsl-qg-hPr" id="BLm-OJ-yZz"/>
                         <outlet property="ticker24HrLowLabel" destination="3tz-rr-rl5" id="qNC-P9-Chz"/>
@@ -304,6 +282,53 @@
             </objects>
             <point key="canvasLocation" x="2457" y="1005"/>
         </scene>
+        <!--Currency Search View Controller-->
+        <scene sceneID="h6p-nS-PqL">
+            <objects>
+                <tableViewController id="8nf-UZ-s88" customClass="CurrencySearchViewController" customModule="ETH_Tracker" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="Kai-VV-uel">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" id="zYM-Dw-y2f" customClass="CurrencyCell" customModule="ETH_Tracker" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="92" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="zYM-Dw-y2f" id="7oy-vD-PaK">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8yh-Lm-baG">
+                                            <rect key="frame" x="8" y="11" width="133" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fhV-Dt-cLH">
+                                            <rect key="frame" x="260" y="8" width="46" height="30"/>
+                                            <state key="normal" title="Button"/>
+                                            <connections>
+                                                <action selector="setButtonPressed:" destination="zYM-Dw-y2f" eventType="touchUpInside" id="hMo-NS-etj"/>
+                                            </connections>
+                                        </button>
+                                    </subviews>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="currencyPairLabel" destination="8yh-Lm-baG" id="WsV-tz-BM7"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="8nf-UZ-s88" id="kwk-rw-xoe"/>
+                            <outlet property="delegate" destination="8nf-UZ-s88" id="AHI-Au-XRW"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" id="gxI-t8-9KA"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="6X6-WV-1iy" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1581" y="1831"/>
+        </scene>
         <!--Trade History-->
         <scene sceneID="8fy-yt-QF4">
             <objects>
@@ -320,10 +345,17 @@
                                 <rect key="frame" x="0.0" y="77" width="320" height="254"/>
                             </pickerView>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rpx-qE-YzE">
-                                <rect key="frame" x="137" y="390" width="46" height="30"/>
-                                <state key="normal" title="Button"/>
+                                <rect key="frame" x="41" y="389" width="44" height="30"/>
+                                <state key="normal" title="Select"/>
                                 <connections>
                                     <action selector="setPairButtonPressed:" destination="gY9-3F-PEA" eventType="touchUpInside" id="NS7-1Y-X5h"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dKF-0G-VWQ">
+                                <rect key="frame" x="183" y="389" width="98" height="30"/>
+                                <state key="normal" title="Set As Default"/>
+                                <connections>
+                                    <action selector="setDefaultButtonPressed:" destination="gY9-3F-PEA" eventType="touchUpInside" id="Hst-6t-m94"/>
                                 </connections>
                             </button>
                         </subviews>

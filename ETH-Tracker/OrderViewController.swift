@@ -77,8 +77,8 @@ class OrderViewController: UIViewController {
                 
                 let orderBook  = result
                 
-                self.buyOrderValueLabel.text = String(format: "%0.3f ETH", orderBook.buysValue)
-                self.sellOrderValueLabel.text = String(format: "%0.3f ETH", orderBook.sellsValue)
+                self.buyOrderValueLabel.text = String(format: "%0.3f \(self.dataManager.quoteCurrency)", orderBook.buysValue)
+                self.sellOrderValueLabel.text = String(format: "%0.3f \(self.dataManager.quoteCurrency)", orderBook.sellsValue)
                 
                 
                 print("buys \(orderBook.totalBuys) number of sells \(orderBook.totalSells)")
