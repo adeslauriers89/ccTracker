@@ -53,21 +53,13 @@ class HomeViewController: UIViewController {
         dataManager.splitCurrencyPair()
         
         
-        dataManager.getCurrencyPairs { (pairs) in
-            
-            let pears = pairs
-            
-            for par in pears {
-                print("pears \(par.name) base: \(par.baseCurrency) and quote \(par.quoteCurrency)")
-            }
-        }
+        
         
         
         
         print("TRYING WITH USER DEFAULTS \(dataManager.defaultCurrencyPair)")
         
-        //dataManager.currPair = "BTC_ETH"
-        //print("NEW  USER DEFAULTS \(dataManager.currPair)")
+
 
     }
         //MARK: Actions
@@ -78,6 +70,17 @@ class HomeViewController: UIViewController {
         getTickerData()
     }
     
+    func findPercentageDifference(base: Int, target: Int ,percent: Int) {
+        
+        let myPercent = percent / 100
+        print(myPercent)
+        
+        
+        
+        
+    }
+
+    
     //MARK: Data Functions
     
     
@@ -87,10 +90,7 @@ class HomeViewController: UIViewController {
          
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
                 
-                //"24hr Low: \(String(newTicker.low24Hr))"
-                //"Current Price: \(String(newTicker.currentPrice))"
-                
-                
+
                 var currencyPair = self.dataManager.selectedCurrencyPair
                 
                 if currencyPair == "" {

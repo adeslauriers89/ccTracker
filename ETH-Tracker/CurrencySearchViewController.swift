@@ -12,8 +12,6 @@ class CurrencySearchViewController: UITableViewController {
     
     //MARK: Properties
 
-//    var currencyPairs = [String]()
-//    var filteredPairs = [String]()
     
     var currencyPairs = [CurrencyPair]()
     var filteredPairs = [CurrencyPair]()
@@ -37,15 +35,6 @@ class CurrencySearchViewController: UITableViewController {
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
                 
                 self.currencyPairs = pairs
-                
-//                let fetchedPairs = pairs
-//                
-//                for pair in fetchedPairs {
-//                    
-//                    let pairName = pair.name
-//                    
-//                    self.currencyPairs.append(pairName)
-//                }
                 
                 self.tableView.reloadData()
             })
@@ -82,11 +71,17 @@ class CurrencySearchViewController: UITableViewController {
             pair = filteredPairs[indexPath.row]
             cell.tapAction = { (cell) in
                 print("suh \(self.filteredPairs[indexPath.row].name)")
+                
+                self.presentAlertViewController(self.filteredPairs[indexPath.row])
+                
+
             }
         } else {
             pair = currencyPairs[indexPath.row]
             cell.tapAction = { (cell) in
                 print("suh \(self.currencyPairs[indexPath.row].name)")
+                
+                self.presentAlertViewController(self.currencyPairs[indexPath.row])
             }
         }
 
@@ -95,14 +90,14 @@ class CurrencySearchViewController: UITableViewController {
         return cell
     }
     
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        
-        if searchController.active && searchController.searchBar.text != "" {
-            print("hey \(filteredPairs[indexPath.row].name)")
-        } else {
-            print("hey \(currencyPairs[indexPath.row].name)")
-        }
-    }
+//    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+//        
+//        if searchController.active && searchController.searchBar.text != "" {
+//            print("hey \(filteredPairs[indexPath.row].name)")
+//        } else {
+//            print("hey \(currencyPairs[indexPath.row].name)")
+//        }
+//    }
     
     //MARK: - General Functions
     
@@ -116,6 +111,45 @@ class CurrencySearchViewController: UITableViewController {
         
         tableView.reloadData()
     }
+    
+    func presentAlertViewController(forSelectedPair: CurrencyPair) {
+        
+        let alertController = UIAlertController(title: forSelectedPair.name, message: "Search with selected pair or set as default", preferredStyle: .Alert)
+        
+        let searchAction = UIAlertAction(title: "Search", style: .Default) { (action: UIAlertAction) in
+            print("picked search \(forSelectedPair.name)")
+            
+            self.dataManager.selectedCurrencyPair = forSelectedPair.name
+
+            self.navigationController?.popToRootViewControllerAnimated(true)
+
+            
+        }
+        
+        let setDefaultAction = UIAlertAction(title: "Set as default", style: .Default) { (action: UIAlertAction) in
+            print("picked default \(forSelectedPair.name)")
+            
+            self.dataManager.defaultCurrencyPair = forSelectedPair.name
+            self.dataManager.selectedCurrencyPair = forSelectedPair.name
+            
+            self.navigationController?.popToRootViewControllerAnimated(true)
+        }
+        
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) { (action: UIAlertAction) in
+        }
+        
+        alertController.addAction(searchAction)
+        alertController.addAction(setDefaultAction)
+        alertController.addAction(cancelAction)
+        
+        self.presentViewController(alertController, animated: true, completion: nil)
+        
+    }
+    
+    
+    
+
  
 }
 

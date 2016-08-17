@@ -151,16 +151,9 @@
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="88c-38-5ec">
-                                <rect key="frame" x="86" y="404" width="150" height="30"/>
-                                <state key="normal" title="Change Currency Pair"/>
-                                <connections>
-                                    <segue destination="gY9-3F-PEA" kind="push" identifier="segueToTradeHistory" id="JzW-3w-1xj"/>
-                                </connections>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jGE-Al-64b">
-                                <rect key="frame" x="137" y="360" width="46" height="30"/>
-                                <state key="normal" title="Button"/>
+                                <rect key="frame" x="85" y="404" width="150" height="30"/>
+                                <state key="normal" title="Change Currency Pair"/>
                                 <connections>
                                     <segue destination="8nf-UZ-s88" kind="push" id="U8S-fK-Fy6"/>
                                 </connections>
@@ -305,8 +298,8 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fhV-Dt-cLH">
-                                            <rect key="frame" x="260" y="8" width="46" height="30"/>
-                                            <state key="normal" title="Button"/>
+                                            <rect key="frame" x="261" y="8" width="44" height="30"/>
+                                            <state key="normal" title="Select"/>
                                             <connections>
                                                 <action selector="setButtonPressed:" destination="zYM-Dw-y2f" eventType="touchUpInside" id="hMo-NS-etj"/>
                                             </connections>

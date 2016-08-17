@@ -14,15 +14,6 @@ class TradeHistoryViewController: UIViewController, UIPickerViewDelegate, UIPick
     
     var dataManager = DataManager.sharedManager
     
-    @IBOutlet weak var lastMinuteHistoryLabel: UILabel!
-    @IBOutlet weak var lastFiveMinuteHistoryLabel: UILabel!
-    @IBOutlet weak var lastThirtyMinuteHistoryLabel: UILabel!
-    @IBOutlet weak var lastTwoHourHistoryLabel: UILabel!
-    @IBOutlet weak var lastSixHourHistoryLabel: UILabel!
-    @IBOutlet weak var lastTwelveHourHistoryLabel: UILabel!
-    @IBOutlet weak var lastTwentyFourHourHistoryLabel: UILabel!
-    
-    
     @IBOutlet weak var picker: UIPickerView!
     
     

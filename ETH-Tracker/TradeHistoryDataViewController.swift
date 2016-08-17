@@ -120,7 +120,7 @@ class TradeHistoryDataViewController: UIViewController {
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
         
-        dataManager.cancelDownloads()
+     //   dataManager.cancelDownloads()
     }
     
     

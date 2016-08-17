@@ -193,23 +193,7 @@ class DataManager {
             
             if let unWrappedData = data {
                 guard let fetchedTicker = (try? NSJSONSerialization.JSONObjectWithData(unWrappedData, options: NSJSONReadingOptions.AllowFragments) as! [String : AnyObject]) else  {return}
-                
-//                if let eth: AnyObject = fetchedTicker["BTC_ETH"] {
-//                    if let ethTickerDict = eth as? [String : AnyObject] {
-//                        
-//                        guard let currentPrice = ethTickerDict["last"]?.doubleValue,
-//                            var percentChange = ethTickerDict["percentChange"]?.doubleValue,
-//                            let volume = ethTickerDict["baseVolume"]?.doubleValue,
-//                            let high24Hr = ethTickerDict["high24hr"]?.doubleValue,
-//                            let low24Hr = ethTickerDict["low24hr"]?.doubleValue else {return}
-//                        
-//                        percentChange *= 100
-//                        
-//                        let ethTicker = Ticker(currentPrice: currentPrice, percentChange: percentChange, volume: volume, high24Hr: high24Hr, low24Hr: low24Hr)
-//                        
-//                        completion(ethTicker)
-//                    }
-//                }
+
                 
                 if let pair: AnyObject = fetchedTicker[chosenPair] {
                     if let pairTickerDict = pair as? [String : AnyObject] {
@@ -365,7 +349,7 @@ class DataManager {
         let urlPath = "https://poloniex.com/public?command=returnTradeHistory&currencyPair=\(currencyPair)&start=\(startTime)&end=\(fromTime)"
         
         let historyTask = NSURLSession.sharedSession().dataTaskWithURL(NSURL(string: urlPath)!) { (data, response, error) -> Void in
-            
+        
             if error != nil {
                 let currentVC = self.findCurrentVC()
                 
@@ -400,6 +384,8 @@ class DataManager {
                         
                         completedTrades.append(newTrade)
                     }
+                    
+                    
                 }
             }
             
@@ -409,6 +395,7 @@ class DataManager {
 
             completion(result: (trades: completedTrades, tradeInfo: tradeInfo))
             
+          
         }
 //        dataTasks.append(historyTask)
         historyTask.resume()
@@ -609,31 +596,31 @@ class DataManager {
         return navigationController.viewControllers.last
     }
     
-    func cancelDownloads() {
-        
-       // let session = NSURLSession(configuration: NSURLSessionConfiguration.defaultSessionConfiguration())
-        
-//        session.getTasksWithCompletionHandler { (dataTasks: [NSURLSessionDataTask], uploadTasks: [NSURLSessionUploadTask], downloadTasks: [NSURLSessionDownloadTask]) in
-        
-        NSURLSession.sharedSession().getTasksWithCompletionHandler { (dataTasks: [NSURLSessionDataTask], uploadTasks: [NSURLSessionUploadTask], downloadTasks: [NSURLSessionDownloadTask]) in
-           
-        
-            for task in dataTasks {
-                
-                task.cancel()
-                print("Datatask cancelled \(task)")
-                
-            }
-            
-            for task in downloadTasks {
-                
-                task.cancel()
-                print("DL cancelled \(task)")
-            }
-        }
-        
-
-        }
-        
+//    func cancelDownloads() {
+//        
+//       // let session = NSURLSession(configuration: NSURLSessionConfiguration.defaultSessionConfiguration())
+//        
+////        session.getTasksWithCompletionHandler { (dataTasks: [NSURLSessionDataTask], uploadTasks: [NSURLSessionUploadTask], downloadTasks: [NSURLSessionDownloadTask]) in
+//        
+//        NSURLSession.sharedSession().getTasksWithCompletionHandler { (dataTasks: [NSURLSessionDataTask], uploadTasks: [NSURLSessionUploadTask], downloadTasks: [NSURLSessionDownloadTask]) in
+//           
+//        
+//            for task in dataTasks {
+//                
+//                task.cancel()
+//                print("Datatask cancelled \(task)")
+//                
+//            }
+//            
+//            for task in downloadTasks {
+//                
+//                task.cancel()
+//                print("DL cancelled \(task)")
+//            }
+//        }
+//        
+//
+//        }
+    
 
 }
