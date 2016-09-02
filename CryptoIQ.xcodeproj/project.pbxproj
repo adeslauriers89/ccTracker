@@ -19,7 +19,6 @@
 		A6CC2B751D2AC42900E72EB8 /* HistoryData.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6CC2B741D2AC42900E72EB8 /* HistoryData.swift */; };
 		A6DA1A541CC0102B009CB354 /* OrderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6DA1A531CC0102B009CB354 /* OrderViewController.swift */; };
 		A6DA1A561CC013CF009CB354 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6DA1A551CC013CF009CB354 /* HomeViewController.swift */; };
-		A6DA1A581CC02B14009CB354 /* TradeHistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6DA1A571CC02B14009CB354 /* TradeHistoryViewController.swift */; };
 		A6E6CBF71CAB254F00F92EA6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6E6CBF61CAB254F00F92EA6 /* AppDelegate.swift */; };
 		A6E6CBFC1CAB254F00F92EA6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A6E6CBFA1CAB254F00F92EA6 /* Main.storyboard */; };
 		A6E6CBFE1CAB254F00F92EA6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A6E6CBFD1CAB254F00F92EA6 /* Assets.xcassets */; };
@@ -56,14 +55,13 @@
 		A6CC2B741D2AC42900E72EB8 /* HistoryData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoryData.swift; sourceTree = "<group>"; };
 		A6DA1A531CC0102B009CB354 /* OrderViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrderViewController.swift; sourceTree = "<group>"; };
 		A6DA1A551CC013CF009CB354 /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
-		A6DA1A571CC02B14009CB354 /* TradeHistoryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TradeHistoryViewController.swift; sourceTree = "<group>"; };
-		A6E6CBF31CAB254F00F92EA6 /* ETH-Tracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ETH-Tracker.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A6E6CBF31CAB254F00F92EA6 /* CryptoIQ.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CryptoIQ.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A6E6CBF61CAB254F00F92EA6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A6E6CBFB1CAB254F00F92EA6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		A6E6CBFD1CAB254F00F92EA6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A6E6CC001CAB254F00F92EA6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A6E6CC021CAB254F00F92EA6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		A6E6CC071CAB255000F92EA6 /* ETH-TrackerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "ETH-TrackerTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A6E6CC071CAB255000F92EA6 /* CryptoIQ.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CryptoIQ.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A6E6CC0B1CAB255000F92EA6 /* ETH_TrackerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETH_TrackerTests.swift; sourceTree = "<group>"; };
 		A6E6CC0D1CAB255000F92EA6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A6E6CC161CAB273A00F92EA6 /* DataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
@@ -104,7 +102,6 @@
 			children = (
 				A6DA1A551CC013CF009CB354 /* HomeViewController.swift */,
 				A6DA1A531CC0102B009CB354 /* OrderViewController.swift */,
-				A6DA1A571CC02B14009CB354 /* TradeHistoryViewController.swift */,
 				A68D1BC11CD01172000BA696 /* LineChartViewController.swift */,
 				A660878B1D2C018A00E69E61 /* TradeHistoryDataViewController.swift */,
 				A65AA77A1D626E8200A6E331 /* CurrencySearchViewController.swift */,
@@ -134,8 +131,8 @@
 		A6E6CBF41CAB254F00F92EA6 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				A6E6CBF31CAB254F00F92EA6 /* ETH-Tracker.app */,
-				A6E6CC071CAB255000F92EA6 /* ETH-TrackerTests.xctest */,
+				A6E6CBF31CAB254F00F92EA6 /* CryptoIQ.app */,
+				A6E6CC071CAB255000F92EA6 /* CryptoIQ.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -190,9 +187,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		A6E6CBF21CAB254F00F92EA6 /* ETH-Tracker */ = {
+		A6E6CBF21CAB254F00F92EA6 /* CryptoIQ */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = A6E6CC101CAB255000F92EA6 /* Build configuration list for PBXNativeTarget "ETH-Tracker" */;
+			buildConfigurationList = A6E6CC101CAB255000F92EA6 /* Build configuration list for PBXNativeTarget "CryptoIQ" */;
 			buildPhases = (
 				6EC8FF3F667B3C11EDDA38AC /* Check Pods Manifest.lock */,
 				A6E6CBEF1CAB254F00F92EA6 /* Sources */,
@@ -205,14 +202,14 @@
 			);
 			dependencies = (
 			);
-			name = "ETH-Tracker";
+			name = CryptoIQ;
 			productName = "ETH-Tracker";
-			productReference = A6E6CBF31CAB254F00F92EA6 /* ETH-Tracker.app */;
+			productReference = A6E6CBF31CAB254F00F92EA6 /* CryptoIQ.app */;
 			productType = "com.apple.product-type.application";
 		};
-		A6E6CC061CAB255000F92EA6 /* ETH-TrackerTests */ = {
+		A6E6CC061CAB255000F92EA6 /* CryptoIQTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = A6E6CC131CAB255000F92EA6 /* Build configuration list for PBXNativeTarget "ETH-TrackerTests" */;
+			buildConfigurationList = A6E6CC131CAB255000F92EA6 /* Build configuration list for PBXNativeTarget "CryptoIQTests" */;
 			buildPhases = (
 				A6E6CC031CAB255000F92EA6 /* Sources */,
 				A6E6CC041CAB255000F92EA6 /* Frameworks */,
@@ -223,9 +220,9 @@
 			dependencies = (
 				A6E6CC091CAB255000F92EA6 /* PBXTargetDependency */,
 			);
-			name = "ETH-TrackerTests";
+			name = CryptoIQTests;
 			productName = "ETH-TrackerTests";
-			productReference = A6E6CC071CAB255000F92EA6 /* ETH-TrackerTests.xctest */;
+			productReference = A6E6CC071CAB255000F92EA6 /* CryptoIQ.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -249,7 +246,7 @@
 					};
 				};
 			};
-			buildConfigurationList = A6E6CBEE1CAB254F00F92EA6 /* Build configuration list for PBXProject "ETH-Tracker" */;
+			buildConfigurationList = A6E6CBEE1CAB254F00F92EA6 /* Build configuration list for PBXProject "CryptoIQ" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -262,8 +259,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				A6E6CBF21CAB254F00F92EA6 /* ETH-Tracker */,
-				A6E6CC061CAB255000F92EA6 /* ETH-TrackerTests */,
+				A6E6CBF21CAB254F00F92EA6 /* CryptoIQ */,
+				A6E6CC061CAB255000F92EA6 /* CryptoIQTests */,
 			);
 		};
 /* End PBXProject section */
@@ -343,7 +340,6 @@
 			files = (
 				A68C7D381CB72C4A00CD9B23 /* Order.swift in Sources */,
 				A6A688801CAC96DF005644A0 /* Constants.swift in Sources */,
-				A6DA1A581CC02B14009CB354 /* TradeHistoryViewController.swift in Sources */,
 				A6E6CC171CAB273A00F92EA6 /* DataManager.swift in Sources */,
 				A65AA77D1D627DA200A6E331 /* CurrencyCell.swift in Sources */,
 				A6DA1A561CC013CF009CB354 /* HomeViewController.swift in Sources */,
@@ -372,7 +368,7 @@
 /* Begin PBXTargetDependency section */
 		A6E6CC091CAB255000F92EA6 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = A6E6CBF21CAB254F00F92EA6 /* ETH-Tracker */;
+			target = A6E6CBF21CAB254F00F92EA6 /* CryptoIQ */;
 			targetProxy = A6E6CC081CAB255000F92EA6 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -487,8 +483,8 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = "ETH-Tracker/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "xcode.ETH-Tracker";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = xcode.CryptoIQ;
+				PRODUCT_NAME = CryptoIQ;
 				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
@@ -502,8 +498,8 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = "ETH-Tracker/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "xcode.ETH-Tracker";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = xcode.CryptoIQ;
+				PRODUCT_NAME = CryptoIQ;
 				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
@@ -515,8 +511,8 @@
 				INFOPLIST_FILE = "ETH-TrackerTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "xcode.ETH-TrackerTests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ETH-Tracker.app/ETH-Tracker";
+				PRODUCT_NAME = CryptoIQ;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CryptoIQ.app/CryptoIQ";
 			};
 			name = Debug;
 		};
@@ -527,15 +523,15 @@
 				INFOPLIST_FILE = "ETH-TrackerTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "xcode.ETH-TrackerTests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ETH-Tracker.app/ETH-Tracker";
+				PRODUCT_NAME = CryptoIQ;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CryptoIQ.app/CryptoIQ";
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		A6E6CBEE1CAB254F00F92EA6 /* Build configuration list for PBXProject "ETH-Tracker" */ = {
+		A6E6CBEE1CAB254F00F92EA6 /* Build configuration list for PBXProject "CryptoIQ" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A6E6CC0E1CAB255000F92EA6 /* Debug */,
@@ -544,7 +540,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		A6E6CC101CAB255000F92EA6 /* Build configuration list for PBXNativeTarget "ETH-Tracker" */ = {
+		A6E6CC101CAB255000F92EA6 /* Build configuration list for PBXNativeTarget "CryptoIQ" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A6E6CC111CAB255000F92EA6 /* Debug */,
@@ -553,7 +549,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		A6E6CC131CAB255000F92EA6 /* Build configuration list for PBXNativeTarget "ETH-TrackerTests" */ = {
+		A6E6CC131CAB255000F92EA6 /* Build configuration list for PBXNativeTarget "CryptoIQTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A6E6CC141CAB255000F92EA6 /* Debug */,

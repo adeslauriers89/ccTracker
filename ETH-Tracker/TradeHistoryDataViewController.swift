@@ -13,9 +13,8 @@ class TradeHistoryDataViewController: UIViewController {
     //MARK: Properties
     
     var dataManager = DataManager.sharedManager
-   // var operationQueue: NSOperationQueue?
     
-    // one min view & labels
+    // 1 min view & labels
     
     @IBOutlet weak var oneMinView: UIView!
     @IBOutlet weak var oneMinTotalBuysLabel: UILabel!
@@ -25,7 +24,6 @@ class TradeHistoryDataViewController: UIViewController {
     @IBOutlet weak var oneMinTotalTradesLabel: UILabel!
     @IBOutlet weak var oneMinNetValueLabel: UILabel!
     @IBOutlet weak var oneMinRefreshButton: UIButton!
-
     
     // 5 min view & labels
     
@@ -48,9 +46,7 @@ class TradeHistoryDataViewController: UIViewController {
     @IBOutlet weak var thirtyMinTotalTradesLabel: UILabel!
     @IBOutlet weak var thirtyMinNetValueLabel: UILabel!
     @IBOutlet weak var thirtyMinRefreshButton: UIButton!
-    let thirtyMinActivityWheel = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.Gray)
 
-    
     // 2 hr view & labels
     
     @IBOutlet weak var twoHourView: UIView!
@@ -93,13 +89,7 @@ class TradeHistoryDataViewController: UIViewController {
         super.viewDidLoad()
         
         view.backgroundColor = colours.backGroundGrey
-
-//        thirtyMinActivityWheel.center = thirtyMinView.center
-//        thirtyMinActivityWheel.hidesWhenStopped = true
-//        thirtyMinActivityWheel.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.Gray
-//        thirtyMinView.addSubview(thirtyMinActivityWheel)
-
-        
+       
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -120,7 +110,6 @@ class TradeHistoryDataViewController: UIViewController {
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
         
-     //   dataManager.cancelDownloads()
     }
     
     
@@ -184,7 +173,6 @@ class TradeHistoryDataViewController: UIViewController {
         dataManager.getHistory(timeConstants.thirtyMins, fromTime: dataManager.currentTime) { (result) in
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
                 
-                self.thirtyMinActivityWheel.startAnimating()
 
                 
                 let tradeHistoryData = result.tradeInfo
@@ -204,7 +192,6 @@ class TradeHistoryDataViewController: UIViewController {
                 }
                 
                 self.thirtyMinNetValueLabel.text = String(format: "%0.3f \(self.dataManager.baseCurrency)", tradeHistoryData.netValue)
-                self.thirtyMinActivityWheel.stopAnimating()
 
                 
             })
@@ -298,18 +285,6 @@ class TradeHistoryDataViewController: UIViewController {
     
     func configureViewStyle() {
         
-//        var activityWheel = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.Gray)
-//        
-//        activityWheel.center = view.center
-//        activityWheel.hidesWhenStopped = true
-//        activityWheel.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.Gray
-//        view.addSubview(activityWheel)
-        
-//        oneMinActivityWheel.center = oneMinView.center
-//        oneMinActivityWheel.hidesWhenStopped = true
-//        oneMinActivityWheel.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.Gray
-//        view.addSubview(oneMinActivityWheel)
-//        
         oneMinView.layer.borderWidth = 1.0
         oneMinView.layer.borderColor = UIColor.blackColor().CGColor
         oneMinView.layer.cornerRadius = 5.0

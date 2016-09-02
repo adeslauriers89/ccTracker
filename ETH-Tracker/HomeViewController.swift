@@ -9,7 +9,7 @@
 import UIKit
 
 class HomeViewController: UIViewController {
-
+    
     
     //MARK: Properties
     
@@ -35,7 +35,6 @@ class HomeViewController: UIViewController {
         super.viewDidLoad()
         
         view.backgroundColor = colours.backGroundGrey
-
         
         tickerView.layer.borderWidth = 1.0
         tickerView.layer.borderColor = UIColor.blackColor().CGColor
@@ -53,16 +52,8 @@ class HomeViewController: UIViewController {
         dataManager.splitCurrencyPair()
         
         
-        
-        
-        
-        
-        print("TRYING WITH USER DEFAULTS \(dataManager.defaultCurrencyPair)")
-        
-
-
     }
-        //MARK: Actions
+    //MARK: Actions
     
     
     @IBAction func refreshTickerButtonPressed(sender: UIButton) {
@@ -70,16 +61,6 @@ class HomeViewController: UIViewController {
         getTickerData()
     }
     
-    func findPercentageDifference(base: Int, target: Int ,percent: Int) {
-        
-        let myPercent = percent / 100
-        print(myPercent)
-        
-        
-        
-        
-    }
-
     
     //MARK: Data Functions
     
@@ -87,10 +68,10 @@ class HomeViewController: UIViewController {
     func getTickerData() {
         
         dataManager.getTicker(dataManager.selectedCurrencyPair) { (newTicker) in
-         
+            
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
                 
-
+                
                 var currencyPair = self.dataManager.selectedCurrencyPair
                 
                 if currencyPair == "" {

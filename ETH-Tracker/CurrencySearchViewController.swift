@@ -11,21 +11,16 @@ import UIKit
 class CurrencySearchViewController: UITableViewController {
     
     //MARK: Properties
-
+    
     
     var currencyPairs = [CurrencyPair]()
     var filteredPairs = [CurrencyPair]()
     
     let dataManager = DataManager.sharedManager
-    
     let searchController = UISearchController(searchResultsController: nil)
     
     
-    
-    
     //MARK: ViewController Life Cycle
-    
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,7 +35,7 @@ class CurrencySearchViewController: UITableViewController {
             })
             
         }
-      
+        
         searchController.searchResultsUpdater = self
         searchController.dimsBackgroundDuringPresentation = false
         definesPresentationContext = true
@@ -70,34 +65,23 @@ class CurrencySearchViewController: UITableViewController {
         if searchController.active && searchController.searchBar.text != "" {
             pair = filteredPairs[indexPath.row]
             cell.tapAction = { (cell) in
-                print("suh \(self.filteredPairs[indexPath.row].name)")
                 
                 self.presentAlertViewController(self.filteredPairs[indexPath.row])
                 
-
             }
         } else {
             pair = currencyPairs[indexPath.row]
             cell.tapAction = { (cell) in
-                print("suh \(self.currencyPairs[indexPath.row].name)")
                 
                 self.presentAlertViewController(self.currencyPairs[indexPath.row])
             }
         }
-
+        
         cell.currencyPairLabel.text = pair.name
         
         return cell
     }
     
-//    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-//        
-//        if searchController.active && searchController.searchBar.text != "" {
-//            print("hey \(filteredPairs[indexPath.row].name)")
-//        } else {
-//            print("hey \(currencyPairs[indexPath.row].name)")
-//        }
-//    }
     
     //MARK: - General Functions
     
@@ -106,7 +90,6 @@ class CurrencySearchViewController: UITableViewController {
             let categoryMatch = (scope == "All")  || (pair.baseCurrency == scope)
             
             return categoryMatch && pair.name.lowercaseString.containsString(searchText.lowercaseString)
-         //   return pair.lowercaseString.containsString(searchText.lowercaseString)
         }
         
         tableView.reloadData()
@@ -117,17 +100,13 @@ class CurrencySearchViewController: UITableViewController {
         let alertController = UIAlertController(title: forSelectedPair.name, message: "Search with selected pair or set as default", preferredStyle: .Alert)
         
         let searchAction = UIAlertAction(title: "Search", style: .Default) { (action: UIAlertAction) in
-            print("picked search \(forSelectedPair.name)")
             
             self.dataManager.selectedCurrencyPair = forSelectedPair.name
-
             self.navigationController?.popToRootViewControllerAnimated(true)
-
             
         }
         
         let setDefaultAction = UIAlertAction(title: "Set as default", style: .Default) { (action: UIAlertAction) in
-            print("picked default \(forSelectedPair.name)")
             
             self.dataManager.defaultCurrencyPair = forSelectedPair.name
             self.dataManager.selectedCurrencyPair = forSelectedPair.name
@@ -146,11 +125,6 @@ class CurrencySearchViewController: UITableViewController {
         self.presentViewController(alertController, animated: true, completion: nil)
         
     }
-    
-    
-    
-
- 
 }
 
 extension CurrencySearchViewController: UISearchResultsUpdating {
@@ -160,8 +134,6 @@ extension CurrencySearchViewController: UISearchResultsUpdating {
         let scope = searchBar.scopeButtonTitles![searchBar.selectedScopeButtonIndex]
         
         filterContentForSearchText(searchController.searchBar.text!, scope: scope)
-        
-      //  filterContentForSearchText(searchController.searchBar.text!)
     }
 }
 

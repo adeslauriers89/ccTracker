@@ -33,6 +33,6 @@ struct colours {
     
     static let backGroundGrey = UIColor(colorLiteralRed: 217.0/255.0, green: 217.0/255.0 , blue: 217.0/255.0, alpha: 1.0)
     static let positiveGreen = UIColor(colorLiteralRed: 99.0/255.0, green: 195.0/255.0 , blue: 57.0/255.0, alpha: 1.0)
-
+    static let appBlue = UIColor(colorLiteralRed: 24.0/255.0, green: 187.0/255.0, blue: 255.0/255.0, alpha: 1.0)
 }
 

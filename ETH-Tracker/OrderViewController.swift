@@ -19,7 +19,28 @@ class OrderViewController: UIViewController {
     @IBOutlet weak var buyOrderValueLabel: UILabel!
     @IBOutlet weak var sellOrderValueLabel: UILabel!
     
+    @IBOutlet weak var percentBuyLabel: UILabel!
+    @IBOutlet weak var percentSellLabel: UILabel!
+    
+    
     @IBOutlet weak var orderBookRefreshButton: UIButton!
+    
+    var defaultPercent: Double {
+        get {
+            if let returnValue = NSUserDefaults.standardUserDefaults().objectForKey("orderPercent") as? Double {
+                return returnValue
+            } else {
+                return 1.0
+            }
+        }
+        
+        set {
+            NSUserDefaults.standardUserDefaults().setObject(newValue, forKey: "orderPercent")
+            NSUserDefaults.standardUserDefaults().synchronize()
+        }
+    }
+    
+    var percentToSearch = Double()
     
     
     //MARK: ViewController Life Cycle
@@ -28,16 +49,16 @@ class OrderViewController: UIViewController {
         super.viewDidLoad()
         
         configureViewStyles()
-
+        
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-        getOrderBookData()
+        getOrderBookData(defaultPercent)
         
     }
-   
+    
     //MARK: UI Functions
     
     func configureViewStyles() {
@@ -53,26 +74,83 @@ class OrderViewController: UIViewController {
         orderBookRefreshButton.layer.cornerRadius = 5.0
         
         view.backgroundColor = UIColor(colorLiteralRed: 217.0/255.0, green: 217.0/255.0 , blue: 217.0/255.0, alpha: 1.0)
-
+        
     }
     
-    //MARK: Actions 
+    //MARK: Actions
     
     
     @IBAction func refreshOrderBookButtonPressed(sender: UIButton) {
         
-        getOrderBookData()
+        getOrderBookData(percentToSearch)
         
     }
+    
+    @IBAction func changePercentButtonPressed(sender: UIButton) {
+        var inputTextField: UITextField?
+        
+        let percentChangeAlert = UIAlertController(title: "Change Percentage", message: "Input a different % to search with. Suggested range 0.01 - 3.0", preferredStyle: UIAlertControllerStyle.Alert)
+        
+        percentChangeAlert.addTextFieldWithConfigurationHandler { (textField: UITextField) in
+            textField.placeholder = "1.0"
+            inputTextField = textField
+        }
+        
+        let setDefaultAction = UIAlertAction(title: "Set as default", style: .Default) { (action: UIAlertAction) in
+            
+            if let text = inputTextField?.text {
+                
+                let percentInput = NSNumberFormatter().numberFromString(text)
+                
+                if let percent = percentInput as Double? {
+                    
+                    self.percentToSearch = percent
+                    self.defaultPercent = percent
+                    self.getOrderBookData(percent)
+                    
+                }
+                
+                
+            }
+        }
+        
+        let enterAction = UIAlertAction(title: "Enter", style: .Default) { (action: UIAlertAction) in
+            
+            if let text = inputTextField?.text  {
+                
+                let percentInput = NSNumberFormatter().numberFromString(text)
+                
+                if let percentInput = percentInput {
+                    
+                    self.percentToSearch = Double(percentInput)
+                    self.getOrderBookData(Double(percentInput))
+                    
+                }
+            }
+        }
+        percentChangeAlert.addAction(enterAction)
+        percentChangeAlert.addAction(setDefaultAction)
+        percentChangeAlert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
+        
+        presentViewController(percentChangeAlert, animated: true, completion: nil)
+        
+    }
+    
     
     //MARK: Data Functions
     
     
-    func getOrderBookData() {
-//        dataManager.fetchOrderBook { (result) in
-        dataManager.fetchOrderBook(dataManager.selectedCurrencyPair) { (result) in
-            
+    func getOrderBookData(forPercent: Double) {
         
+        var percentForSearch = forPercent
+        
+        if percentForSearch == 0.0 {
+            percentForSearch = self.defaultPercent
+        }
+        
+        
+        dataManager.fetchOrderBook(dataManager.selectedCurrencyPair, percentInput: percentForSearch) { (result) in
+            
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
                 
                 let orderBook  = result
@@ -80,12 +158,12 @@ class OrderViewController: UIViewController {
                 self.buyOrderValueLabel.text = String(format: "%0.3f \(self.dataManager.quoteCurrency)", orderBook.buysValue)
                 self.sellOrderValueLabel.text = String(format: "%0.3f \(self.dataManager.quoteCurrency)", orderBook.sellsValue)
                 
+                self.percentBuyLabel.text = "\(percentForSearch)% of current price"
+                self.percentSellLabel.text = "\(percentForSearch)% of current price"
                 
-                print("buys \(orderBook.totalBuys) number of sells \(orderBook.totalSells)")
                 
             })
         }
     }
     
-
 }

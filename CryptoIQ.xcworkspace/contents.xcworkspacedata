@@ -2,7 +2,7 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:ETH-Tracker.xcodeproj">
+      location = "group:/Users/adamdeslauriers/Desktop/Xcode/ETH-Tracker/CryptoIQ.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:Pods/Pods.xcodeproj">

@@ -10,7 +10,7 @@ import UIKit
 import Charts
 
 class LineChartViewController: UIViewController, ChartViewDelegate {
-
+    
     //MARK: Properties
     
     var dataManager = DataManager.sharedManager
@@ -25,7 +25,7 @@ class LineChartViewController: UIViewController, ChartViewDelegate {
     
     var netValueOfIntervals = [Double]()
     var activityWheel = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.Gray)
-
+    
     
     @IBOutlet weak var timePeriodSegmentedControl: UISegmentedControl!
     @IBOutlet weak var lineChartView: LineChartView!
@@ -42,8 +42,8 @@ class LineChartViewController: UIViewController, ChartViewDelegate {
         view.addSubview(activityWheel)
         
         view.backgroundColor = UIColor(colorLiteralRed: 217.0/255.0, green: 217.0/255.0 , blue: 217.0/255.0, alpha: 1.0)
-
-     
+        
+        
         lineChartView.delegate = self
         lineChartView.descriptionTextColor = UIColor.blackColor()
         lineChartView.descriptionText = ""
@@ -81,11 +81,6 @@ class LineChartViewController: UIViewController, ChartViewDelegate {
         var intervalOfTrades = [Trade]()
         let tradesToSplit = trades
         
-        let realtime = NSDate(timeIntervalSince1970: Double(start))
-        
-        print("Start in realtime \(realtime))")
-        print("START IN 1st \(start)")
-        
         var startTime = start
         let endTime = end
         
@@ -107,13 +102,11 @@ class LineChartViewController: UIViewController, ChartViewDelegate {
             
             tradeHistoryInIntervals.insert(intervalOfTrades, atIndex: i)
             
-            
             startTime += timeInterval
             timeIntervalEnd += timeInterval
             
         }
         
-     //   calculateNetValueOfTrades(tradeHistoryInIntervals)
         getDatesForIntervals(start, timeInterval: timeInterval, numberOfIntervals: numberOfIntervals,trades: tradeHistoryInIntervals)
         
     }
@@ -131,21 +124,14 @@ class LineChartViewController: UIViewController, ChartViewDelegate {
         for _ in 0..<numberOfIntervals {
             
             let dateForInterval = NSDate(timeIntervalSince1970: Double(startingInterval))
-            
-      //      print("\(i)date \(dateForInterval)")
-            
             let dateString = String(dateForInterval)
-            
             let separatedDates = dateString.componentsSeparatedByString(" ")
-            
-            print(separatedDates[1])
             
             dateStringCollection.append(separatedDates[1])
             
             startingInterval += timeInterval
         }
         
-        print(dateStringCollection)
         
         dataPointsArray = dateStringCollection
         
@@ -158,13 +144,11 @@ class LineChartViewController: UIViewController, ChartViewDelegate {
         
         var tradesNetValue = Double()
         var netValuesOfTradeIntervals = [Double]()
-
-      //  getDatesFromTradeHistory(trades)
-   
+        
         for tradeGroup in trades {
             tradesNetValue = 0
             self.netValueReset()
-  
+            
             for trade in tradeGroup {
                 if trade.type == "buy" {
                     self.totalBuyValue = trade.total + self.totalBuyValue
@@ -176,13 +160,10 @@ class LineChartViewController: UIViewController, ChartViewDelegate {
             tradesNetValue = Double(self.totalBuyValue - self.totalSellValue)
             
             netValuesOfTradeIntervals.append(tradesNetValue)
-
+            
         }
-        print(netValuesOfTradeIntervals)
-        
         setChart(dataPointsArray, values: netValuesOfTradeIntervals)
         
-      
     }
     
     func netValueReset() {
@@ -190,38 +171,7 @@ class LineChartViewController: UIViewController, ChartViewDelegate {
         self.totalBuyValue = 0
     }
     
-//    func getDatesFromTradeHistory(history: [[Trade]]) {
-//        
-//        if dataPointsArray.isEmpty == false {
-//            dataPointsArray.removeAll()
-//        }
-//        
-//        var datesFromHistory = [String]()
-//        var trimmedDatesArray = [String]()
-//        
-//        for historyInterval in history {
-//            
-//            if let dateString = historyInterval.last?.date {
-//                trimmedDatesArray = dateString.componentsSeparatedByString(" ")
-//            }
-//            
-//            
-//            
-//            datesFromHistory.append(trimmedDatesArray.last!)
-//            
-//        }
-//        dataPointsArray = datesFromHistory
-//        print("BAd 1 \(datesFromHistory)")
-//        
-//    }
     
-    func chartValueSelected(chartView: ChartViewBase, entry: ChartDataEntry, dataSetIndex: Int, highlight: ChartHighlight) {
- 
-        print("\(entry.value) for the hour of \(dataPointsArray[entry.xIndex])")
-    }
-    
-    
- 
     //MARK : Actions
     
     
@@ -230,7 +180,7 @@ class LineChartViewController: UIViewController, ChartViewDelegate {
         
         switch timePeriodSegmentedControl.selectedSegmentIndex {
         case 0:
-        
+            
             getHistory30Min()
             
         case 1:
@@ -273,7 +223,7 @@ class LineChartViewController: UIViewController, ChartViewDelegate {
                     
                 })
             })
-        
+            
         case 3:
             
             
@@ -296,7 +246,7 @@ class LineChartViewController: UIViewController, ChartViewDelegate {
                     
                 })
             })
-
+            
         case 4:
             
             self.timePeriodSegmentedControl.userInteractionEnabled = false
@@ -317,13 +267,13 @@ class LineChartViewController: UIViewController, ChartViewDelegate {
                     
                 })
             })
-
-
+            
+            
         default:
             break
         }
     }
-
+    
     @IBAction func saveChartButtonPressed(sender: UIBarButtonItem) {
         lineChartView.saveToCameraRoll()
         
@@ -345,40 +295,10 @@ class LineChartViewController: UIViewController, ChartViewDelegate {
                 self.activityWheel.stopAnimating()
                 
                 self.timePeriodSegmentedControl.userInteractionEnabled = true
-
+                
                 
             })
         })
     }
     
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

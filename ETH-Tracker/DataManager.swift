@@ -11,16 +11,8 @@ import UIKit
 
 
 class DataManager {
-
+    
     static let sharedManager = DataManager()
-    
-    //static let pair = "currencyPair"
-    
-//    var selectedCurrencyPair: String = "BTC_ETH" {
-//        didSet {
-//            print("The value of myProperty changed from \(oldValue) to \(selectedCurrencyPair)")
-//        }
-//    }
     
     var selectedCurrencyPair: String = ""
     
@@ -42,11 +34,6 @@ class DataManager {
     var baseCurrency: String = ""
     
     var quoteCurrency: String = ""
-
-    
-    
-   // let session =  NSURLSession(configuration: NSURLSessionConfiguration.defaultSessionConfiguration())
-    
     
     
     var dataTasks = [NSURLSessionDataTask]()
@@ -67,53 +54,11 @@ class DataManager {
         
         let splitPairArray = pairToSplit.componentsSeparatedByString("_")
         
-        print(splitPairArray)
-        
         baseCurrency = splitPairArray[0]
         quoteCurrency = splitPairArray[1]
         
-        print("Base \(baseCurrency)")
-        print("Quote \(quoteCurrency)")
     }
     
-//    func getCurrencyPairs(completion:[String] -> Void) {
-//        
-//        let urlPath = "https://poloniex.com/public?command=returnTicker"
-//        let endPoint = NSURL(string: urlPath)
-//        var currencyPairs = [String]()
-//        
-//        let currencyPairTask = NSURLSession.sharedSession().dataTaskWithURL(endPoint!) { (data, response, error) -> Void in
-//            
-//            if error != nil {
-//                let currentVC = self.findCurrentVC()
-//                
-//                let alertController = UIAlertController(title: "Error", message: "\(error!.localizedDescription)", preferredStyle: .Alert)
-//                let okAction = UIAlertAction(title: "OK", style: .Default, handler: { (action: UIAlertAction) in
-//                    return
-//                })
-//                
-//                alertController.addAction(okAction)
-//                
-//                dispatch_async(dispatch_get_main_queue(), {
-//                    currentVC!.presentViewController(alertController, animated: true, completion: nil)
-//                })
-//                print("ERROR: \(error)")
-//            }
-//            
-//            if let unWrappedData = data {
-//                guard let fetchedPairs = (try? NSJSONSerialization.JSONObjectWithData(unWrappedData, options: NSJSONReadingOptions.AllowFragments) as! [String : AnyObject]) else {return}
-//                
-//                for pair in fetchedPairs {
-//                    let pairName = pair.0
-//                    
-//                    currencyPairs.append(pairName)
-//                }
-//            }
-//            completion(currencyPairs)
-//        }
-//        currencyPairTask.resume()
-//    }
-
     
     func getCurrencyPairs(completion:[CurrencyPair] -> Void) {
         
@@ -136,13 +81,10 @@ class DataManager {
                 dispatch_async(dispatch_get_main_queue(), {
                     currentVC!.presentViewController(alertController, animated: true, completion: nil)
                 })
-                print("ERROR: \(error)")
             }
             
             if let unWrappedData = data {
                 guard let fetchedPairs = (try? NSJSONSerialization.JSONObjectWithData(unWrappedData, options: NSJSONReadingOptions.AllowFragments) as! [String : AnyObject]) else {return}
-                
-                
                 
                 for pair in fetchedPairs {
                     let newPair = CurrencyPair(name: pair.0)
@@ -169,7 +111,6 @@ class DataManager {
         var chosenPair = forPair
         
         if chosenPair == "" {
-            
             chosenPair = defaultCurrencyPair
         }
         
@@ -188,12 +129,11 @@ class DataManager {
                 dispatch_async(dispatch_get_main_queue(), {
                     currentVC!.presentViewController(alertController, animated: true, completion: nil)
                 })
-                print("ERROR: \(error)")
             }
             
             if let unWrappedData = data {
                 guard let fetchedTicker = (try? NSJSONSerialization.JSONObjectWithData(unWrappedData, options: NSJSONReadingOptions.AllowFragments) as! [String : AnyObject]) else  {return}
-
+                
                 
                 if let pair: AnyObject = fetchedTicker[chosenPair] {
                     if let pairTickerDict = pair as? [String : AnyObject] {
@@ -208,26 +148,16 @@ class DataManager {
                         
                         let pairTicker = Ticker(currentPrice: currentPrice, percentChange: percentChange, volume: volume, high24Hr: high24Hr, low24Hr: low24Hr)
                         
-                        print("Curr price \(pairTicker.currentPrice) High \(pairTicker.high24Hr) lo \(pairTicker.low24Hr)")
-                        
-                        
                         completion(pairTicker)
                     }
                 }
-                ///////////////
-                
-                ////
-            } else {
-                print("No connection")
             }
         }
         tickerTask.resume()
         
     }
     
-
-    
-    func fetchOrderBook(forPair: String,completion:(result:(totalBuys: Int, buysValue: Double, totalSells: Int, sellsValue: Double)) -> Void ) {
+    func fetchOrderBook(forPair: String, percentInput: Double ,completion:(result:(totalBuys: Int, buysValue: Double, totalSells: Int, sellsValue: Double)) -> Void ) {
         
         var totalAmountPendingBuys: Double = 0.0
         var totalAmountPendingSells: Double = 0.0
@@ -241,8 +171,6 @@ class DataManager {
             pairToSearch = defaultCurrencyPair
         }
         
-        
-        
         let url = "https://poloniex.com/public?command=returnOrderBook&currencyPair=\(pairToSearch)&depth=500"
         
         let orderTask = NSURLSession.sharedSession().dataTaskWithURL(NSURL(string: url)!) { (data, response, error) -> Void in
@@ -252,7 +180,6 @@ class DataManager {
                 if let fetchedOrders = (try? NSJSONSerialization.JSONObjectWithData(unWrappedData, options: NSJSONReadingOptions.AllowFragments) as! [String: AnyObject]) {
                     
                     let fetchedBuyOrders = fetchedOrders["bids"] as! [AnyObject]
-                    
                     
                     for buy in fetchedBuyOrders {
                         
@@ -285,14 +212,13 @@ class DataManager {
             
             self.getTicker(pairToSearch, completion: { (Ticker) in
                 
-        
+                
                 
                 currentPrice = Ticker.currentPrice
                 
-                self.findOrdersWithinOnePercentCurrentPrice(buyOrdersArray, sellOrders: sellOrdersArray, currentPrice: currentPrice, completion: { (result) in
+                self.calculatePercentageDifference(buyOrdersArray, sellOrders: sellOrdersArray, currentPrice: currentPrice, percentEntered: percentInput, completion: { (result) in
                     
                     completion(result: (totalBuys: result.totalBuys, buysValue: result.buysValue, totalSells: result.totalSells, sellsValue: result.sellsValue))
-                    
                 })
                 
             })
@@ -303,53 +229,54 @@ class DataManager {
     }
     
     
-    func findOrdersWithinOnePercentCurrentPrice(buyOrders: [Order], sellOrders: [Order],currentPrice: Double, completion: (result: (totalBuys: Int, buysValue: Double, totalSells: Int, sellsValue: Double) ) -> Void )  {
+    func calculatePercentageDifference(buyOrders: [Order], sellOrders: [Order], currentPrice: Double, percentEntered: Double, completion:(result: (totalBuys: Int, buysValue: Double, totalSells: Int, sellsValue: Double) ) -> Void )  {
         
-        var sellsWithinOnePercent = [Order]()
-        var totalValueSellsWithinOnePercent:Double = 0.0
-        var buysWithinOnePercent = [Order]()
-        var totalValueBuysWithinOnePercent:Double = 0.0
+        var sellsWithinPercent = [Order]()
+        var totalValueSellsWithinPercent: Double = 0.0
+        var buysWithinPercent = [Order]()
+        var totalValueBuysWithinPercent: Double = 0.0
         
         
         for order in sellOrders {
-            let difference: Double = currentPrice / order.price
+            let difference = order.price - currentPrice
+            let percentDiff = difference/currentPrice * 100
             
-            if difference >= 0.99009900 {
-                sellsWithinOnePercent.append(order)
+            if abs(percentDiff) <= percentEntered {
+                sellsWithinPercent.append(order)
                 
-                totalValueSellsWithinOnePercent = order.amount + totalValueSellsWithinOnePercent
+                totalValueSellsWithinPercent = order.amount + totalValueSellsWithinPercent
             }
         }
         
         for order in buyOrders {
-            let difference: Double = currentPrice / order.price
             
-            if difference <= 1.01010101 {
-                buysWithinOnePercent.append(order)
+            let difference = currentPrice - order.price
+            let percentDiff = difference/currentPrice * 100
+            
+            if abs(percentDiff) <= percentEntered {
+                buysWithinPercent.append(order)
                 
-                totalValueBuysWithinOnePercent = order.amount + totalValueBuysWithinOnePercent
-                
+                totalValueBuysWithinPercent = order.amount + totalValueBuysWithinPercent
             }
+            
+            completion(result: (totalBuys: buysWithinPercent.count, buysValue: totalValueBuysWithinPercent, totalSells: sellsWithinPercent.count, sellsValue: totalValueSellsWithinPercent))
         }
         
-        completion(result: (totalBuys: buysWithinOnePercent.count, buysValue: totalValueBuysWithinOnePercent, totalSells: sellsWithinOnePercent.count, sellsValue: totalValueSellsWithinOnePercent))
     }
-
-    
     
     func getHistory(forTimePeriod: Int, fromTime: Int,completion: (result: (trades: [Trade], tradeInfo: HistoryData) ) -> Void) {
         
         var completedTrades = [Trade]()
         let startTime = fromTime - forTimePeriod
-//        let currencyPair = "BTC_ETH"
         var currencyPair = selectedCurrencyPair
         if currencyPair == "" {
             currencyPair = defaultCurrencyPair
         }
         let urlPath = "https://poloniex.com/public?command=returnTradeHistory&currencyPair=\(currencyPair)&start=\(startTime)&end=\(fromTime)"
         
-        let historyTask = NSURLSession.sharedSession().dataTaskWithURL(NSURL(string: urlPath)!) { (data, response, error) -> Void in
-        
+        let historyTask = NSURLSession.sharedSession().dataTaskWithURL(NSURL(string: urlPath)!) { (data , response , error) -> Void in
+            
+            
             if error != nil {
                 let currentVC = self.findCurrentVC()
                 
@@ -363,7 +290,6 @@ class DataManager {
                 dispatch_async(dispatch_get_main_queue(), {
                     currentVC!.presentViewController(alertController, animated: true, completion: nil)
                 })
-                print("ERROR: \(error)")
             }
             
             if let unWrappedData = data {
@@ -384,20 +310,16 @@ class DataManager {
                         
                         completedTrades.append(newTrade)
                     }
-                    
-                    
                 }
             }
             
             let tradeInfo = self.caluclateHistoryData(completedTrades)
             tradeInfo.startTimeUnix = startTime
             tradeInfo.endTimeUnix = fromTime
-
+            
             completion(result: (trades: completedTrades, tradeInfo: tradeInfo))
             
-          
         }
-//        dataTasks.append(historyTask)
         historyTask.resume()
         
     }
@@ -409,9 +331,9 @@ class DataManager {
         var fetchedTrades = [Trade]()
         var fetchedHistoryData = [HistoryData]()
         var timeToSearchFrom = currentTime
-    
+        
         for i in 0..<timesToCombine {
-
+            
             if (i == timesToCombine - 1) {
                 dispatch_group_enter(group)
                 getHistory(timePeriod - i, fromTime: timeToSearchFrom, completion: { (result) in
@@ -420,12 +342,7 @@ class DataManager {
                     let tradeInfo = result.tradeInfo
                     
                     fetchedTrades.appendContentsOf(trades)
-                    
                     fetchedHistoryData.append(tradeInfo)
-                    
-                    print("trades count \(fetchedTrades.count)")
-                    print("Time number : \(i)")
-                    print("Start \(tradeInfo.startTimeUnix) End \(tradeInfo.endTimeUnix)")
                     
                     dispatch_group_leave(group)
                 })
@@ -440,37 +357,21 @@ class DataManager {
                     fetchedTrades.appendContentsOf(trades)
                     fetchedHistoryData.append(tradeInfo)
                     
-//                    print("trades count \(fetchedTrades.count)")
-//                    print("Time number : \(i)")
-//                    print("Start \(tradeInfo.startTimeUnix) End \(tradeInfo.endTimeUnix)")
-
                     dispatch_group_leave(group)
                 })
-                
-
             }
             
             timeToSearchFrom -= timePeriod + 1
+        }
+        
+        dispatch_group_notify(group, dispatch_get_main_queue()) {
+            
+            let histData = self.combineHistoryData(fetchedHistoryData)
+            
+            completion(result: (trades: fetchedTrades, tradeInfo: histData))
             
         }
         
-        dispatch_group_notify(group, dispatch_get_main_queue()) { 
-            
-            
-            print("HIST DATA COUNT \(fetchedHistoryData.count)")
-            print("TRADES COUNTTTTT \(fetchedTrades.count)")
-                        
-            let histData = self.combineHistoryData(fetchedHistoryData)
-            
-            print("COMBINED HIST DATA: Total buys \(histData.totalBuys) value \(histData.totalBuyValue). Total sells \(histData.totalSells) value \(histData.totalSellValue). Total Trades \(histData.totalTrades) value \(histData.netValue)")
-            
-            
-            
-            
-            completion(result: (trades: fetchedTrades, tradeInfo: histData))
-
-        }
-
     }
     
     
@@ -503,7 +404,7 @@ class DataManager {
         let startTime = getEarliestTime(startTimes)
         let endTime = getLatestTime(endTimes)
         
-    
+        
         let histData = HistoryData(totalBuys: combinedTotalBuys, totalBuyValue: combinedBuyValue, totalSells: combinedTotalSells, totalSellValue: combinedSellValue, netValue: combinedNetValue, totalTrades: combinedTotalTrades)
         histData.startTimeUnix = startTime
         histData.endTimeUnix = endTime
@@ -516,36 +417,25 @@ class DataManager {
     func getEarliestTime(times: [Int]) -> Int {
         
         var earliest = Int()
-        
         earliest = times.first!
         
         for time in times {
-//            print("TIME \(time)")
-            
             if time < earliest {
                 earliest = time
             }
-//            print(" earliest time \(earliest)")
-            
         }
-        
         return earliest
     }
     
     func getLatestTime(times: [Int]) -> Int {
         
         var latest = Int()
-        
         latest = times.first!
         
         for time in times {
-//            print("TIME \(time)")
-            
             if time > latest {
                 latest = time
             }
-//            print(" LATEST time \(latest)")
-            
         }
         return latest
     }
@@ -583,7 +473,6 @@ class DataManager {
                 totalSellValue = trade.total + totalSellValue
             }
         }
-        
         netValue = totalBuyValue - totalSellValue
         
         let tradeHistoryData = HistoryData(totalBuys: totalBuys, totalBuyValue: totalBuyValue, totalSells: totalSells, totalSellValue: totalSellValue, netValue: netValue, totalTrades: tradeHistory.count)
@@ -596,31 +485,4 @@ class DataManager {
         return navigationController.viewControllers.last
     }
     
-//    func cancelDownloads() {
-//        
-//       // let session = NSURLSession(configuration: NSURLSessionConfiguration.defaultSessionConfiguration())
-//        
-////        session.getTasksWithCompletionHandler { (dataTasks: [NSURLSessionDataTask], uploadTasks: [NSURLSessionUploadTask], downloadTasks: [NSURLSessionDownloadTask]) in
-//        
-//        NSURLSession.sharedSession().getTasksWithCompletionHandler { (dataTasks: [NSURLSessionDataTask], uploadTasks: [NSURLSessionUploadTask], downloadTasks: [NSURLSessionDownloadTask]) in
-//           
-//        
-//            for task in dataTasks {
-//                
-//                task.cancel()
-//                print("Datatask cancelled \(task)")
-//                
-//            }
-//            
-//            for task in downloadTasks {
-//                
-//                task.cancel()
-//                print("DL cancelled \(task)")
-//            }
-//        }
-//        
-//
-//        }
-    
-
 }
